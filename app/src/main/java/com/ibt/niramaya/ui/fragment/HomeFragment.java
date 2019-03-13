@@ -22,6 +22,10 @@ import com.ibt.niramaya.utils.ConnectionDetector;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ibt.niramaya.ui.activity.HomeActivity.imgSearch;
+import static com.ibt.niramaya.ui.activity.HomeActivity.imgSort;
+import static com.ibt.niramaya.ui.activity.HomeActivity.txtTitle;
+
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     private View rootView;
@@ -44,6 +48,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void init() {
+        txtTitle.setText("Home");
+        imgSearch.setVisibility(View.VISIBLE);
+        imgSort.setVisibility(View.GONE);
+
         activity = getActivity();
         mContext = getActivity();
         cd = new ConnectionDetector(mContext);

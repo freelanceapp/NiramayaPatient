@@ -20,7 +20,7 @@ public class Constant {
 
     // Fragment constant
     public static final String HomeFragment = "Home_Fragment";
-    public static final String LoginFragment = "Login_Fragment";
+    public static final String PrescriptionFragment = "PrescriptionFragment";
     public static final String SignUpFragment = "SignUp_Fragment";
     public static final String ForgotPassword_Fragment = "ForgotPassword_Fragment";
     public static final String Verification_Fragment = "Verification_Fragment";

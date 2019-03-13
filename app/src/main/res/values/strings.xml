@@ -2,4 +2,7 @@
     <string name="app_name">Niramaya</string>
     <string name="home">Home</string>
     <string name="find_your_location">Find your location</string>
+    <string name="your_saved_treatment">Your Saved Treatment...!</string>
+    <string name="view_your_past_prescription">View Your Past Prescription</string>
+    <string name="title">Title</string>
 </resources>
