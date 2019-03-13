@@ -1,0 +1,56 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppFullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:typeface">monospace</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="WindowTitleBackground">
+        <item name="android:background">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Widget" />
+
+    <!-- <style name="customRatingBar" parent="@android:style/Widget.RatingBar">
+         <item name="android:progressDrawable">@drawable/customratingstars</item>
+         <item name="android:minHeight">20dip</item>
+         <item name="android:maxHeight">20dip</item>
+     </style>
+
+     <style name="foodRatingBar" parent="@android:style/Widget.RatingBar">
+         <item name="android:progressDrawable">@drawable/food_rating_bar_full</item>
+         <item name="android:minHeight">23dip</item>
+         <item name="android:maxHeight">25dip</item>
+     </style>
+
+     <style name="foodRatingBar1" parent="@android:style/Widget.RatingBar">
+         <item name="android:progressDrawable">@drawable/food_rating_bar_full</item>
+         <item name="android:minHeight">18dip</item>
+         <item name="android:maxHeight">18dip</item>
+     </style>
+
+     <style name="RatingBar" parent="Theme.AppCompat">
+         <item name="colorControlNormal">@color/gray_i</item>
+         <item name="colorControlActivated">@color/yellow</item>
+     </style>-->
+
+</resources>
