@@ -12,6 +12,7 @@ import com.ibt.niramaya.R;
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.ui.fragment.HomeFragment;
 import com.ibt.niramaya.ui.fragment.PrescriptionsFragment;
+import com.ibt.niramaya.ui.fragment.ReportFragment;
 import com.ibt.niramaya.utils.FragmentUtils;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
@@ -77,6 +78,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 fragmentUtils.replaceFragment(new PrescriptionsFragment(), Constant.PrescriptionFragment);
                 break;
             case R.id.txtReports:
+                fragmentUtils.replaceFragment(new ReportFragment(), Constant.ReportsFragment);
                 break;
             case R.id.txtInvoice:
                 break;

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="20dp">
+
+                <EditText
+                    android:id="@+id/edtSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_toStartOf="@+id/imgSearch"
+                    android:layout_toLeftOf="@+id/imgSearch"
+                    android:background="@drawable/layout_bg6"
+                    android:hint="Search here ..."
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:paddingStart="16dp"
+                    android:paddingLeft="16dp"
+                    android:textSize="@dimen/size_14" />
+
+                <ImageView
+                    android:id="@+id/imgSearch"
+                    android:layout_width="58dp"
+                    android:layout_height="42dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/layout_bg7"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_search" />
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewReports"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="24dp" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>
