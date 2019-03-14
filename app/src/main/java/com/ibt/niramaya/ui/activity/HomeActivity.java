@@ -1,6 +1,7 @@
 package com.ibt.niramaya.ui.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,7 +11,9 @@ import android.widget.TextView;
 
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.constant.Constant;
+import com.ibt.niramaya.ui.fragment.BedFragment;
 import com.ibt.niramaya.ui.fragment.HomeFragment;
+import com.ibt.niramaya.ui.fragment.InvoiceFragment;
 import com.ibt.niramaya.ui.fragment.PrescriptionsFragment;
 import com.ibt.niramaya.ui.fragment.ReportFragment;
 import com.ibt.niramaya.utils.FragmentUtils;
@@ -81,8 +84,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 fragmentUtils.replaceFragment(new ReportFragment(), Constant.ReportsFragment);
                 break;
             case R.id.txtInvoice:
+                fragmentUtils.replaceFragment(new InvoiceFragment(), Constant.InvoiceFragment);
                 break;
             case R.id.txtBed:
+                fragmentUtils.replaceFragment(new BedFragment(), Constant.BedFragment);
                 break;
             case R.id.txtHistory:
                 break;
@@ -96,5 +101,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         slidingRootNav.closeMenu();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment HomeFragment = fragmentManager.findFragmentByTag(Constant.HomeFragment);
+        Fragment PrescriptionFragment = fragmentManager.findFragmentByTag(Constant.PrescriptionFragment);
+        Fragment ReportFragment = fragmentManager.findFragmentByTag(Constant.ReportsFragment);
     }
 }
