@@ -10,7 +10,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.ibt.niramaya.R;
@@ -40,14 +43,9 @@ public class Login_Fragment extends Fragment implements OnClickListener {
 
     private static View view;
     private static Button loginButton;
-    private static TextView forgotPassword;
-    private static LinearLayout signUp;
-    private static LinearLayout loginLayout;
     private static Animation shakeAnimation;
     private static FragmentManager fragmentManager;
-    ProgressBar loginProgress;
-    String getEmailId, getPassword;
-
+    private static EditText etMobileNumber, etAadharNumber;
     Context ctx;
     ConnectionDetector connectionDetector;
     //SessionManager sessionManager;
@@ -71,25 +69,49 @@ public class Login_Fragment extends Fragment implements OnClickListener {
     private void initViews() {
         fragmentManager = getActivity().getSupportFragmentManager();
         loginButton = view.findViewById(R.id.loginBtn);
+        etMobileNumber = view.findViewById(R.id.etMobileNumber);
+        etAadharNumber = view.findViewById(R.id.etAadharNumber);
        // loginLayout = (LinearLayout) view.findViewById(R.id.login_layout);
 
         // Load ShakeAnimation
         shakeAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
 
-        // Setting text selector over textviews
-        @SuppressLint("ResourceType") XmlResourceParser xrp = getResources().getXml(R.drawable.text_selector);
-        try {
-            ColorStateList csl = ColorStateList.createFromXml(getResources(), xrp);
+        etMobileNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            forgotPassword.setTextColor(csl);
-            //show_hide_password.setTextColor(csl);
-            //signUp.setBackgroundResource(csl);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                signUp.setBackgroundTintList(csl);
             }
 
-        } catch (Exception e) {
-        }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                Toast.makeText(ctx, "Mobile Number" , Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etAadharNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Toast.makeText(ctx, "Aadhar Number" , Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     // Set Listeners
@@ -114,6 +136,13 @@ public class Login_Fragment extends Fragment implements OnClickListener {
         }
 
     }
+
+
+
+
+
+
+
 
     /*private void checkValidation() {
         getEmailId = emailid_et.getText().toString();

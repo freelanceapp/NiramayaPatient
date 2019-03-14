@@ -3,106 +3,123 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:background="@color/gray_i">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="MOBILE VERIFICATION"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_margin="@dimen/size_6"/>
-
-        <ImageView
-            android:layout_width="60sp"
-            android:layout_height="80sp"
-            android:src="@drawable/mobile_phone"/>
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="You are Just One Step Away..!"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:layout_margin="@dimen/size_10"/>
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="An OTP has been sent to your "
-            android:textColor="@color/gray_a"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Mobile Number"
-            android:textColor="@color/gray_a"
-            android:textSize="12sp" />
-
-        <com.ibt.niramaya.utils.pinview.Pinview
-            android:id="@+id/pinview1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:layout_marginBottom="14dp"
-            app:cursorVisible="false"
-            app:forceKeyboard="true"
-            app:hint=""
-            app:inputType="number"
-            app:password="false"
-            app:pinBackground="@drawable/pinview_back"
-            app:pinHeight="30dp"
-            app:pinLength="6"
-            app:pinWidth="30dp" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_12"
-            android:orientation="horizontal"
-            android:padding="@dimen/size_10"
-            android:layout_marginBottom="20dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="-2dp"
+                android:layout_marginTop="-20dp"
+                android:layout_marginRight="-2dp"
+                android:layout_marginBottom="@dimen/size_20"
+                android:adjustViewBounds="true"
+                android:src="@drawable/top_back" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Didn't get the OTP? "
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RESEND"
+                android:layout_margin="@dimen/size_6"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="MOBILE VERIFICATION"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:layout_width="60sp"
+                android:layout_height="80sp"
+                android:layout_gravity="center"
+                android:src="@drawable/mobile_phone" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/size_10"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="You are Just One Step Away..!"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="An OTP has been sent to your "
+                android:textColor="@color/gray_a"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Mobile Number"
+                android:textColor="@color/gray_a"
+                android:textSize="12sp" />
+
+            <com.ibt.niramaya.utils.pinview.Pinview
+                android:id="@+id/pinview1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                app:cursorVisible="false"
+                app:forceKeyboard="true"
+                app:hint=""
+                app:inputType="number"
+                app:password="false"
+                app:pinBackground="@drawable/pinview_back"
+                app:pinHeight="30dp"
+                app:pinLength="6"
+                app:pinWidth="30dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/size_12"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:padding="@dimen/size_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Didn't get the OTP? "
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RESEND"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/forgot_button"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:background="@drawable/buttun_back_green"
+                android:paddingLeft="80sp"
+                android:paddingRight="80sp"
+                android:text="@string/submit"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginTop="4sp"
+                android:layout_marginBottom="@dimen/size_8"/>
         </LinearLayout>
-
-
-        <Button
-            android:id="@+id/forgot_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/buttun_back_green"
-            android:paddingLeft="80sp"
-            android:paddingRight="80sp"
-            android:text="@string/submit"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

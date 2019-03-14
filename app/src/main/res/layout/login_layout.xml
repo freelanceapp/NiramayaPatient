@@ -1,84 +1,99 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/gray_i">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.5">
-
-        </LinearLayout>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/size_24"
-            android:layout_marginRight="@dimen/size_24">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Login with Aadhar"
-                android:textSize="@dimen/size_18"
-                android:padding="6sp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="@dimen/size_6"/>
-
-            <EditText
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_back_b"
-                android:padding="@dimen/size_8"
-                android:hint="Enter Aadhar Number"
-                android:inputType="number"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1.5">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="250sp"
+                    android:src="@drawable/top_back"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:layout_marginTop="-10dp"/>
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="OR"
-                android:textSize="22sp"
-                android:textColor="@color/green_dark"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/size_10"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Login with OTP"
-                android:textSize="@dimen/size_18"
-                android:padding="6sp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="@dimen/size_6"/>
-
-            <EditText
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/etEmail"
-                android:background="@drawable/edittext_back_b"
-                android:padding="@dimen/size_8"
-                android:hint="Enter Mobile Number"
-                android:inputType="phone"/>
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_24"
+                android:layout_marginRight="@dimen/size_24"
+                android:layout_marginTop="@dimen/size_20"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SUBMIT"
-                android:id="@+id/loginBtn"
-                android:background="@drawable/buttun_back_green"
-                android:textColor="@color/white"
-                android:paddingLeft="80sp"
-                android:paddingRight="80sp"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/size_6"
+                    android:padding="6sp"
+                    android:text="Login with Aadhar"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/size_18" />
 
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_back_b"
+                    android:hint="Enter Aadhar Number"
+                    android:inputType="number"
+                    android:padding="@dimen/size_8"
+                    android:id="@+id/etAadharNumber"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/size_10"
+                    android:text="OR"
+                    android:textColor="@color/green_dark"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/size_6"
+                    android:padding="6sp"
+                    android:text="Login with OTP"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/size_18" />
+
+                <EditText
+                    android:id="@+id/etMobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_back_b"
+                    android:hint="Enter Mobile Number"
+                    android:inputType="phone"
+                    android:padding="@dimen/size_8" />
+
+                <Button
+                    android:id="@+id/loginBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="@dimen/size_8"
+                    android:background="@drawable/buttun_back_green"
+                    android:paddingLeft="80sp"
+                    android:paddingRight="80sp"
+                    android:text="SUBMIT"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
+    </ScrollView>
 </RelativeLayout>
