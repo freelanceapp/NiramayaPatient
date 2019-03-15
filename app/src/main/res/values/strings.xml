@@ -10,5 +10,13 @@
     <string name="total">TOTAL</string>
     <string name="paid">PAID</string>
     <string name="due">DUE</string>
+    <string name="facilities">Facilities</string>
+    <string name="departments">Departments</string>
+    <string name="doctors">Doctors</string>
+    <string name="general_gi_laparoscopy_surgery"><![CDATA[General GI & Laparoscopy Surgery]]></string>
+    <string name="joint_replacement_traumatology"><![CDATA[Joint Replacement & Traumatology]]></string>
+    <string name="arthroscopy_ligament_reconstruction"><![CDATA[Arthroscopy & Ligament Reconstruction]]></string>
+    <string name="cosmetic_reconstructive_surgery"><![CDATA[Cosmetic & Reconstructive Surgery]]></string>
+    <string name="obstetrics_gynaec_surgery"><![CDATA[Obstetrics & Gynaec surgery]]></string>
 
 </resources>

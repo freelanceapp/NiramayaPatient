@@ -49,6 +49,7 @@
         </activity>
         <activity android:name=".utils.BaseActivity" />
         <activity android:name=".ui.activity.HospitalDetailActivity" />
+        <activity android:name=".ui.activity.HospitalDepartmentDetailActivity" />
     </application>
 
 </manifest>

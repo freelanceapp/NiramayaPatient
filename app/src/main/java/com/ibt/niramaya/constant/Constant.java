@@ -29,10 +29,10 @@ public class Constant {
     public static final String DocumentsFragment = "DocumentsFragment";
     public static final String SettingsFragment = "SettingsFragment";
     public static final String AddUserFragment = "AddUserFragment";
-    public static final String RestaurentMenuFragment = "RestaurentMenuFragment";
-    public static final String RestaurentAboutFragment = "RestaurentAboutFragment";
-    public static final String RestaurentReviewFragment = "RestaurentReviewFragment";
-    public static final String MenuListFragment = "MenuListFragment";
+
+    public static final String FacilitiesFragment = "FacilitiesFragment";
+    public static final String DepartmentsFragment = "DepartmentsFragment";
+    public static final String DoctorFragment = "DoctorFragment";
 
     // Preference
     public static final String User_Id = "user_id";

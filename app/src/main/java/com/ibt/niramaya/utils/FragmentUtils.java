@@ -13,10 +13,10 @@ public class FragmentUtils {
         this.fragmentManager = fragmentManager;
     }
 
-    public void replaceFragment(Fragment fragment, String tag) {
+    public void replaceFragment(Fragment fragment, String tag, int frameId) {
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.home_frame, fragment,
+                .replace(frameId, fragment,
                         tag).commit();
     }
 }
