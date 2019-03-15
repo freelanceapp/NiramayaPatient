@@ -1,7 +1,6 @@
 package com.ibt.niramaya.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,17 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibt.niramaya.R;
-import com.ibt.niramaya.ui.activity.HospitalDetailActivity;
 
 import java.util.List;
 
-public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapter.MyViewHolder> {
+public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.MyViewHolder> {
 
     private List<String> vendorLists;
     private Context mContext;
     private View.OnClickListener onClickListener;
 
-    public HospitalListAdapter(List<String> vendorLists, Context mContext, View.OnClickListener onClickListener) {
+    public ReportListAdapter(List<String> vendorLists, Context mContext, View.OnClickListener onClickListener) {
         this.vendorLists = vendorLists;
         this.mContext = mContext;
         this.onClickListener = onClickListener;
@@ -29,7 +27,7 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_hospital_list, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_report_list, parent, false);
         return new MyViewHolder(itemView);
     }
 
@@ -43,13 +41,14 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
         String sImg = Constant.BASE_URL + vendorLists.get(position).getVendorLogo();
         Glide.with(mContext).load(sImg)
                 .into(holder.rc_img);*/
-        holder.txtOpen.setOnClickListener(new View.OnClickListener() {
+        /*holder.txtOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, HospitalDetailActivity.class);
+                intent.putExtra("from", "detail");
                 mContext.startActivity(intent);
             }
-        });
+        });*/
 
     }
 

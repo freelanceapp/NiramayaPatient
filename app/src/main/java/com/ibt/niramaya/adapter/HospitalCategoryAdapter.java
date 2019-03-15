@@ -1,7 +1,6 @@
 package com.ibt.niramaya.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibt.niramaya.R;
-import com.ibt.niramaya.ui.activity.HospitalDetailActivity;
 
 import java.util.List;
 
@@ -43,15 +41,6 @@ public class HospitalCategoryAdapter extends RecyclerView.Adapter<HospitalCatego
         String sImg = Constant.BASE_URL + vendorLists.get(position).getVendorLogo();
         Glide.with(mContext).load(sImg)
                 .into(holder.rc_img);*/
-        holder.txtCategoryName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, HospitalDetailActivity.class);
-                intent.putExtra("from", "category");
-                mContext.startActivity(intent);
-            }
-        });
-
     }
 
     @Override
