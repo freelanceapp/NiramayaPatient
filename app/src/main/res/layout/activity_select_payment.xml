@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.SelectPaymentActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/layout_bg4">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_arrow_back"
+                android:tint="@color/white"
+                android:adjustViewBounds="true"
+                android:padding="4sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/size_20"
+                android:textColor="@color/white"/>
+
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/size_18"
+            android:layout_marginTop="36dp"
+            android:layout_marginLeft="16dp"
+            android:text="Choose your Payment Method"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+
+            <ImageView
+                android:id="@+id/ivCash"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/rhl_circle_bg"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/size_20"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/ivCash"
+                android:layout_marginLeft="16dp"
+                android:text="Cash"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/ivOnlinePayment"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/rhl_circle_bg"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/size_20"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/ivOnlinePayment"
+                android:layout_marginLeft="16dp"
+                android:text="Online Payment"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/ivInsurancePolicy"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/rhl_circle_bg"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/size_20"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/ivInsurancePolicy"
+                android:layout_marginLeft="16dp"
+                android:text="Insurance Policy"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnBookNow"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="36dp"
+        android:text="Make Payment"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/layout_bg_rhl1"
+        android:textSize="@dimen/size_20"
+        android:textColor="@color/white"
+        android:textAllCaps="false"/>
+
+</RelativeLayout>
