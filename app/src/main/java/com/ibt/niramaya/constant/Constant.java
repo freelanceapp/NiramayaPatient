@@ -21,6 +21,10 @@ public class Constant {
     // Fragment constant
     public static final String HomeFragment = "Home_Fragment";
     public static final String PrescriptionFragment = "PrescriptionFragment";
+    public static final String SignUpFragment = "SignUp_Fragment";
+    public static final String Otp_Fragment = "OtpFragment";
+    public static final String LoginFragment = "Login_Fragment";
+    public static final String Verification_Fragment = "Verification_Fragment";
     public static final String ReportsFragment = "ReportsFragment";
     public static final String InvoiceFragment = "InvoiceFragment";
     public static final String BedFragment = "BedFragment";
@@ -29,10 +33,10 @@ public class Constant {
     public static final String DocumentsFragment = "DocumentsFragment";
     public static final String SettingsFragment = "SettingsFragment";
     public static final String AddUserFragment = "AddUserFragment";
-    public static final String RestaurentMenuFragment = "RestaurentMenuFragment";
-    public static final String RestaurentAboutFragment = "RestaurentAboutFragment";
-    public static final String RestaurentReviewFragment = "RestaurentReviewFragment";
-    public static final String MenuListFragment = "MenuListFragment";
+
+    public static final String FacilitiesFragment = "FacilitiesFragment";
+    public static final String DepartmentsFragment = "DepartmentsFragment";
+    public static final String DoctorFragment = "DoctorFragment";
 
     // Preference
     public static final String User_Id = "user_id";

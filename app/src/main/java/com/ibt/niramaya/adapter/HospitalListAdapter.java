@@ -47,7 +47,6 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, HospitalDetailActivity.class);
-                intent.putExtra("from", "detail");
                 mContext.startActivity(intent);
             }
         });

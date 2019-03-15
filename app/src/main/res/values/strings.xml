@@ -2,6 +2,16 @@
     <string name="app_name">Niramaya</string>
     <string name="home">Home</string>
     <string name="find_your_location">Find your location</string>
+    <string name="show_pwd">Show Password</string>
+    <string name="hide_pwd">Hide Password</string>
+    <string name="forgot">Forgot password?</string>
+    <string name="closebutton">Close Button for Activity</string>
+    <string name="newUser">Not a Member yet? Sign Up here.</string>
+    <string name="fullName">Full Name</string>
+    <string name="mobileNumber">Mobile Number</string>
+    <string name="location">Location</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="submit">Submit</string>
     <string name="your_saved_treatment">Your Saved Treatment...!</string>
     <string name="view_your_past_prescription">View Your Past Prescription</string>
     <string name="title">Title</string>
@@ -10,5 +20,13 @@
     <string name="total">TOTAL</string>
     <string name="paid">PAID</string>
     <string name="due">DUE</string>
+    <string name="facilities">Facilities</string>
+    <string name="departments">Departments</string>
+    <string name="doctors">Doctors</string>
+    <string name="general_gi_laparoscopy_surgery"><![CDATA[General GI & Laparoscopy Surgery]]></string>
+    <string name="joint_replacement_traumatology"><![CDATA[Joint Replacement & Traumatology]]></string>
+    <string name="arthroscopy_ligament_reconstruction"><![CDATA[Arthroscopy & Ligament Reconstruction]]></string>
+    <string name="cosmetic_reconstructive_surgery"><![CDATA[Cosmetic & Reconstructive Surgery]]></string>
+    <string name="obstetrics_gynaec_surgery"><![CDATA[Obstetrics & Gynaec surgery]]></string>
 
 </resources>
