@@ -1,18 +1,17 @@
 package com.ibt.niramaya.ui.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.constant.Constant;
-import com.ibt.niramaya.ui.fragment.Login_Fragment;
+import com.ibt.niramaya.ui.fragment.LoginFragment;
+import com.ibt.niramaya.utils.BaseActivity;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private static FragmentManager fragmentManager;
     Context ctx;
@@ -23,16 +22,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ctx = this;
-       // checkSession();
+        // checkSession();
         fragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
             fragmentManager
                     .beginTransaction()
-                    .replace(R.id.login_frame, new Login_Fragment(ctx), Constant.LoginFragment).commit();
+                    .replace(R.id.login_frame, new LoginFragment(ctx), Constant.LoginFragment).commit();
         }
-
-
-
     }
 
     /*private void checkSession() {
@@ -49,13 +45,12 @@ public class LoginActivity extends AppCompatActivity {
         fragmentManager
                 .beginTransaction()
                 .setCustomAnimations(R.anim.left_enter, R.anim.right_out)
-                .replace(R.id.login_frame, new Login_Fragment(ctx),
+                .replace(R.id.login_frame, new LoginFragment(ctx),
                         Constant.LoginFragment).commit();
     }
 
     @Override
     public void onBackPressed() {
-
         // Find the tag of signup and forgot password fragment
         Fragment SignUp_Fragment = fragmentManager
                 .findFragmentByTag(Constant.SignUpFragment);

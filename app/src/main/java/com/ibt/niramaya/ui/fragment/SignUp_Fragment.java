@@ -23,11 +23,6 @@ import com.ibt.niramaya.R;
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.utils.ConnectionDetector;
 
-import org.json.JSONObject;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 @SuppressLint("ValidFragment")
 public class SignUp_Fragment extends Fragment implements OnClickListener {
 
@@ -96,7 +91,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                 fragmentManager
                         .beginTransaction()
                         .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-                        .replace(R.id.login_frame, new Otp_Fragment(),
+                        .replace(R.id.login_frame, new OtpFragment(),
                                 Constant.Otp_Fragment).commit();
                 break;
 
@@ -105,7 +100,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                 fragmentManager
                         .beginTransaction()
                         .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-                        .replace(R.id.login_frame, new Login_Fragment(ctx),
+                        .replace(R.id.login_frame, new LoginFragment(ctx),
                                 Constant.SignUpFragment).commit();
                 break;*/
         }
