@@ -28,5 +28,15 @@
     <string name="arthroscopy_ligament_reconstruction"><![CDATA[Arthroscopy & Ligament Reconstruction]]></string>
     <string name="cosmetic_reconstructive_surgery"><![CDATA[Cosmetic & Reconstructive Surgery]]></string>
     <string name="obstetrics_gynaec_surgery"><![CDATA[Obstetrics & Gynaec surgery]]></string>
+    <string name="make_payment">Make Payment</string>
+    <string name="insurance_policy">Insurance Policy</string>
+    <string name="image_insurance_policy">Image Insurance Policy</string>
+    <string name="online_payment">Online Payment</string>
+    <string name="image_online_payment">Image Online Payment</string>
+    <string name="cash">Cash</string>
+    <string name="image_cash">Image Cash</string>
+    <string name="choose_your_payment_method">Choose your Payment Method</string>
+    <string name="payment">Payment</string>
+    <string name="image_back">Image Back</string>
 
 </resources>
