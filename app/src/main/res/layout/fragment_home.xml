@@ -27,7 +27,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_location" />
+                    android:src="@drawable/icf_location_pin" />
 
                 <TextView
                     android:id="@+id/txtLocationAddress"

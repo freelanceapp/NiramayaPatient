@@ -1,6 +1,7 @@
 package com.ibt.niramaya.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibt.niramaya.R;
+import com.ibt.niramaya.ui.activity.BookAppointmentActivity;
 
 import java.util.List;
 
@@ -41,6 +43,13 @@ public class HospitalCategoryAdapter extends RecyclerView.Adapter<HospitalCatego
         String sImg = Constant.BASE_URL + vendorLists.get(position).getVendorLogo();
         Glide.with(mContext).load(sImg)
                 .into(holder.rc_img);*/
+        holder.imgCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, BookAppointmentActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -50,7 +59,7 @@ public class HospitalCategoryAdapter extends RecyclerView.Adapter<HospitalCatego
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView restaurent_name, txtCategoryName;
-        public ImageView rc_img;
+        public ImageView imgCategory;
         private CardView cardViewItem;
 
         public MyViewHolder(View view) {
@@ -60,6 +69,7 @@ public class HospitalCategoryAdapter extends RecyclerView.Adapter<HospitalCatego
             restaurent_address = view.findViewById(R.id.restaurent_address);
             restaurent_name = view.findViewById(R.id.restaurent_name);
             rc_img = view.findViewById(R.id.restaurent_img);*/
+            imgCategory = view.findViewById(R.id.imgCategory);
         }
     }
 

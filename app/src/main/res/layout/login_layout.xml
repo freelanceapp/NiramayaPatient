@@ -5,7 +5,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -16,21 +17,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.5">
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="250sp"
-                    android:src="@drawable/top_back"
+                    android:layout_marginTop="-10dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:layout_marginTop="-10dp"/>
+                    android:src="@drawable/top_back" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/size_24"
-                android:layout_marginRight="@dimen/size_24"
                 android:layout_marginTop="@dimen/size_20"
+                android:layout_marginRight="@dimen/size_24"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -44,23 +46,24 @@
                     android:textSize="@dimen/size_18" />
 
                 <EditText
+                    android:id="@+id/etAadharNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_back_b"
                     android:hint="Enter Aadhar Number"
                     android:inputType="number"
-                    android:padding="@dimen/size_8"
-                    android:id="@+id/etAadharNumber"/>
+                    android:paddingLeft="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/size_10"
+                    android:layout_margin="16dp"
                     android:text="OR"
                     android:textColor="@color/green_dark"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,14 +81,16 @@
                     android:background="@drawable/edittext_back_b"
                     android:hint="Enter Mobile Number"
                     android:inputType="phone"
-                    android:padding="@dimen/size_8" />
+                    android:paddingLeft="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp" />
 
                 <Button
                     android:id="@+id/loginBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginBottom="@dimen/size_8"
                     android:background="@drawable/buttun_back_green"
                     android:paddingLeft="80sp"

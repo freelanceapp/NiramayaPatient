@@ -23,7 +23,7 @@ public class Constant {
     public static final String PrescriptionFragment = "PrescriptionFragment";
     public static final String SignUpFragment = "SignUp_Fragment";
     public static final String Otp_Fragment = "OtpFragment";
-    public static final String LoginFragment = "Login_Fragment";
+    public static final String LoginFragment = "LoginFragment";
     public static final String Verification_Fragment = "Verification_Fragment";
     public static final String ReportsFragment = "ReportsFragment";
     public static final String InvoiceFragment = "InvoiceFragment";

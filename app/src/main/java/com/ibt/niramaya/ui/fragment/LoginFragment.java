@@ -2,19 +2,11 @@ package com.ibt.niramaya.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.content.res.XmlResourceParser;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,24 +14,16 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.utils.ConnectionDetector;
 
 
-
 @SuppressLint("ValidFragment")
-public class Login_Fragment extends Fragment implements OnClickListener {
+public class LoginFragment extends Fragment implements OnClickListener {
 
     private static View view;
     private static Button loginButton;
@@ -51,7 +35,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
     //SessionManager sessionManager;
 
     @SuppressLint("ValidFragment")
-    public Login_Fragment(Context ctx) {
+    public LoginFragment(Context ctx) {
         this.ctx = ctx;
         //sessionManager = new SessionManager(ctx);
     }
@@ -71,7 +55,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
         loginButton = view.findViewById(R.id.loginBtn);
         etMobileNumber = view.findViewById(R.id.etMobileNumber);
         etAadharNumber = view.findViewById(R.id.etAadharNumber);
-       // loginLayout = (LinearLayout) view.findViewById(R.id.login_layout);
+        // loginLayout = (LinearLayout) view.findViewById(R.id.login_layout);
 
         // Load ShakeAnimation
         shakeAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
@@ -85,7 +69,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                Toast.makeText(ctx, "Mobile Number" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, "Mobile Number", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -103,7 +87,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Toast.makeText(ctx, "Aadhar Number" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, "Aadhar Number", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -117,7 +101,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
     // Set Listeners
     private void setListeners() {
         loginButton.setOnClickListener(this);
-       /// forgotPassword.setOnClickListener(this);
+        /// forgotPassword.setOnClickListener(this);
         //signUp.setOnClickListener(this);
 
     }
@@ -126,12 +110,12 @@ public class Login_Fragment extends Fragment implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.loginBtn:
-               // checkValidation();
+                // checkValidation();
                 fragmentManager
                         .beginTransaction()
                         .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-                        .replace(R.id.login_frame, new SignUp_Fragment(ctx),
-                                Constant.SignUpFragment).commit();
+                        .replace(R.id.login_frame, new OtpFragment(),
+                                Constant.Otp_Fragment).commit();
                 break;
         }
 

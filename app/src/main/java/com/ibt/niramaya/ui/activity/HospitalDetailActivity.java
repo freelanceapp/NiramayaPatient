@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.ui.fragment.home_detail_fragment.DepartmentsFragment;
+import com.ibt.niramaya.ui.fragment.home_detail_fragment.DoctorFragment;
 import com.ibt.niramaya.ui.fragment.home_detail_fragment.FacilitiesFragment;
 import com.ibt.niramaya.utils.BaseActivity;
 import com.ibt.niramaya.utils.FragmentUtils;
@@ -51,7 +52,7 @@ public class HospitalDetailActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.txtDoctors:
                 onTextviewClick(R.id.txtDoctors, R.id.txtFacilities, R.id.txtDepartments);
-                fragmentUtils.replaceFragment(new FacilitiesFragment(), Constant.FacilitiesFragment, R.id.frameLayout);
+                fragmentUtils.replaceFragment(new DoctorFragment(), Constant.DoctorFragment, R.id.frameLayout);
                 break;
             case R.id.imgBack:
                 finish();
