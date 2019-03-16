@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.SearchHospitalListActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:text="Select Hospital Which Serves You Better...!"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_20"
+            android:textStyle="normal" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_search_hospital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="113dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="26dp"
+        android:elevation="2dp"
+        app:cardCornerRadius="18dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:background="@android:color/transparent"
+                android:drawableRight="@drawable/ic_search"
+                android:hint="Search Hospital"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray_g"
+                android:textSize="@dimen/size_14" />
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="6dp"
+                android:background="@drawable/layout_pbg15"
+                android:padding="6dp"
+                android:src="@drawable/ic_search" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvSearchHospital"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
