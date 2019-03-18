@@ -24,11 +24,18 @@ public class DonationFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootview = inflater.inflate(R.layout.fragment_donation, container, false);
+        mContext = getActivity();
         init();
         return rootview;
     }
 
     private void init() {
+        ((Button)rootview.findViewById(R.id.btnBecomeDonor)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDonorDialogOne();
+            }
+        });
     }
 
     private void openDonorDialogOne() {
@@ -138,30 +145,16 @@ public class DonationFragment extends BaseFragment {
         dialogBuilder.setCancelable(false);
 
         LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.dialog_become_doner_one, null);
+        final View dialogView = inflater.inflate(R.layout.dialog_become_doner_two, null);
         dialogBuilder.setView(dialogView);
         final AlertDialog alertDialog = dialogBuilder.create();
 
-        /*((EditText) dialogView.findViewById(R.id.etDOB)).setOnClickListener(new View.OnClickListener() {
+        ((Button)dialogView.findViewById(R.id.btnDialogBecomeDonor)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDatePicker(((EditText) dialogView.findViewById(R.id.etDOB)));
+                alertDialog.dismiss();
             }
         });
-
-        ((EditText) dialogView.findViewById(R.id.etLastDate)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDatePicker(((EditText) dialogView.findViewById(R.id.etLastDate)));
-            }
-        });
-
-        ((Button) dialogView.findViewById(R.id.btnNext)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initDialogOneData(dialogView, alertDialog);
-            }
-        });*/
 
         alertDialog.show();
     }
