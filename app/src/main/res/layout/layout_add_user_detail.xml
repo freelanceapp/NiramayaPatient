@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/size_18"
+                android:layout_marginTop="24dp"
+                android:layout_marginLeft="16dp"
+                android:gravity="center"
+                android:text="Add User Details"
+                android:textStyle="bold"
+                android:layout_marginStart="16dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/size_12"
+                android:layout_marginLeft="16dp"
+                android:gravity="center"
+                android:text="The user will be treated as sub user of  your account"
+                android:layout_marginStart="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_margin="16dp"
+                android:padding="16dp"
+                android:background="@drawable/layout_bg_rhl3">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/size_10"
+                    android:text="Fill The Form*" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/size_12"
+                    android:layout_marginTop="10dp"
+                    android:text="Name" />
+
+                <EditText
+                    android:id="@+id/etName"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="Cruze Beckham"
+                    android:textSize="@dimen/size_12"
+                    android:paddingLeft="10dp"
+                    android:inputType="textPersonName"
+                    android:imeOptions="actionNext"
+                    android:paddingRight="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/layout_bg_rhl4"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/size_12"
+                    android:layout_marginTop="10dp"
+                    android:text="Email" />
+
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="cruze@gmail.com"
+                    android:textSize="@dimen/size_12"
+                    android:paddingLeft="10dp"
+                    android:inputType="textEmailAddress"
+                    android:imeOptions="actionNext"
+                    android:paddingRight="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/layout_bg_rhl4"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/size_12"
+                    android:layout_marginTop="10dp"
+                    android:text="Mobile" />
+
+                <EditText
+                    android:id="@+id/etMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="+91-9887548968"
+                    android:textSize="@dimen/size_12"
+                    android:paddingLeft="10dp"
+                    android:inputType="phone"
+                    android:imeOptions="actionNext"
+                    android:paddingRight="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/layout_bg_rhl4"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/size_12"
+                    android:layout_marginTop="10dp"
+                    android:text="Aadhar Number" />
+
+                <EditText
+                    android:id="@+id/etAadharNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="8887 4587 7896"
+                    android:textSize="@dimen/size_12"
+                    android:paddingLeft="10dp"
+                    android:inputType="number"
+                    android:imeOptions="actionNext"
+                    android:paddingRight="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/layout_bg_rhl4"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/size_12"
+                    android:layout_marginTop="10dp"
+                    android:text="Date Of Birth" />
+
+                <EditText
+                    android:id="@+id/etDOB"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="01/02/1993"
+                    android:textSize="@dimen/size_12"
+                    android:paddingLeft="10dp"
+                    android:inputType="date"
+                    android:imeOptions="actionNext"
+                    android:paddingRight="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/layout_bg_rhl4"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/size_12"
+                    android:layout_marginTop="10dp"
+                    android:text="Gender" />
+
+                <EditText
+                    android:id="@+id/etGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="Male"
+                    android:textSize="@dimen/size_12"
+                    android:paddingLeft="10dp"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"
+                    android:paddingRight="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/layout_bg_rhl4"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/size_12"
+                    android:layout_marginTop="10dp"
+                    android:text="Blood Group" />
+
+                <EditText
+                    android:id="@+id/etBloodGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="B+"
+                    android:textSize="@dimen/size_12"
+                    android:paddingLeft="10dp"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"
+                    android:paddingRight="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/layout_bg_rhl4"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/size_12"
+                    android:layout_marginTop="10dp"
+                    android:text="Weight" />
+
+                <EditText
+                    android:id="@+id/etWeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="79 kg"
+                    android:textSize="@dimen/size_12"
+                    android:paddingLeft="10dp"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"
+                    android:paddingRight="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/layout_bg_rhl4"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/size_12"
+                    android:layout_marginTop="10dp"
+                    android:text="Address" />
+
+                <EditText
+                    android:id="@+id/etAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="228-n Palasiya Indore, Madhya Pradesh"
+                    android:textSize="@dimen/size_12"
+                    android:paddingLeft="10dp"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"
+                    android:paddingRight="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/layout_bg_rhl4"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/size_12"
+                    android:layout_marginTop="10dp"
+                    android:text="last date of donation if any" />
+
+                <EditText
+                    android:id="@+id/etLastDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="Select Date"
+                    android:drawableRight="@drawable/icf_appointment2"
+                    android:textSize="@dimen/size_12"
+                    android:paddingLeft="10dp"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"
+                    android:paddingRight="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/layout_bg_rhl4"/>
+
+                <Button
+                    android:id="@+id/btnNext"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="48dp"
+                    android:textColor="@color/white"
+                    android:text="@string/next"
+                    android:textSize="@dimen/size_18"
+                    android:textAllCaps="false"
+                    android:background="@drawable/layout_bg_rhl5"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>
