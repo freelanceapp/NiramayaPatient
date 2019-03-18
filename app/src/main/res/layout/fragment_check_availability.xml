@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="We Help save Lives!"
+        android:textAlignment="center"
+        android:textStyle="normal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginRight="16dp"
+            android:layout_toLeftOf="@+id/cv_btn_search"
+            android:layout_weight="1"
+            android:background="@drawable/layout_bg6"
+            android:hint="Apollo"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray_g" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_btn_search"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            app:cardBackgroundColor="@color/green_dark"
+            app:cardCornerRadius="4dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_search" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+    <View
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/gray_g"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4dp">
+    <TextView
+        android:textSize="12dp"
+        android:padding="4dp"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:textColor="@color/black"
+        android:text="Sr. No."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textSize="12dp"
+        android:padding="4dp"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:textColor="@color/black"
+        android:text="BLOOD BANK"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textSize="12dp"
+        android:padding="4dp"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:textColor="@color/black"
+        android:text="BLOOD GROUP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textAlignment="center"
+        android:textSize="12dp"
+        android:padding="4dp"
+        android:layout_weight="1"
+        android:textColor="@color/black"
+        android:text="QUANTITY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvSearchCheckAvailability"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
