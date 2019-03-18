@@ -7,8 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.ibt.niramaya.R;
+import com.ibt.niramaya.adapter.CheckAvailabilityAdapter;
 import com.ibt.niramaya.adapter.InvoiceListAdapter;
 import com.ibt.niramaya.utils.BaseFragment;
 
@@ -21,34 +24,40 @@ import static com.ibt.niramaya.ui.activity.HomeActivity.txtTitle;
 
 public class CheckAvailbilityFragment extends BaseFragment implements View.OnClickListener {
 
-    private List<String> prescriptionList = new ArrayList<>();
+    private List<String> chekcBloodAvailiblityList = new ArrayList<>();
     private View rootView;
+    private CheckAvailabilityAdapter checkAvailabilityAdapter;
+    private RelativeLayout rlSearchCheckAvailability;
+    private EditText etSearchBox;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_blood_donation, container, false);
+        rootView = inflater.inflate(R.layout.fragment_check_availability, container, false);
         init();
         return rootView;
     }
 
     private void init() {
-        imgSearch.setVisibility(View.GONE);
-        imgSort.setVisibility(View.VISIBLE);
-        txtTitle.setText("Add User");
-        prescriptionListApi();
+        mContext = getActivity();
+        rlSearchCheckAvailability = rootView.findViewById(R.id.rl_search_checkAvailability);
+        etSearchBox = rootView.findViewById(R.id.et_search_checkAvailability);
+        chekcAvailiblity();
     }
 
-    private void prescriptionListApi() {
-        for (int i = 0; i < 10; i++) {
-            prescriptionList.add("Name");
+    private void chekcAvailiblity() {
+        for (int i = 0; i < 2; i++) {
+            chekcBloodAvailiblityList.add("01");
+            chekcBloodAvailiblityList.add("Apollo");
+            chekcBloodAvailiblityList.add("A+");
+            chekcBloodAvailiblityList.add("50");
         }
-        RecyclerView recyclerViewInvoice = rootView.findViewById(R.id.recyclerViewInvoice);
-        recyclerViewInvoice.setHasFixedSize(true);
-        recyclerViewInvoice.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
-        InvoiceListAdapter prescriptionAdapter = new InvoiceListAdapter(prescriptionList, mContext, this);
-        recyclerViewInvoice.setAdapter(prescriptionAdapter);
-        prescriptionAdapter.notifyDataSetChanged();
+        RecyclerView rvSearchAvailability = rootView.findViewById(R.id.rvSearchCheckAvailability);
+        rvSearchAvailability.setHasFixedSize(true);
+        rvSearchAvailability.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
+        checkAvailabilityAdapter = new CheckAvailabilityAdapter(mContext, chekcBloodAvailiblityList);
+        rvSearchAvailability.setAdapter(checkAvailabilityAdapter);
+        checkAvailabilityAdapter.notifyDataSetChanged();
     }
 
     @Override
