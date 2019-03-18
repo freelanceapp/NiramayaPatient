@@ -22,30 +22,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base">
-        <activity android:name=".ui.activity.DocumentsActivity"></activity>
+        <activity android:name=".PushpendraTestActivity">
+           <intent-filter>
+               <action android:name="android.intent.action.MAIN" />
+
+               <category android:name="android.intent.category.LAUNCHER" />
+           </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.DocumentsActivity" />
         <activity android:name=".ui.activity.SelectPaymentActivity" />
-        <activity android:name=".adapter.DoctorActivity"
+        <activity
+            android:name=".ui.activity.DoctorActivity"
             android:screenOrientation="portrait">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-
         </activity>
         <activity
             android:name=".ui.activity.SearchHospitalListActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.activity.PeditricianActivity" />
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait">
-
-
-
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,6 +52,7 @@
             android:name=".ui.activity.HomeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
+<!--
             <intent-filter android:label="Home">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -67,6 +64,7 @@
                     android:pathPrefix="/gizmos"
                     android:scheme="http" />
             </intent-filter>
+-->
         </activity>
         <activity android:name=".utils.BaseActivity" />
         <activity android:name=".ui.activity.HospitalDetailActivity" />
