@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4">
+        <TextView
+            android:id="@+id/tvCAserNo"
+            android:textSize="12dp"
+            android:padding="4dp"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:text="01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvCaBloodBank"
+            android:textSize="12dp"
+            android:padding="4dp"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:text="Apollo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvCABloodGroup"
+            android:textSize="12dp"
+            android:padding="4dp"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:text="A+"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvCAQuantity"
+            android:textAlignment="center"
+            android:textSize="12dp"
+            android:padding="4dp"
+            android:layout_weight="1"
+            android:text="50"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</RelativeLayout>
