@@ -28,6 +28,9 @@
     <string name="arthroscopy_ligament_reconstruction"><![CDATA[Arthroscopy & Ligament Reconstruction]]></string>
     <string name="cosmetic_reconstructive_surgery"><![CDATA[Cosmetic & Reconstructive Surgery]]></string>
     <string name="obstetrics_gynaec_surgery"><![CDATA[Obstetrics & Gynaec surgery]]></string>
+
+    <string name="find_and_book"><![CDATA[Find & Book]]></string>
+
     <string name="make_payment">Make Payment</string>
     <string name="insurance_policy">Insurance Policy</string>
     <string name="image_insurance_policy">Image Insurance Policy</string>
@@ -48,5 +51,6 @@
     <string name="add_user_details">Add User Details</string>
     <string name="become_a_donor">Become A Donor</string>
     <string name="every_blood_donor_is_a_live_saver">\"Every Blood donor is a Live Saver\nBE ONE.!\"</string>
+    >>>>>>> 7bdcafb214e5bb5f19ff569e7e537b45f49cfe55
 
 </resources>

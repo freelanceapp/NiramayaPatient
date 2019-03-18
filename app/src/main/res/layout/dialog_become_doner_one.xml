@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-
-    <RelativeLayout android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
 
@@ -19,283 +17,264 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/size_18"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginLeft="16dp"
                     android:gravity="center"
                     android:text="@string/become_a_donor"
+                    android:textSize="@dimen/size_18"
                     android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/size_14"
-                    android:layout_marginRight="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginRight="16dp"
                     android:gravity="center"
-                    android:text="@string/every_blood_donor_is_a_live_saver" />
+                    android:text="@string/every_blood_donor_is_a_live_saver"
+                    android:textSize="@dimen/size_14" />
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:layout_margin="16dp"
-                    android:padding="16dp"
-                    android:background="@drawable/layout_bg_rhl3">
+                    android:background="@drawable/layout_bg_rhl3"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/size_12"
-                        android:text="Fill The Blood Donor Form*" />
+                        android:text="Fill The Blood Donor Form*"
+                        android:textSize="@dimen/size_12" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/size_14"
                         android:layout_marginTop="16dp"
-                        android:text="Name" />
+                        android:text="Name"
+                        android:textSize="@dimen/size_14" />
 
                     <EditText
                         android:id="@+id/etName"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="4dp"
-                        android:hint="Cruze Beckham"
-                        android:textSize="@dimen/size_14"
-                        android:paddingLeft="10dp"
-                        android:inputType="textPersonName"
-                        android:imeOptions="actionNext"
-                        android:paddingRight="5dp"
+                        android:background="@drawable/layout_bg_rhl4"
                         android:gravity="center_vertical"
-                        android:background="@drawable/layout_bg_rhl4"/>
+                        android:hint="Cruze Beckham"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:textSize="@dimen/size_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/size_14"
                         android:layout_marginTop="16dp"
-                        android:text="Email" />
+                        android:text="Email"
+                        android:textSize="@dimen/size_14" />
 
                     <EditText
                         android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="4dp"
-                        android:hint="cruze@gmail.com"
-                        android:textSize="@dimen/size_14"
-                        android:paddingLeft="10dp"
-                        android:inputType="textEmailAddress"
-                        android:imeOptions="actionNext"
-                        android:paddingRight="5dp"
+                        android:background="@drawable/layout_bg_rhl4"
                         android:gravity="center_vertical"
-                        android:background="@drawable/layout_bg_rhl4"/>
+                        android:hint="cruze@gmail.com"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:textSize="@dimen/size_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/size_14"
                         android:layout_marginTop="16dp"
-                        android:text="Mobile" />
+                        android:text="Mobile"
+                        android:textSize="@dimen/size_14" />
 
                     <EditText
                         android:id="@+id/etMobile"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="4dp"
-                        android:hint="+91-9887548968"
-                        android:textSize="@dimen/size_14"
-                        android:paddingLeft="10dp"
-                        android:inputType="phone"
-                        android:imeOptions="actionNext"
-                        android:paddingRight="5dp"
+                        android:background="@drawable/layout_bg_rhl4"
                         android:gravity="center_vertical"
-                        android:background="@drawable/layout_bg_rhl4"/>
+                        android:hint="+91-9887548968"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:textSize="@dimen/size_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/size_14"
                         android:layout_marginTop="16dp"
-                        android:text="Alternate Mobile Number(Optional)" />
+                        android:text="Alternate Mobile Number(Optional)"
+                        android:textSize="@dimen/size_14" />
 
                     <EditText
                         android:id="@+id/etAlternateMobile"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="4dp"
+                        android:background="@drawable/layout_bg_rhl4"
+                        android:gravity="center_vertical"
                         android:hint="Enter Alternate Mobile Number"
-                        android:textSize="@dimen/size_14"
-                        android:paddingLeft="10dp"
+                        android:imeOptions="actionNext"
                         android:inputType="phone"
-                        android:imeOptions="actionNext"
-                        android:paddingRight="5dp"
-                        android:gravity="center_vertical"
-                        android:background="@drawable/layout_bg_rhl4"/>
-
-                    <!--<TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/size_14"
-                        android:layout_marginTop="16dp"
-                        android:text="Aadhar Number" />
-
-                    <EditText
-                        android:id="@+id/etAadharNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="4dp"
-                        android:hint="8887 4587 7896"
-                        android:textSize="@dimen/size_14"
                         android:paddingLeft="10dp"
-                        android:inputType="number"
-                        android:imeOptions="actionNext"
                         android:paddingRight="5dp"
-                        android:gravity="center_vertical"
-                        android:background="@drawable/layout_bg_rhl4"/>-->
+                        android:textSize="@dimen/size_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/size_14"
                         android:layout_marginTop="16dp"
-                        android:text="Date Of Birth" />
+                        android:text="Date Of Birth"
+                        android:textSize="@dimen/size_14" />
 
                     <EditText
                         android:id="@+id/etDOB"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="4dp"
-                        android:hint="01/02/1993"
-                        android:textSize="@dimen/size_14"
-                        android:paddingLeft="10dp"
-                        android:inputType="date"
-                        android:imeOptions="actionNext"
-                        android:paddingRight="5dp"
+                        android:background="@drawable/layout_bg_rhl4"
                         android:gravity="center_vertical"
-                        android:background="@drawable/layout_bg_rhl4"/>
+                        android:hint="01/02/1993"
+                        android:imeOptions="actionNext"
+                        android:inputType="date"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:textSize="@dimen/size_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/size_14"
                         android:layout_marginTop="16dp"
-                        android:text="Gender" />
+                        android:text="Gender"
+                        android:textSize="@dimen/size_14" />
 
                     <EditText
                         android:id="@+id/etGender"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="4dp"
-                        android:hint="Male"
-                        android:textSize="@dimen/size_14"
-                        android:paddingLeft="10dp"
-                        android:inputType="text"
-                        android:imeOptions="actionNext"
-                        android:paddingRight="5dp"
+                        android:background="@drawable/layout_bg_rhl4"
                         android:gravity="center_vertical"
-                        android:background="@drawable/layout_bg_rhl4"/>
+                        android:hint="Male"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:textSize="@dimen/size_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/size_14"
                         android:layout_marginTop="16dp"
-                        android:text="Blood Group" />
+                        android:text="Blood Group"
+                        android:textSize="@dimen/size_14" />
 
                     <EditText
                         android:id="@+id/etBloodGroup"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="4dp"
-                        android:hint="B+"
-                        android:textSize="@dimen/size_14"
-                        android:paddingLeft="10dp"
-                        android:inputType="text"
-                        android:imeOptions="actionNext"
-                        android:paddingRight="5dp"
+                        android:background="@drawable/layout_bg_rhl4"
                         android:gravity="center_vertical"
-                        android:background="@drawable/layout_bg_rhl4"/>
+                        android:hint="B+"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:textSize="@dimen/size_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/size_14"
                         android:layout_marginTop="16dp"
-                        android:text="Weight" />
+                        android:text="Weight"
+                        android:textSize="@dimen/size_14" />
 
                     <EditText
                         android:id="@+id/etWeight"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="4dp"
+                        android:background="@drawable/layout_bg_rhl4"
+                        android:gravity="center_vertical"
                         android:hint="79 kg"
                         android:textSize="@dimen/size_14"
                         android:paddingLeft="10dp"
                         android:inputType="numberDecimal"
                         android:imeOptions="actionNext"
-                        android:paddingRight="5dp"
-                        android:gravity="center_vertical"
-                        android:background="@drawable/layout_bg_rhl4"/>
+                        android:paddingRight="5dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/size_14"
                         android:layout_marginTop="16dp"
-                        android:text="Address" />
+                        android:text="Address"
+                        android:textSize="@dimen/size_14" />
 
                     <EditText
                         android:id="@+id/etAddress"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="4dp"
-                        android:hint="228-n Palasiya Indore, Madhya Pradesh"
-                        android:textSize="@dimen/size_14"
-                        android:paddingLeft="10dp"
-                        android:inputType="text"
-                        android:imeOptions="actionNext"
-                        android:paddingRight="5dp"
+                        android:background="@drawable/layout_bg_rhl4"
                         android:gravity="center_vertical"
-                        android:background="@drawable/layout_bg_rhl4"/>
+                        android:hint="228-n Palasiya Indore, Madhya Pradesh"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:textSize="@dimen/size_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/size_14"
                         android:layout_marginTop="16dp"
-                        android:text="last date of donation if any" />
+                        android:text="last date of donation if any"
+                        android:textSize="@dimen/size_14" />
 
                     <EditText
                         android:id="@+id/etLastDate"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="4dp"
-                        android:hint="Select Date"
+                        android:background="@drawable/layout_bg_rhl4"
                         android:drawableRight="@drawable/icf_appointment2"
                         android:textSize="@dimen/size_14"
                         android:paddingLeft="10dp"
                         android:inputType="date"
-                        android:imeOptions="actionNext"
-                        android:paddingRight="10dp"
                         android:gravity="center_vertical"
-                        android:background="@drawable/layout_bg_rhl4"/>
+                        android:hint="Select Date"
+                        android:imeOptions="actionNext"
+                        android:paddingRight="10dp" />
 
                     <Button
                         android:id="@+id/btnNext"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_margin="44dp"
-                        android:textColor="@color/white"
+                        android:background="@drawable/layout_bg_rhl5"
                         android:text="@string/next"
-                        android:textSize="@dimen/size_18"
                         android:textAllCaps="false"
-                        android:background="@drawable/layout_bg_rhl5"/>
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/size_18" />
 
                 </LinearLayout>
 

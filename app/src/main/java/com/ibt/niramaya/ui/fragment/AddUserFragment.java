@@ -46,7 +46,6 @@ public class AddUserFragment extends BaseFragment implements View.OnClickListene
     private void init(View view) {
         imgSearch.setVisibility(View.GONE);
         imgSort.setVisibility(View.VISIBLE);
-        txtTitle.setText("Add User");
         viewFlipper = view.findViewById(R.id.vpAddUser);
         (view.findViewById(R.id.ivAddNewUser)).setOnClickListener(this);
         (view.findViewById(R.id.btnNext)).setOnClickListener(this);
