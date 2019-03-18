@@ -27,7 +27,7 @@ public class BloodDonationFragment extends BaseFragment implements View.OnClickL
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_add_user, container, false);
+        rootView = inflater.inflate(R.layout.fragment_blood_donation, container, false);
         init();
         return rootView;
     }
