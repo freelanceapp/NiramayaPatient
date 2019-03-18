@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.constant.Constant;
+import com.ibt.niramaya.ui.fragment.AddUserFragment;
 import com.ibt.niramaya.ui.fragment.BedFragment;
 import com.ibt.niramaya.ui.fragment.HomeFragment;
 import com.ibt.niramaya.ui.fragment.InvoiceFragment;
@@ -98,6 +99,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.txtSettings:
                 break;
             case R.id.txtAddUser:
+                fragmentUtils.replaceFragment(new AddUserFragment(), Constant.AddUserFragment, R.id.home_frame);
                 break;
         }
         slidingRootNav.closeMenu();
