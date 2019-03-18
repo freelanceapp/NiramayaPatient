@@ -28,5 +28,6 @@
     <string name="arthroscopy_ligament_reconstruction"><![CDATA[Arthroscopy & Ligament Reconstruction]]></string>
     <string name="cosmetic_reconstructive_surgery"><![CDATA[Cosmetic & Reconstructive Surgery]]></string>
     <string name="obstetrics_gynaec_surgery"><![CDATA[Obstetrics & Gynaec surgery]]></string>
+    <string name="find_and_book"><![CDATA[Find & Book]]></string>
 
 </resources>

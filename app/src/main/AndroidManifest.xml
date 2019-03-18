@@ -69,6 +69,7 @@
         <activity android:name=".ui.activity.BookAppointmentActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.HospitalDepartmentDetailActivity" />
+        <activity android:name=".ui.activity.FindAndBookActivity" />
     </application>
 
 </manifest>

@@ -10,56 +10,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/layout_bg4">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:padding="4sp"
-                android:src="@drawable/ic_arrow_back"
-                android:tint="@color/white" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Peditrician"
-                android:textColor="@color/white"
-                android:textSize="@dimen/size_20" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="4dp"
-                    android:src="@drawable/ic_search" />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="4dp"
-                    android:padding="4sp"
-                    android:src="@drawable/ic_filter"
-                    android:tint="@color/white" />
-            </LinearLayout>
-        </RelativeLayout>
+        <include layout="@layout/toolbar_layout" />
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_6"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <ScrollView
             android:layout_width="match_parent"
