@@ -35,7 +35,6 @@ public class InvoiceFragment extends BaseFragment implements View.OnClickListene
     private void init() {
         imgSearch.setVisibility(View.GONE);
         imgSort.setVisibility(View.VISIBLE);
-        txtTitle.setText("Invoice");
         prescriptionListApi();
     }
 

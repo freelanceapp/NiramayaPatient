@@ -48,7 +48,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void init() {
-        txtTitle.setText("Home");
         imgSearch.setVisibility(View.VISIBLE);
         imgSort.setVisibility(View.GONE);
 

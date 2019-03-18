@@ -35,7 +35,6 @@ public class PrescriptionsFragment extends BaseFragment implements View.OnClickL
     private void init() {
         imgSearch.setVisibility(View.GONE);
         imgSort.setVisibility(View.VISIBLE);
-        txtTitle.setText("Prescription");
         prescriptionListApi();
     }
 

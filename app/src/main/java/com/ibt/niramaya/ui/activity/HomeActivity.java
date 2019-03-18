@@ -75,33 +75,62 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Fragment AddUserFragment = fragmentManager.findFragmentByTag(Constant.AddUserFragment);
+        Fragment BloodDonationFragment = fragmentManager.findFragmentByTag(Constant.BloodDonationFragment);
+        Fragment BedFragment = fragmentManager.findFragmentByTag(Constant.BedFragment);
+        Fragment HomeFragment = fragmentManager.findFragmentByTag(Constant.HomeFragment);
+        Fragment InvoiceFragment = fragmentManager.findFragmentByTag(Constant.InvoiceFragment);
+        Fragment PrescriptionFragment = fragmentManager.findFragmentByTag(Constant.PrescriptionFragment);
+        Fragment ReportFragment = fragmentManager.findFragmentByTag(Constant.ReportsFragment);
+
         switch (v.getId()) {
             case R.id.txtHome:
-                fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.home_frame);
+                txtTitle.setText("Home");
+                if (HomeFragment == null) {
+                    fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.home_frame);
+                }
                 break;
             case R.id.txtPrescription:
-                fragmentUtils.replaceFragment(new PrescriptionsFragment(), Constant.PrescriptionFragment, R.id.home_frame);
+                txtTitle.setText("Prescription");
+                if (PrescriptionFragment == null) {
+                    fragmentUtils.replaceFragment(new PrescriptionsFragment(), Constant.PrescriptionFragment, R.id.home_frame);
+                }
                 break;
             case R.id.txtReports:
-                fragmentUtils.replaceFragment(new ReportFragment(), Constant.ReportsFragment, R.id.home_frame);
+                txtTitle.setText("Report");
+                if (ReportFragment == null) {
+                    fragmentUtils.replaceFragment(new ReportFragment(), Constant.ReportsFragment, R.id.home_frame);
+                }
                 break;
             case R.id.txtInvoice:
-                fragmentUtils.replaceFragment(new InvoiceFragment(), Constant.InvoiceFragment, R.id.home_frame);
+                txtTitle.setText("Invoice");
+                if (InvoiceFragment == null) {
+                    fragmentUtils.replaceFragment(new InvoiceFragment(), Constant.InvoiceFragment, R.id.home_frame);
+                }
                 break;
             case R.id.txtBed:
-                fragmentUtils.replaceFragment(new BedFragment(), Constant.BedFragment, R.id.home_frame);
+                txtTitle.setText("Bed History");
+                if (BedFragment == null) {
+                    fragmentUtils.replaceFragment(new BedFragment(), Constant.BedFragment, R.id.home_frame);
+                }
                 break;
             case R.id.txtHistory:
                 break;
             case R.id.txtBloodDonation:
-                fragmentUtils.replaceFragment(new BloodDonationFragment(), Constant.BloodDonationFragment, R.id.home_frame);
+                txtTitle.setText("Blood Donation");
+                if (BloodDonationFragment == null) {
+                    fragmentUtils.replaceFragment(new BloodDonationFragment(), Constant.BloodDonationFragment, R.id.home_frame);
+                }
                 break;
             case R.id.txtDocuments:
                 break;
             case R.id.txtSettings:
                 break;
             case R.id.txtAddUser:
-                fragmentUtils.replaceFragment(new AddUserFragment(), Constant.AddUserFragment, R.id.home_frame);
+                txtTitle.setText("Add User");
+                if (AddUserFragment == null) {
+                    fragmentUtils.replaceFragment(new AddUserFragment(), Constant.AddUserFragment, R.id.home_frame);
+                }
                 break;
         }
         slidingRootNav.closeMenu();
@@ -109,11 +138,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
+        Fragment AddUserFragment = fragmentManager.findFragmentByTag(Constant.AddUserFragment);
+        Fragment BedFragment = fragmentManager.findFragmentByTag(Constant.BedFragment);
         Fragment HomeFragment = fragmentManager.findFragmentByTag(Constant.HomeFragment);
+        Fragment InvoiceFragment = fragmentManager.findFragmentByTag(Constant.InvoiceFragment);
         Fragment PrescriptionFragment = fragmentManager.findFragmentByTag(Constant.PrescriptionFragment);
         Fragment ReportFragment = fragmentManager.findFragmentByTag(Constant.ReportsFragment);
-        Fragment InvoiceFragment = fragmentManager.findFragmentByTag(Constant.InvoiceFragment);
-        Fragment BedFragment = fragmentManager.findFragmentByTag(Constant.BedFragment);
 
         if (HomeFragment != null) {
             finish();

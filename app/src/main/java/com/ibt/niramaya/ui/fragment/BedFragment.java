@@ -35,7 +35,6 @@ public class BedFragment extends BaseFragment implements View.OnClickListener {
     private void init() {
         imgSearch.setVisibility(View.GONE);
         imgSort.setVisibility(View.VISIBLE);
-        txtTitle.setText("Bed History");
         //prescriptionListApi();
     }
 
