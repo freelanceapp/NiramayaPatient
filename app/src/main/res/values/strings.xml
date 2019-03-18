@@ -46,5 +46,7 @@
     <string name="view">View</string>
     <string name="next">Next</string>
     <string name="add_user_details">Add User Details</string>
+    <string name="become_a_donor">Become A Donor</string>
+    <string name="every_blood_donor_is_a_live_saver">\"Every Blood donor is a Live Saver\nBE ONE.!\"</string>
 
 </resources>

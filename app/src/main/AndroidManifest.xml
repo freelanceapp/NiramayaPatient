@@ -23,11 +23,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base">
         <activity android:name=".PushpendraTestActivity">
-           <intent-filter>
+           <!--<intent-filter>
                <action android:name="android.intent.action.MAIN" />
 
                <category android:name="android.intent.category.LAUNCHER" />
-           </intent-filter>
+           </intent-filter>-->
         </activity>
         <activity android:name=".ui.activity.DocumentsActivity" />
         <activity android:name=".ui.activity.SelectPaymentActivity" />
