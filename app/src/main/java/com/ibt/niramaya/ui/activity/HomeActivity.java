@@ -17,6 +17,7 @@ import com.ibt.niramaya.ui.fragment.HomeFragment;
 import com.ibt.niramaya.ui.fragment.InvoiceFragment;
 import com.ibt.niramaya.ui.fragment.PrescriptionsFragment;
 import com.ibt.niramaya.ui.fragment.ReportFragment;
+import com.ibt.niramaya.ui.fragment.blood_donation.BloodDonationFragment;
 import com.ibt.niramaya.utils.FragmentUtils;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
@@ -93,6 +94,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.txtHistory:
                 break;
             case R.id.txtBloodDonation:
+                fragmentUtils.replaceFragment(new BloodDonationFragment(), Constant.BloodDonationFragment, R.id.home_frame);
                 break;
             case R.id.txtDocuments:
                 break;

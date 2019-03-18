@@ -2,6 +2,8 @@ package com.ibt.niramaya.ui.fragment.blood_donation;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ibt.niramaya.R;
+import com.ibt.niramaya.adapter.BloodDonationPagerAdapter;
 import com.ibt.niramaya.adapter.InvoiceListAdapter;
 import com.ibt.niramaya.utils.BaseFragment;
 
@@ -21,8 +24,9 @@ import static com.ibt.niramaya.ui.activity.HomeActivity.txtTitle;
 
 public class BloodDonationFragment extends BaseFragment implements View.OnClickListener {
 
-    private List<String> prescriptionList = new ArrayList<>();
     private View rootView;
+    private ViewPager viewPager;
+    private TabLayout tab;
 
     @Nullable
     @Override
@@ -35,24 +39,29 @@ public class BloodDonationFragment extends BaseFragment implements View.OnClickL
     private void init() {
         imgSearch.setVisibility(View.GONE);
         imgSort.setVisibility(View.VISIBLE);
-        txtTitle.setText("Add User");
-        prescriptionListApi();
-    }
+        txtTitle.setText("Blood Donation");
+        setViewPager();
 
-    private void prescriptionListApi() {
-        for (int i = 0; i < 10; i++) {
-            prescriptionList.add("Name");
-        }
-        RecyclerView recyclerViewInvoice = rootView.findViewById(R.id.recyclerViewInvoice);
-        recyclerViewInvoice.setHasFixedSize(true);
-        recyclerViewInvoice.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
-        InvoiceListAdapter prescriptionAdapter = new InvoiceListAdapter(prescriptionList, mContext, this);
-        recyclerViewInvoice.setAdapter(prescriptionAdapter);
-        prescriptionAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onClick(View v) {
 
     }
+
+    private void setViewPager() {
+
+        viewPager = rootView.findViewById(R.id.viewPager);
+        tab = rootView.findViewById(R.id.tabs);
+        if (viewPager != null) {
+            BloodDonationPagerAdapter adapter = new BloodDonationPagerAdapter(getActivity().getSupportFragmentManager());
+            viewPager.setAdapter(adapter);
+            tab.setupWithViewPager(viewPager);
+        }
+
+        assert viewPager != null;
+        viewPager.setOffscreenPageLimit(3);
+
+    }
+
 }

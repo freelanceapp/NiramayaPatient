@@ -1,6 +1,7 @@
 package com.ibt.niramaya.ui.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Switch;
 import android.widget.ViewFlipper;
 
 import com.ibt.niramaya.R;
@@ -31,40 +33,36 @@ public class AddUserFragment extends BaseFragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_add_user, container, false);
-        init();
         return rootView;
     }
 
-    private void init() {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        init(view);
+
+    }
+
+    private void init(View view) {
         imgSearch.setVisibility(View.GONE);
         imgSort.setVisibility(View.VISIBLE);
         txtTitle.setText("Add User");
-        viewFlipper = rootView.findViewWithTag(R.id.vpAddUser);
+        viewFlipper = view.findViewById(R.id.vpAddUser);
+        (view.findViewById(R.id.ivAddNewUser)).setOnClickListener(this);
+        (view.findViewById(R.id.btnNext)).setOnClickListener(this);
         //prescriptionListApi();
     }
 
     @Override
     public void onClick(View v) {
-
+        switch(v.getId()){
+            case R.id.ivAddNewUser :
+                viewFlipper.showNext();
+                break;
+            case R.id.btnNext :
+                viewFlipper.showPrevious();
+                break;
+        }
     }
 
-    /*private void showNextView() {
-        Animation inAnimation = AnimationUtils.loadAnimation(mContext, R.anim.enter_from_right);
-        Animation outAnimation = AnimationUtils.loadAnimation(mContext, R.anim.exit_to_left);
-        viewFlipper.inAnimation(inAnimation);
-        viewFlipper.outAnimation = outAnimation
-        viewFlipper.setFlipInterval(500)
-
-        viewFlipper.showNext()
-    }
-
-    private fun showPreviousView() {
-        val inAnimation = AnimationUtils.loadAnimation(this, R.anim.enter_from_left)
-        val outAnimation = AnimationUtils.loadAnimation(this, R.anim.exit_to_right)
-        viewFlipper.inAnimation = inAnimation
-        viewFlipper.outAnimation = outAnimation
-        viewFlipper.setFlipInterval(500)
-
-        viewFlipper.showPrevious()
-    }*/
 }
