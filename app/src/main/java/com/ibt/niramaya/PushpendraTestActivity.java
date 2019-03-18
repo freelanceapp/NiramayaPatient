@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 
 import com.ibt.niramaya.ui.fragment.blood_donation.CheckAvailbilityFragment;
 import com.ibt.niramaya.ui.fragment.blood_donation.DonationFragment;
+import com.ibt.niramaya.ui.fragment.blood_donation.RecievedFragment;
 import com.ibt.niramaya.utils.BaseActivity;
 
 public class PushpendraTestActivity extends BaseActivity {
@@ -21,7 +22,7 @@ public class PushpendraTestActivity extends BaseActivity {
         fragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null){
          fragmentManager.beginTransaction()
-         .replace(R.id.frame_test_fragment,new DonationFragment()).commit();
+         .replace(R.id.frame_test_fragment,new RecievedFragment()).commit();
 
         }
     }

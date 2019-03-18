@@ -22,12 +22,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base">
-        <activity android:name=".PushpendraTestActivity">
-           <intent-filter>
+        <activity android:name=".PushpendraTestActivity"
+            android:screenOrientation="portrait">
+          <!-- <intent-filter>
                <action android:name="android.intent.action.MAIN" />
 
                <category android:name="android.intent.category.LAUNCHER" />
-           </intent-filter>
+           </intent-filter>-->
         </activity>
         <activity android:name=".ui.activity.DocumentsActivity" />
         <activity android:name=".ui.activity.SelectPaymentActivity" />
@@ -42,11 +43,11 @@
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".ui.activity.HomeActivity"
