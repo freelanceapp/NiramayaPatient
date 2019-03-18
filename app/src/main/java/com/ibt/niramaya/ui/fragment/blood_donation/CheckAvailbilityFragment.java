@@ -1,4 +1,4 @@
-package com.ibt.niramaya.ui.fragment;
+package com.ibt.niramaya.ui.fragment.blood_donation;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,7 +19,7 @@ import static com.ibt.niramaya.ui.activity.HomeActivity.imgSearch;
 import static com.ibt.niramaya.ui.activity.HomeActivity.imgSort;
 import static com.ibt.niramaya.ui.activity.HomeActivity.txtTitle;
 
-public class BloodDonationFragment extends BaseFragment implements View.OnClickListener {
+public class CheckAvailbilityFragment extends BaseFragment implements View.OnClickListener {
 
     private List<String> prescriptionList = new ArrayList<>();
     private View rootView;
