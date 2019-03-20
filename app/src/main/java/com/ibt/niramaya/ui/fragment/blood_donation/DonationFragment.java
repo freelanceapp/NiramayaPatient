@@ -116,7 +116,7 @@ public class DonationFragment extends BaseFragment {
         dAddress = ((EditText) dialogView.findViewById(R.id.etAddress)).getText().toString().trim();
         dLastDate = ((EditText) dialogView.findViewById(R.id.etLastDate)).getText().toString().trim();
 
-        if (dName.isEmpty()){
+        /*if (dName.isEmpty()){
             showToast("Name should not be empty.");
         }else if(dEmail.isEmpty()){
             showToast("Email should not be empty.");
@@ -134,10 +134,10 @@ public class DonationFragment extends BaseFragment {
             showToast("Address should not be empty.");
         }else if(dLastDate.isEmpty()){
             showToast("Last Date should not be empty.");
-        }else{
+        }else{*/
             openDonorDialogTwo();
             alertDialog.dismiss();
-        }
+        //}
     }
 
     private void openDonorDialogTwo() {

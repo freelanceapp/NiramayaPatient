@@ -13,6 +13,7 @@ import com.ibt.niramaya.R;
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.ui.fragment.AddUserFragment;
 import com.ibt.niramaya.ui.fragment.BedFragment;
+import com.ibt.niramaya.ui.fragment.DocumentsFragment;
 import com.ibt.niramaya.ui.fragment.HomeFragment;
 import com.ibt.niramaya.ui.fragment.InvoiceFragment;
 import com.ibt.niramaya.ui.fragment.PrescriptionsFragment;
@@ -80,6 +81,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Fragment BedFragment = fragmentManager.findFragmentByTag(Constant.BedFragment);
         Fragment HomeFragment = fragmentManager.findFragmentByTag(Constant.HomeFragment);
         Fragment InvoiceFragment = fragmentManager.findFragmentByTag(Constant.InvoiceFragment);
+        Fragment DocumentsFragment = fragmentManager.findFragmentByTag(Constant.DocumentsFragment);
         Fragment PrescriptionFragment = fragmentManager.findFragmentByTag(Constant.PrescriptionFragment);
         Fragment ReportFragment = fragmentManager.findFragmentByTag(Constant.ReportsFragment);
 
@@ -123,6 +125,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.txtDocuments:
+                txtTitle.setText("Documents");
+                if (DocumentsFragment == null) {
+                    fragmentUtils.replaceFragment(new DocumentsFragment(), Constant.DocumentsFragment, R.id.home_frame);
+                }
                 break;
             case R.id.txtSettings:
                 break;
