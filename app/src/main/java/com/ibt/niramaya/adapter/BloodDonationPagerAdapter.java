@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.ibt.niramaya.ui.fragment.AddUserFragment;
 import com.ibt.niramaya.ui.fragment.blood_donation.CheckAvailbilityFragment;
 import com.ibt.niramaya.ui.fragment.blood_donation.DonationFragment;
+import com.ibt.niramaya.ui.fragment.blood_donation.RecievedFragment;
 
 public class BloodDonationPagerAdapter extends FragmentPagerAdapter {
 
@@ -28,7 +29,7 @@ public class BloodDonationPagerAdapter extends FragmentPagerAdapter {
                 fragment = new DonationFragment();
                 break;
             case 2 :
-                fragment = new AddUserFragment();
+                fragment = new RecievedFragment();
                 break;
         }
         return fragment;

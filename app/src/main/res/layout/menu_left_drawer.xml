@@ -292,31 +292,41 @@
                     </android.support.v7.widget.CardView>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/llLogout"
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="26dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:orientation="horizontal"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp">
+                    android:layout_height="match_parent"
+                    android:paddingRight="16dp">
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_back" />
-
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/llLogout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:text="Logout"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/size_18" />
-                </LinearLayout>
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="26dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:orientation="horizontal"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/icf_left_arrow" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:text="Logout"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/size_18" />
+                    </LinearLayout>
+
+                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
