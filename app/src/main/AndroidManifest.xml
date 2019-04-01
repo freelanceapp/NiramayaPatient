@@ -67,6 +67,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ui.activity.HospitalDepartmentDetailActivity" />
         <activity android:name=".ui.activity.FindAndBookActivity" />
+        <activity android:name=".ui.activity.PrescriptionActivity" />
     </application>
 
 </manifest>

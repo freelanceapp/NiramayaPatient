@@ -121,13 +121,6 @@ public class LoginFragment extends Fragment implements OnClickListener {
 
     }
 
-
-
-
-
-
-
-
     /*private void checkValidation() {
         getEmailId = emailid_et.getText().toString();
         getPassword = password_et.getText().toString();

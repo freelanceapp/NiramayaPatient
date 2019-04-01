@@ -17,7 +17,6 @@ import java.util.List;
 
 import static com.ibt.niramaya.ui.activity.HomeActivity.imgSearch;
 import static com.ibt.niramaya.ui.activity.HomeActivity.imgSort;
-import static com.ibt.niramaya.ui.activity.HomeActivity.txtTitle;
 
 public class PrescriptionsFragment extends BaseFragment implements View.OnClickListener {
 
@@ -28,6 +27,7 @@ public class PrescriptionsFragment extends BaseFragment implements View.OnClickL
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_prescription, container, false);
+        mContext = getActivity();
         init();
         return rootView;
     }
