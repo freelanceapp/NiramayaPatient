@@ -9,9 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ibt.niramaya.retrofit.RetrofitApiClient;
+import com.ibt.niramaya.retrofit.RetrofitService;
+
 public class BaseFragment extends Fragment {
 
-    //public RetrofitApiClient retrofitApiClient;
+    public RetrofitApiClient retrofitApiClient;
     public ConnectionDetector cd;
     public Context mContext;
     public Activity activity;
@@ -27,7 +30,7 @@ public class BaseFragment extends Fragment {
         activity = getActivity();
         mContext = getActivity();
         cd = new ConnectionDetector(mContext);
-        //retrofitApiClient = RetrofitService.getRetrofit();
+        retrofitApiClient = RetrofitService.getRetrofit();
         return null;
     }
 }

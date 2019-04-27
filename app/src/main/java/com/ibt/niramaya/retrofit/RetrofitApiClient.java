@@ -1,5 +1,8 @@
 package com.ibt.niramaya.retrofit;
 
+import com.ibt.niramaya.constant.Constant;
+import com.ibt.niramaya.modal.otp_verifacation_modal.OtpVerificationMainModal;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -13,56 +16,62 @@ import retrofit2.http.Part;
 public interface RetrofitApiClient {
 
 
-    @Multipart
-    @POST("Add_Property.php")
-    Call<ResponseBody> addProperty(@Part MultipartBody.Part Image1,
-                                   @Part MultipartBody.Part Image2,
-                                   @Part MultipartBody.Part Image3,
-                                   @Part MultipartBody.Part Image4,
-                                      @Part("WardName") RequestBody WardName,
-                                      @Part("ZoneName") RequestBody ZoneName,
-                                      @Part("BlockNumber") RequestBody BlockNumber,
-                                      @Part("PropertyNumber") RequestBody PropertyNumber,
-                                      @Part("PropertyName") RequestBody PropertyName,
-                                      @Part("Address") RequestBody Address,
+    @FormUrlEncoded
+    @POST(Constant.USER_LOGIN)
+    Call<ResponseBody> usersLogin(@Field("contact") String contact);
 
-                                      @Part("CorporationPropertyNumber") RequestBody CorporationPropertyNumber,
-                                      @Part("PropertyUsageType") RequestBody PropertyUsageType,
-                                      @Part("PropertyType") RequestBody PropertyType,
-                                      @Part("ResidentialCount") RequestBody ResidentialCount,
-                                      @Part("CommercialCount") RequestBody CommercialCount,
-                                      @Part("Remark1") RequestBody Remark1,
-                                      @Part("Remark2") RequestBody Remark2,
+    @FormUrlEncoded
+    @POST(Constant.OTP_VERIFICATION)
+    Call<OtpVerificationMainModal> fatchOtp(@Field("contact") String contact, @Field("otp_number") String otp_number);
 
-                                      @Part("Longitude") RequestBody Longitude,
-                                      @Part("Latitude") RequestBody Latitude,
-                                      @Part("UserId") RequestBody UserId);
+    @FormUrlEncoded
+    @POST(Constant.CREATE_PATIENT_PROFILE)
+    Call<ResponseBody> createPatientProfie(@Field("name") String name,
+                                           @Field("bloodgroup") String bloodgroup,
+                                           @Field("contact") String contact,
+                                           @Field("date_of_birth") String date_of_birth,
+                                           @Field("email") String email,
+                                           @Field("house_number") String house_number,
+                                           @Field("street_name") String street_name,
+                                           @Field("city") String city,
+                                           @Field("state") String state,
+                                           @Field("country") String country,
+                                           @Field("zipcode") String zipcode,
+                                           @Field("gender") String gender,
+                                           @Field("gardian_name") String gardian_name,
+                                           @Field("relationship_with_gardian") String relationship_with_gardian,
+                                           @Field("gardian_contact") String gardian_contact,
+                                           @Field("gardian_address") String gardian_address,
+                                           @Field("aadhar_number") String aadhar_number,
+                                           @Field("user_id") String user_id,
+                                           @Field("relationship_status") String relationship_status,
+                                           @Field("profile_picture") String profile_picture);
 
     @FormUrlEncoded
     @POST("Add_Property.php")
     Call<ResponseBody> uploadPropertyDataToServer(@Field("Image1") String Image1,
-                                                    @Field("Image2") String Image2,
-                                                    @Field("Image3") String Image3,
-                                                    @Field("Image4") String Image4,
+                                                  @Field("Image2") String Image2,
+                                                  @Field("Image3") String Image3,
+                                                  @Field("Image4") String Image4,
 
-                                                    @Field("WardName") String WardName,
-                                                    @Field("ZoneName") String ZoneName,
-                                                    @Field("BlockNumber") String BlockNumber,
-                                                    @Field("PropertyNumber") String PropertyNumber,
-                                                    @Field("PropertyName") String PropertyName,
-                                                    @Field("Address") String Address,
+                                                  @Field("WardName") String WardName,
+                                                  @Field("ZoneName") String ZoneName,
+                                                  @Field("BlockNumber") String BlockNumber,
+                                                  @Field("PropertyNumber") String PropertyNumber,
+                                                  @Field("PropertyName") String PropertyName,
+                                                  @Field("Address") String Address,
 
-                                                    @Field("CorporationPropertyNumber") String CorporationPropertyNumber,
-                                                    @Field("PropertyUsageType") String PropertyUsageType,
-                                                    @Field("PropertyType") String PropertyType,
-                                                    @Field("ResidentialCount") String ResidentialCount,
-                                                    @Field("CommercialCount") String CommercialCount,
-                                                    @Field("Remark1") String Remark1,
-                                                    @Field("Remark2") String Remark2,
-                                                    @Field("DeviceId") String DeviceId,
+                                                  @Field("CorporationPropertyNumber") String CorporationPropertyNumber,
+                                                  @Field("PropertyUsageType") String PropertyUsageType,
+                                                  @Field("PropertyType") String PropertyType,
+                                                  @Field("ResidentialCount") String ResidentialCount,
+                                                  @Field("CommercialCount") String CommercialCount,
+                                                  @Field("Remark1") String Remark1,
+                                                  @Field("Remark2") String Remark2,
+                                                  @Field("DeviceId") String DeviceId,
 
-                                                    @Field("Longitude") String Longitude,
-                                                    @Field("Latitude") String Latitude,
-                                                    @Field("UserId") String UserId);
+                                                  @Field("Longitude") String Longitude,
+                                                  @Field("Latitude") String Latitude,
+                                                  @Field("UserId") String UserId);
 
 }
