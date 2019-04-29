@@ -23,7 +23,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activity.PatientRagistrationActivity"></activity>
+        <activity android:name=".ui.activity.patient.PatientDetailActivity"></activity>
+        <activity
+            android:name=".ui.activity.patient.AddNewPatientActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PatientRagistrationActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".PushpendraTestActivity"
             android:screenOrientation="portrait" />

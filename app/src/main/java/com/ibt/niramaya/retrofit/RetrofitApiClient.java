@@ -2,6 +2,7 @@ package com.ibt.niramaya.retrofit;
 
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.modal.otp_verifacation_modal.OtpVerificationMainModal;
+import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -46,6 +47,10 @@ public interface RetrofitApiClient {
                                            @Field("user_id") String user_id,
                                            @Field("relationship_status") String relationship_status,
                                            @Field("profile_picture") String profile_picture);
+
+    @FormUrlEncoded
+    @POST(Constant.PATIENT_LIST)
+    Call<PatientMainModal> patientList(@Field("user_id") String user_id);
 
     @FormUrlEncoded
     @POST("Add_Property.php")

@@ -90,7 +90,7 @@ public class OtpFragment extends BaseFragment implements OnClickListener {
                             String strContact = responseBody.getUser().getUserContact();
                             AppPreference.setStringPreference(mContext, Constant.USER_CONTACT, strContact);
                             AppPreference.setStringPreference(mContext, Constant.USER_ID, strUserId);
-                            startActivity(new Intent(mContext, PatientRagistrationActivity.class));
+                            startActivity(new Intent(mContext, HomeActivity.class));
                             Alerts.show(mContext, responseBody.getMessage());
                         } else {
                             Alerts.show(mContext, responseBody.getMessage());

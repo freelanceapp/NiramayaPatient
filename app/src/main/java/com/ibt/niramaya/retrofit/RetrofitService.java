@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ibt.niramaya.BuildConfig;
 import com.ibt.niramaya.modal.otp_verifacation_modal.OtpVerificationMainModal;
+import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
 import com.ibt.niramaya.utils.AppProgressDialog;
 
 import java.util.concurrent.TimeUnit;
@@ -81,6 +82,7 @@ public class RetrofitService {
             }
         });
     }
+
     public static void getOtpResponse(final Dialog dialog, final Call<OtpVerificationMainModal> method, final WebResponse webResponse) {
         if (dialog != null)
             AppProgressDialog.show(dialog);
@@ -94,6 +96,25 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<OtpVerificationMainModal> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getPatientList(final Dialog dialog, final Call<PatientMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<PatientMainModal>() {
+            @Override
+            public void onResponse(Call<PatientMainModal> call, Response<PatientMainModal> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<PatientMainModal> call, Throwable throwable) {
                 AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());
             }

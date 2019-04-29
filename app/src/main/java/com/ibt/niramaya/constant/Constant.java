@@ -9,6 +9,7 @@ public class Constant {
     public static final String USER_LOGIN = "patient/user-login.php";
     public static final String OTP_VERIFICATION = "patient/user-contact-verification.php";
     public static final String CREATE_PATIENT_PROFILE = "patient/create_patient_profile.php";
+    public static final String PATIENT_LIST = "patient/select-patient-list.php";
 
 
     // Fragment constant
@@ -25,7 +26,7 @@ public class Constant {
     public static final String BloodDonationFragment = "BloodDonationFragment";
     public static final String DocumentsFragment = "DocumentsFragment";
     public static final String SettingsFragment = "SettingsFragment";
-    public static final String AddUserFragment = "AddUserFragment";
+    public static final String AddUserFragment = "PatientFragment";
 
     public static final String FacilitiesFragment = "FacilitiesFragment";
     public static final String DepartmentsFragment = "DepartmentsFragment";

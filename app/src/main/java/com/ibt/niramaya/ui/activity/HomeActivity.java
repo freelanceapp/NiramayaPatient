@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.constant.Constant;
-import com.ibt.niramaya.ui.fragment.AddUserFragment;
+import com.ibt.niramaya.ui.fragment.PatientFragment;
 import com.ibt.niramaya.ui.fragment.BedFragment;
 import com.ibt.niramaya.ui.fragment.DocumentsFragment;
 import com.ibt.niramaya.ui.fragment.HomeFragment;
@@ -135,7 +135,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.txtAddUser:
                 txtTitle.setText("Add User");
                 if (AddUserFragment == null) {
-                    fragmentUtils.replaceFragment(new AddUserFragment(), Constant.AddUserFragment, R.id.home_frame);
+                    fragmentUtils.replaceFragment(new PatientFragment(), Constant.AddUserFragment, R.id.home_frame);
                 }
                 break;
         }

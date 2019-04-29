@@ -1,4 +1,4 @@
-package com.ibt.niramaya.ui.activity;
+package com.ibt.niramaya.ui.activity.patient;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -18,6 +18,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,7 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -55,19 +58,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-public class PatientRagistrationActivity extends BaseActivity implements View.OnClickListener {
+public class AddNewPatientActivity extends BaseActivity implements View.OnClickListener {
     private ConnectionDetector cd;
     private static final int LOAD_IMAGE_GALLERY = 123;
     private static int PICK_IMAGE_CAMERA = 124;
     private static int PERMISSION_REQUEST_CODE = 456;
     private File finalFile = null;
     private int selectedPosition = 0;
-    private ArrayAdapter bloodGroupAdapter, relationshipStatusAdapter;
+    private ArrayAdapter bloodGroupAdapter, relationshipStatusAdapter, patientGardianRelationshipAdapter;
     private String[] bloodGroupList = {"Select blood group", "A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"};
     private String[] relationshipList = {"Select Relationship", "Father", "Mother", "Child", "Wife"};
-    private String strBloodGroup = "", strRelationship = "", strGender = "", strmobile = "";
+    private String strBloodGroup = "", strPatientRelationship = "", strRelationship = "", strGender = "", strmobile = "";
     private EditText patientName, aadharNumber, patientEmailId, patientDateofBirthNumber, patienthouseNo,
-            patientSTreet, patientCity, patientState, patientCountry, patientZipCode, patientGardian, patientRelation, patientGardianContact, patientGardianAddress;
+            patientSTreet, patientCity, patientState, patientCountry, patientZipCode, patientGardian, patientGardianContact, patientGardianAddress;
     private TextView patientMobileNumber;
     private CircleImageView imgProfilePatient;
     private String strMedicineImage;
@@ -75,16 +78,27 @@ public class PatientRagistrationActivity extends BaseActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_ragistration);
+        setContentView(R.layout.activity_add_new_patient);
         cd = new ConnectionDetector(mContext);
         retrofitApiClient = RetrofitService.getRetrofit();
         init();
     }
 
     private void init() {
+        Toolbar toolbar = findViewById(R.id.toolbarAddnewPatient);
+        toolbar.setTitle("Add Patient");
+        setTitleColor(R.color.white);
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         findId();
         spinnerData();
         radioGroupData();
+        onAddGardianRelation();
         if (checkPermission()) {
             Alerts.show(mContext, "Permission granted");
         } else {
@@ -116,7 +130,6 @@ public class PatientRagistrationActivity extends BaseActivity implements View.On
         patientCountry = findViewById(R.id.patientCountry);
         patientZipCode = findViewById(R.id.patientZipCode);
         patientGardian = findViewById(R.id.patientGardian);
-        patientRelation = findViewById(R.id.patientRelation);
         patientGardianContact = findViewById(R.id.patientGardianContact);
         patientGardianAddress = findViewById(R.id.patientGardianAddress);
         imgProfilePatient = findViewById(R.id.imgProfilePatient);
@@ -133,7 +146,6 @@ public class PatientRagistrationActivity extends BaseActivity implements View.On
         patientMobileNumber.setText(strmobile);
 
         ((Button) findViewById(R.id.ragisterPatient)).setOnClickListener(this);
-        ((TextView) findViewById(R.id.tvSkip)).setOnClickListener(this);
         imgProfilePatient.setOnClickListener(this);
     }
 
@@ -157,6 +169,26 @@ public class PatientRagistrationActivity extends BaseActivity implements View.On
             }
         });
         bloodGroupAdapter.notifyDataSetChanged();
+
+        /*******************************************************
+         *      Spinner GArdian Relationship
+         * *****************************************************/
+        Spinner spnPatientRelationship = findViewById(R.id.spinnerGardianRelationship);
+        patientGardianRelationshipAdapter = new ArrayAdapter(mContext, R.layout.row_spn_normal, relationshipList);
+        spnPatientRelationship.setAdapter(patientGardianRelationshipAdapter);
+        spnPatientRelationship.setSelection(selectedPosition);
+        spnPatientRelationship.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                strPatientRelationship = relationshipList[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        patientGardianRelationshipAdapter.notifyDataSetChanged();
 
         /*******************************************************
          *      Spinner Relationship status
@@ -359,16 +391,33 @@ public class PatientRagistrationActivity extends BaseActivity implements View.On
                     e.printStackTrace();
                 }
                 break;
-            case R.id.tvSkip:
-                startActivity(new Intent(mContext, HomeActivity.class));
-                break;
         }
     }
 
+    private void onAddGardianRelation() {
+        ((EditText) findViewById(R.id.patientGardian)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                ((LinearLayout) findViewById(R.id.llGardianDetail)).setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String etTExt = patientGardian.getText().toString();
+                if (etTExt.isEmpty()) {
+                    ((LinearLayout) findViewById(R.id.llGardianDetail)).setVisibility(View.GONE);
+                }
+
+            }
+        });
+    }
+
     private void createPatientRagisterApi() {
-      /*  if (cd.isNetworkAvailable()) {
-
-
+        if (cd.isNetworkAvailable()) {
             String strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
             String strName = patientName.getText().toString();
             String strAadahr = aadharNumber.getText().toString();
@@ -382,7 +431,6 @@ public class PatientRagistrationActivity extends BaseActivity implements View.On
             String strCountry = patientCountry.getText().toString();
             String strZipcode = patientZipCode.getText().toString();
             String strGardian = patientGardian.getText().toString();
-            String strRelation = patientRelation.getText().toString();
             String strGardianContact = patientGardianContact.getText().toString();
             String strGarAddress = patientGardianAddress.getText().toString();
 
@@ -402,7 +450,7 @@ public class PatientRagistrationActivity extends BaseActivity implements View.On
                 Alerts.show(mContext, "Country name should not be empty!!!");
             } else if (strZipcode.isEmpty()) {
                 Alerts.show(mContext, "Zipcode should not be empty!!!");
-            } else if (strGardian.isEmpty()) {
+            } /*else if (strGardian.isEmpty()) {
                 Alerts.show(mContext, "Gardian namem should not be empty!!!");
             } else if (strGardianContact.isEmpty()) {
                 Alerts.show(mContext, "Gardian name should not be empty!!!");
@@ -410,16 +458,17 @@ public class PatientRagistrationActivity extends BaseActivity implements View.On
                 strName,strBloodGroup,
                         strmobile,strDob,strEmailadd,strHouseNo,strStreet,strCity,strState,strCountry,strZipcode,strGender,
                         strGardian,strRelation,strGardianContact,strGarAddress,strAadahr,"",strRelationship,""*//*
-            } else {
+            }*/ else {
                 RetrofitService.getServerResponse(new Dialog(mContext), retrofitApiClient.createPatientProfie(strName, strBloodGroup,
                         strmobile, strDob, strEmailadd, strHouseNo, strStreet, strCity, strState, strCountry, strZipcode, strGender,
-                        strGardian, strRelation, strGardianContact, strGarAddress, strAadahr, strUserId, strRelationship, ""), new WebResponse() {
+                        strGardian, strPatientRelationship, strGardianContact, strGarAddress, strAadahr, strUserId, strRelationship, ""), new WebResponse() {
                     @Override
                     public void onResponseSuccess(Response<?> result) {
                         ResponseBody responseBody = (ResponseBody) result.body();
                         try {
                             JSONObject jsonObject = new JSONObject(responseBody.string());
                             if (jsonObject.getBoolean("error")) {
+                                onBackPressed();
                                 Alerts.show(mContext, jsonObject.toString());
                             } else {
                                 Alerts.show(mContext, jsonObject.toString());
@@ -438,6 +487,7 @@ public class PatientRagistrationActivity extends BaseActivity implements View.On
                     }
                 });
             }
-        }*/
+        }
     }
 }
+

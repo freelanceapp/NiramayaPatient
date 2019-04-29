@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.ibt.niramaya.R;
+import com.ibt.niramaya.constant.Constant;
+import com.ibt.niramaya.utils.AppPreference;
 import com.ibt.niramaya.utils.BaseActivity;
 
 public class SplashActivity extends BaseActivity {
@@ -18,16 +20,22 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void init() {
+        final boolean isLogin = AppPreference.getBooleanPreference(mContext, Constant.Is_Login);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(mContext, LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                finish();
+                if (isLogin) {
+                    startActivity(new Intent(mContext, HomeActivity.class));
+                } else {
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                    finish();
+                }
             }
         }, 3000);
     }

@@ -1,10 +1,11 @@
-package com.ibt.niramaya.modal.otp_verifacation_modal;
+package com.ibt.niramaya.modal.patient_modal;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.Parcelable.Creator;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -28,7 +29,7 @@ public class User implements Parcelable {
     private String userCreatedDate;
     @SerializedName("paitent_profile")
     @Expose
-    private List<Object> paitentProfile = new ArrayList<Object>();
+    private List<PaitentProfile> paitentProfile = new ArrayList<PaitentProfile>();
     public final static Parcelable.Creator<User> CREATOR = new Creator<User>() {
 
 
@@ -51,7 +52,7 @@ public class User implements Parcelable {
         this.userContact = ((String) in.readValue((String.class.getClassLoader())));
         this.userName = ((String) in.readValue((String.class.getClassLoader())));
         this.userCreatedDate = ((String) in.readValue((String.class.getClassLoader())));
-        in.readList(this.paitentProfile, (java.lang.Object.class.getClassLoader()));
+        in.readList(this.paitentProfile, (com.ibt.niramaya.modal.patient_modal.PaitentProfile.class.getClassLoader()));
     }
 
     public User() {
@@ -97,11 +98,11 @@ public class User implements Parcelable {
         this.userCreatedDate = userCreatedDate;
     }
 
-    public List<Object> getPaitentProfile() {
+    public List<PaitentProfile> getPaitentProfile() {
         return paitentProfile;
     }
 
-    public void setPaitentProfile(List<Object> paitentProfile) {
+    public void setPaitentProfile(List<PaitentProfile> paitentProfile) {
         this.paitentProfile = paitentProfile;
     }
 

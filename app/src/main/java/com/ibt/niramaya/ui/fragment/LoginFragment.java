@@ -147,6 +147,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
                             JSONObject jsonObject = new JSONObject(responseBody.string());
                             if (!jsonObject.getBoolean("error")) {
                                 AppPreference.setStringPreference(mContext, Constant.USER_CONTACT, strMobile);
+                                AppPreference.setBooleanPreference(mContext, Constant.Is_Login, true);
                                 OtpFragment otpFragment = new OtpFragment();
                                 Bundle data = new Bundle();
                                 data.putString("Mobile", strMobile);

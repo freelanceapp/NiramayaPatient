@@ -22,10 +22,18 @@
                 android:layout_marginLeft="-2dp"
                 android:layout_marginTop="-20dp"
                 android:layout_marginRight="-2dp"
-                android:layout_marginBottom="@dimen/size_20"
                 android:adjustViewBounds="true"
                 android:src="@drawable/top_back" />
 
+            <TextView
+                android:id="@+id/tvSkip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:padding="16dp"
+                android:text="Skip"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -137,48 +145,6 @@
                     android:padding="10dp"
                     android:singleLine="true"
                     android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="2dp"
-                    android:padding="10dp"
-                    android:singleLine="true"
-                    android:text="Select Gender"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <RadioGroup
-                    android:id="@+id/rdGroupGender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
-
-                    <RadioButton
-                        android:id="@+id/tvMail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Male" />
-
-                    <RadioButton
-                        android:id="@+id/tvFemail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Female" />
-
-                    <RadioButton
-                        android:id="@+id/tvOther"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Other" />
-
-                </RadioGroup>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -363,17 +329,20 @@
                     android:id="@+id/patientGardianAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="start"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/edittext_back_b"
-                    android:gravity="center_vertical"
+                    android:gravity="start"
                     android:hint="@string/gardian_address"
                     android:inputType="textMultiLine"
                     android:maxLength="80"
                     android:maxLines="5"
                     android:minLines="3"
-                    android:padding="10dp"
-                    android:textSize="16sp" />
+                    android:padding="6dp"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp"
+                    tools:ignore="RtlCompat" />
 
                 <TextView
                     android:layout_width="match_parent"
