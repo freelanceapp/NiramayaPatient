@@ -51,7 +51,7 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
                 int dobYear = Calendar.getInstance().get(Calendar.YEAR);
                 int dobMonth = Calendar.getInstance().get(Calendar.MONTH);
                 int dobDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog dialog = new DatePickerDialog(mContext, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dialog = new DatePickerDialog(mContext, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
 
@@ -73,7 +73,7 @@ public class BookAppointmentActivity extends BaseActivity implements View.OnClic
 
                 }
             }, dobYear, dobMonth, dobDay);
-            dialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+            //dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             dialog.setTitle("");
             dialog.show();
     }

@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.ui.activity.HomeActivity;
@@ -33,6 +34,9 @@ public class OtpFragment extends BaseFragment implements OnClickListener {
 
     // Initialize the views
     private void initViews() {
+
+        String value = getArguments().getString("OTP");
+
         //emailId = (EditText) view.findViewById(R.id.registered_emailid);
         submit = (TextView) view.findViewById(R.id.btnSubmit);
         //back = (TextView) view.findViewById(R.id.backToLoginBtn);

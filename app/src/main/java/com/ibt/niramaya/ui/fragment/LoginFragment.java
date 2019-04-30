@@ -111,10 +111,14 @@ public class LoginFragment extends Fragment implements OnClickListener {
         switch (v.getId()) {
             case R.id.loginBtn:
                 // checkValidation();
+                Fragment frag = new OtpFragment();
+                Bundle args = new Bundle();
+                    args.putString("OTP", "111111");
+                    frag.setArguments(args);
                 fragmentManager
                         .beginTransaction()
                         .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-                        .replace(R.id.login_frame, new OtpFragment(),
+                        .replace(R.id.login_frame, frag,
                                 Constant.Otp_Fragment).commit();
                 break;
         }
