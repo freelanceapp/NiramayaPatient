@@ -10,6 +10,7 @@ public class Constant {
     public static final String OTP_VERIFICATION = "patient/user-contact-verification.php";
     public static final String CREATE_PATIENT_PROFILE = "patient/create_patient_profile.php";
     public static final String PATIENT_LIST = "patient/select-patient-list.php";
+    public static final String UPDATE_PATIENNT_PROFILE = "patient/update_patient_profile.php";
 
 
     // Fragment constant
@@ -36,4 +37,5 @@ public class Constant {
     public static final String Is_Login = "Is_Login";
     public static final String USER_CONTACT = "userContact";
     public static final String USER_ID = "userId";
+    public static final String PATIENT_ID = "patient_id";
 }

@@ -53,30 +53,26 @@ public interface RetrofitApiClient {
     Call<PatientMainModal> patientList(@Field("user_id") String user_id);
 
     @FormUrlEncoded
-    @POST("Add_Property.php")
-    Call<ResponseBody> uploadPropertyDataToServer(@Field("Image1") String Image1,
-                                                  @Field("Image2") String Image2,
-                                                  @Field("Image3") String Image3,
-                                                  @Field("Image4") String Image4,
-
-                                                  @Field("WardName") String WardName,
-                                                  @Field("ZoneName") String ZoneName,
-                                                  @Field("BlockNumber") String BlockNumber,
-                                                  @Field("PropertyNumber") String PropertyNumber,
-                                                  @Field("PropertyName") String PropertyName,
-                                                  @Field("Address") String Address,
-
-                                                  @Field("CorporationPropertyNumber") String CorporationPropertyNumber,
-                                                  @Field("PropertyUsageType") String PropertyUsageType,
-                                                  @Field("PropertyType") String PropertyType,
-                                                  @Field("ResidentialCount") String ResidentialCount,
-                                                  @Field("CommercialCount") String CommercialCount,
-                                                  @Field("Remark1") String Remark1,
-                                                  @Field("Remark2") String Remark2,
-                                                  @Field("DeviceId") String DeviceId,
-
-                                                  @Field("Longitude") String Longitude,
-                                                  @Field("Latitude") String Latitude,
-                                                  @Field("UserId") String UserId);
-
+    @POST(Constant.UPDATE_PATIENNT_PROFILE)
+    Call<ResponseBody> updatePatientProfie(@Field("name") String name,
+                                           @Field("bloodgroup") String bloodgroup,
+                                           @Field("contact") String contact,
+                                           @Field("date_of_birth") String date_of_birth,
+                                           @Field("email") String email,
+                                           @Field("house_number") String house_number,
+                                           @Field("street_name") String street_name,
+                                           @Field("city") String city,
+                                           @Field("state") String state,
+                                           @Field("country") String country,
+                                           @Field("zipcode") String zipcode,
+                                           @Field("gender") String gender,
+                                           @Field("gardian_name") String gardian_name,
+                                           @Field("relationship_with_gardian") String relationship_with_gardian,
+                                           @Field("gardian_contact") String gardian_contact,
+                                           @Field("gardian_address") String gardian_address,
+                                           @Field("aadhar_number") String aadhar_number,
+                                           @Field("user_id") String user_id,
+                                           @Field("relationship_status") String relationship_status,
+                                           @Field("patient_id") String patient_id,
+                                           @Field("profile_picture") String profile_picture);
 }
