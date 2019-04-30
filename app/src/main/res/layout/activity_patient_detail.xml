@@ -25,6 +25,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/llShowPatientDetail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -316,8 +317,10 @@
                         android:id="@+id/tvPatientRelationship"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/layout_bg_rhl4"
+                        android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:paddingRight="5dp"
                         android:textSize="@dimen/size_14" />
@@ -397,7 +400,475 @@
                     android:visibility="gone" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/llEditPatientDetail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:background="@drawable/layout_bg_rhl3"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:visibility="gone">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgEditProfilePatient"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:src="@drawable/ic_profile" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Name"
+                    android:textSize="@dimen/size_14" />
+
+                <EditText
+                    android:id="@+id/etPatientName"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/layout_bg_rhl4"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:gravity="center_vertical"
+                    android:hint="Enter patient name"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPersonName"
+                    android:maxLength="50"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:textSize="@dimen/size_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Patient Mobile"
+                    android:textSize="@dimen/size_14" />
+
+                <EditText
+                    android:id="@+id/etPatientMobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/layout_bg_rhl4"
+                    android:gravity="center_vertical"
+                    android:hint="1234567890"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:textSize="@dimen/size_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Patient Aadhar Number"
+                    android:textSize="@dimen/size_14" />
+
+                <EditText
+                    android:id="@+id/etPaadharNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/layout_bg_rhl4"
+                    android:gravity="center_vertical"
+                    android:hint="8887 4587 7896"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="12"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:textSize="@dimen/size_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Patient Email"
+                    android:textSize="@dimen/size_14" />
+
+                <EditText
+                    android:id="@+id/etPatientEmailId"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/layout_bg_rhl4"
+                    android:gravity="center_vertical"
+                    android:hint="hospital@gmail.com"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:textSize="@dimen/size_14" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Date Of Birth"
+                    android:textSize="@dimen/size_14" />
+
+                <EditText
+                    android:id="@+id/etPatientDateofBirthNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/layout_bg_rhl4"
+                    android:drawableRight="@drawable/icf_appointment2"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:gravity="center_vertical"
+                    android:hint="01/02/1993"
+                    android:imeOptions="actionNext"
+                    android:inputType="date"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:textSize="@dimen/size_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Select Gender"
+                    android:textSize="@dimen/size_14" />
+
+                <RadioGroup
+                    android:id="@+id/etPGroupGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <RadioButton
+                        android:id="@+id/tvMail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Male" />
+
+                    <RadioButton
+                        android:id="@+id/tvFemail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Female" />
+
+                    <RadioButton
+                        android:id="@+id/tvOther"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Other" />
+
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Blood Group"
+                    android:textSize="@dimen/size_14" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/layout_bg_rhl4"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp">
+
+                    <Spinner
+                        android:id="@+id/etPspinnerBloodGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="House Number"
+                    android:textSize="@dimen/size_14" />
+
+                <EditText
+                    android:id="@+id/etPatienthouseNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/layout_bg_rhl4"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:hint="House Number"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="10"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="@dimen/size_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Street"
+                    android:textSize="@dimen/size_14" />
+
+                <EditText
+                    android:id="@+id/etPatientSTreet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/layout_bg_rhl4"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:hint="Street"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:padding="10dp"
+                    android:textSize="@dimen/size_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="City"
+                    android:textSize="@dimen/size_14" />
+
+                <EditText
+                    android:id="@+id/etPatientCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/layout_bg_rhl4"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:hint="City"
+                    android:inputType="text"
+                    android:maxLength="30"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="@dimen/size_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="State"
+                    android:textSize="@dimen/size_14" />
+
+                <EditText
+                    android:id="@+id/etPatientState"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/layout_bg_rhl4"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:hint="State"
+                    android:inputType="text"
+                    android:maxLength="40"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="@dimen/size_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Country"
+                    android:textSize="@dimen/size_14" />
+
+                <EditText
+                    android:id="@+id/etPatientCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/layout_bg_rhl4"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:hint="Country"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="@dimen/size_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Zipcode"
+                    android:textSize="@dimen/size_14" />
+
+                <EditText
+                    android:id="@+id/etPatientZipCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/layout_bg_rhl4"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:hint="Zip Code"
+                    android:inputType="number"
+                    android:maxLength="8"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="@dimen/size_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Patient Gardian"
+                    android:textSize="@dimen/size_14" />
+
+                <EditText
+                    android:id="@+id/etPatientGardian"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/layout_bg_rhl4"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/gardian_name"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="@dimen/size_14" />
+
+                <LinearLayout
+                    android:id="@+id/etPllGardianDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Patient Relationship"
+                        android:textSize="@dimen/size_14" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/layout_bg_rhl4"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp">
+
+                        <Spinner
+                            android:id="@+id/etPspinnerGardianRelationship"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Gardian Contact"
+                        android:textSize="@dimen/size_14" />
+
+                    <EditText
+                        android:id="@+id/etPatientGardianContact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:background="@drawable/layout_bg_rhl4"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/gardian_contact"
+                        android:inputType="phone"
+                        android:maxLength="10"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:textSize="@dimen/size_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Gardian Address"
+                        android:textSize="@dimen/size_14" />
+
+                    <EditText
+                        android:id="@+id/etPatientGardianAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:background="@drawable/layout_bg_rhl4"
+                        android:gravity="start"
+                        android:hint="@string/gardian_address"
+                        android:inputType="textMultiLine"
+                        android:maxLength="80"
+                        android:maxLines="5"
+                        android:minLines="3"
+                        android:padding="6dp"
+                        android:textAlignment="textStart"
+                        android:textSize="@dimen/size_14"
+                        tools:ignore="RtlCompat" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Patient Relationship Status"
+                        android:textSize="@dimen/size_14" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/layout_bg_rhl4"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp">
+
+                        <Spinner
+                            android:id="@+id/etPspinnerRelationship"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/etPragisterPatient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginBottom="@dimen/size_8"
+                    android:background="@drawable/buttun_back_green"
+                    android:paddingLeft="80sp"
+                    android:paddingRight="80sp"
+                    android:text="Add Patient"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
 </LinearLayout>
