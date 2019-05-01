@@ -79,7 +79,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
         public MyViewHolder(View view) {
             super(view);
             llPatient = view.findViewById(R.id.llPatient);
-            llAddNewPatient = view.findViewById(R.id.llAddNewPatient);
+            ///llAddNewPatient = view.findViewById(R.id.llAddNewPatient);
             ivPatientProfile = view.findViewById(R.id.ivPatientProfile);
             tvPatientProfile = view.findViewById(R.id.tvPatientProfile);
         }

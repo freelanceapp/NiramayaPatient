@@ -63,6 +63,7 @@ import retrofit2.Response;
 
 public class PatientDetailActivity extends BaseActivity implements View.OnClickListener {
     private ConnectionDetector cd;
+    Toolbar toolbar;
     private CircleImageView imgProfilePatient, imgEditProfilePatient;
     private TextView tvPatientName, tvPatientMobileNumber, tvPatientaadharNumber, tvPatientEmailId, tvPatientDateofBirthNumber, tvPatientGender, tvPatientbloodGroup, tvPatienthouseNo, patientSTreet, tvPatientCity, tvPatientState, tvPatientCountry, tvPatientZipCode, tvPatientGardian, tvPatientRelationship, tvPatientGardianContact, tvGardianAddress, tvPatientRelationshipStatus;
     private static final int LOAD_IMAGE_GALLERY = 123;
@@ -90,7 +91,7 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     private void init() {
-        Toolbar toolbar = findViewById(R.id.toolbarPatientDetail);
+        final Toolbar toolbar = findViewById(R.id.toolbarPatientDetail);
         toolbar.setTitle("Patient Detail");
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -104,8 +105,10 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.action_edit) {
+                    toolbar.setTitle("Update Patient Detail");
                     ((LinearLayout) findViewById(R.id.llEditPatientDetail)).setVisibility(View.VISIBLE);
                     ((LinearLayout) findViewById(R.id.llShowPatientDetail)).setVisibility(View.GONE);
+
                 } else {
                     ((LinearLayout) findViewById(R.id.llEditPatientDetail)).setVisibility(View.GONE);
                     ((LinearLayout) findViewById(R.id.llShowPatientDetail)).setVisibility(View.VISIBLE);
@@ -515,6 +518,7 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
             String strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
             String strPatientId = AppPreference.getStringPreference(mContext, Constant.PATIENT_ID);
             String strName = etPatientName.getText().toString();
+            strmobile = etPatientMobileNumber.getText().toString();
             String strAadahr = etPaadharNumber.getText().toString();
             String strEmailadd = etPatientEmailId.getText().toString();
             String strDob = etPatientDateofBirthNumber.getText().toString();
@@ -532,6 +536,8 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
                 Alerts.show(mContext, "Patient name should not be empty!!!");
             } else if (strAadahr.isEmpty()) {
                 Alerts.show(mContext, "Aadhar number should not be empty!!!");
+            } else if (strmobile.isEmpty()) {
+                Alerts.show(mContext, "Mobile number should not be empty!!!");
             } else if (strEmailadd.isEmpty()) {
                 Alerts.show(mContext, "Email address should not be empty!!!");
             } else if (strDob.isEmpty()) {
@@ -553,9 +559,8 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
                         ResponseBody responseBody = (ResponseBody) result.body();
                         try {
                             JSONObject jsonObject = new JSONObject(responseBody.string());
-                            if (jsonObject.getBoolean("error")) {
+                            if (!jsonObject.getBoolean("error")) {
                                 onBackPressed();
-                                finish();
                                 Alerts.show(mContext, jsonObject.toString());
                             } else {
                                 Alerts.show(mContext, jsonObject.toString());
