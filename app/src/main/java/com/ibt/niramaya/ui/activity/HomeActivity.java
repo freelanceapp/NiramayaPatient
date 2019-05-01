@@ -1,17 +1,27 @@
 package com.ibt.niramaya.ui.activity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.constant.Constant;
-import com.ibt.niramaya.ui.fragment.AddUserFragment;
+import com.ibt.niramaya.modal.patient_modal.PaitentProfile;
+import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
+import com.ibt.niramaya.retrofit.RetrofitApiClient;
+import com.ibt.niramaya.retrofit.RetrofitService;
+import com.ibt.niramaya.retrofit.WebResponse;
+import com.ibt.niramaya.ui.fragment.PatientFragment;
 import com.ibt.niramaya.ui.fragment.BedFragment;
 import com.ibt.niramaya.ui.fragment.DocumentsFragment;
 import com.ibt.niramaya.ui.fragment.HomeFragment;
@@ -19,22 +29,39 @@ import com.ibt.niramaya.ui.fragment.InvoiceFragment;
 import com.ibt.niramaya.ui.fragment.PrescriptionsFragment;
 import com.ibt.niramaya.ui.fragment.ReportFragment;
 import com.ibt.niramaya.ui.fragment.blood_donation.BloodDonationFragment;
+import com.ibt.niramaya.utils.Alerts;
+import com.ibt.niramaya.utils.AppPreference;
+import com.ibt.niramaya.utils.ConnectionDetector;
 import com.ibt.niramaya.utils.FragmentUtils;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Response;
+
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public RetrofitApiClient retrofitApiClient;
+    public ConnectionDetector cd;
+    public Context mContext;
     public static TextView txtTitle;
     public static ImageView imgSearch, imgSort;
     private SlidingRootNav slidingRootNav;
+    private Spinner spnPatient;
     private FragmentUtils fragmentUtils;
     private FragmentManager fragmentManager;
+    private List<PaitentProfile> patientList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        mContext = this;
+        cd = new ConnectionDetector(mContext);
+        retrofitApiClient = RetrofitService.getRetrofit();
 
         init(savedInstanceState);
     }
@@ -58,7 +85,52 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 .withMenuLayout(R.layout.menu_left_drawer)
                 .inject();
 
+        spnPatient = findViewById(R.id.spnPatient);
+
+        initPatientSpinner();
+
         clickListener();
+    }
+
+    private void initPatientSpinner() {
+        if (cd.isNetworkAvailable()) {
+            String strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
+            RetrofitService.getPatientList(new Dialog(mContext), retrofitApiClient.patientList(strUserId), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    PatientMainModal mainModal = (PatientMainModal) result.body();
+                    if (mainModal != null) {
+                        patientList = mainModal.getUser().getPaitentProfile();
+
+                        if (patientList.size() > 0) {
+                            spnPatient.setVisibility(View.VISIBLE);
+                        } else {
+                            spnPatient.setVisibility(View.GONE);
+                        }
+
+                        PaitentProfile paitentProfile1 = new PaitentProfile();
+                        paitentProfile1.setPatientId("0");
+                        paitentProfile1.setPatientName("Select Patient");
+                        patientList.add(0, paitentProfile1);
+
+                        ArrayAdapter aa = new ArrayAdapter(mContext, R.layout.row_spinner_item, patientList);
+                        //aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        //Setting the ArrayAdapter data on the Spinner
+                        spnPatient.setAdapter(aa);
+                        spnPatient.setOnItemSelectedListener(spinnerListener);
+                    } else {
+                        Alerts.show(mContext, mainModal.getMessage());
+                    }
+                }
+
+                @Override
+                public void onResponseFailed(String error) {
+                    Alerts.show(mContext, error);
+                }
+            });
+        } else {
+            cd.show(mContext);
+        }
     }
 
     private void clickListener() {
@@ -85,35 +157,54 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Fragment PrescriptionFragment = fragmentManager.findFragmentByTag(Constant.PrescriptionFragment);
         Fragment ReportFragment = fragmentManager.findFragmentByTag(Constant.ReportsFragment);
 
+        String patientId = AppPreference.getStringPreference(mContext, Constant.CURRENT_PATENT_ID);
+
         switch (v.getId()) {
             case R.id.txtHome:
                 txtTitle.setText("Home");
                 if (HomeFragment == null) {
                     fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.home_frame);
+                    slidingRootNav.closeMenu();
                 }
                 break;
             case R.id.txtPrescription:
                 txtTitle.setText("Prescription");
                 if (PrescriptionFragment == null) {
-                    fragmentUtils.replaceFragment(new PrescriptionsFragment(), Constant.PrescriptionFragment, R.id.home_frame);
+                    if (!patientId.isEmpty() && !patientId.equals("0")) {
+                        fragmentUtils.replaceFragment(new PrescriptionsFragment(), Constant.PrescriptionFragment, R.id.home_frame);
+                        slidingRootNav.closeMenu();
+                    } else {
+                        Alerts.show(mContext, "No Patient Selected!");
+                    }
                 }
                 break;
             case R.id.txtReports:
                 txtTitle.setText("Report");
                 if (ReportFragment == null) {
-                    fragmentUtils.replaceFragment(new ReportFragment(), Constant.ReportsFragment, R.id.home_frame);
+                    if (!patientId.isEmpty() && !patientId.equals("0")) {
+                        fragmentUtils.replaceFragment(new ReportFragment(), Constant.ReportsFragment, R.id.home_frame);
+                        slidingRootNav.closeMenu();
+                    } else {
+                        Alerts.show(mContext, "No Patient Selected!");
+                    }
                 }
                 break;
             case R.id.txtInvoice:
                 txtTitle.setText("Invoice");
                 if (InvoiceFragment == null) {
-                    fragmentUtils.replaceFragment(new InvoiceFragment(), Constant.InvoiceFragment, R.id.home_frame);
+                    if (!patientId.isEmpty() && !patientId.equals("0")) {
+                        fragmentUtils.replaceFragment(new InvoiceFragment(), Constant.InvoiceFragment, R.id.home_frame);
+                        slidingRootNav.closeMenu();
+                    } else {
+                        Alerts.show(mContext, "No Patient Selected!");
+                    }
                 }
                 break;
             case R.id.txtBed:
                 txtTitle.setText("Bed History");
                 if (BedFragment == null) {
                     fragmentUtils.replaceFragment(new BedFragment(), Constant.BedFragment, R.id.home_frame);
+                    slidingRootNav.closeMenu();
                 }
                 break;
             case R.id.txtHistory:
@@ -122,24 +213,26 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 txtTitle.setText("Blood Donation");
                 if (BloodDonationFragment == null) {
                     fragmentUtils.replaceFragment(new BloodDonationFragment(), Constant.BloodDonationFragment, R.id.home_frame);
+                    slidingRootNav.closeMenu();
                 }
                 break;
             case R.id.txtDocuments:
                 txtTitle.setText("Documents");
                 if (DocumentsFragment == null) {
                     fragmentUtils.replaceFragment(new DocumentsFragment(), Constant.DocumentsFragment, R.id.home_frame);
+                    slidingRootNav.closeMenu();
                 }
                 break;
             case R.id.txtSettings:
                 break;
             case R.id.txtAddUser:
-                txtTitle.setText("Add User");
+                txtTitle.setText("Add Patient");
                 if (AddUserFragment == null) {
-                    fragmentUtils.replaceFragment(new AddUserFragment(), Constant.AddUserFragment, R.id.home_frame);
+                    fragmentUtils.replaceFragment(new PatientFragment(), Constant.AddUserFragment, R.id.home_frame);
+                    slidingRootNav.closeMenu();
                 }
                 break;
         }
-        slidingRootNav.closeMenu();
     }
 
     @Override
@@ -154,15 +247,44 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if (HomeFragment != null) {
             finish();
         } else if (PrescriptionFragment != null) {
+            txtTitle.setText("Home");
             fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.home_frame);
+            slidingRootNav.closeMenu();
         } else if (ReportFragment != null) {
+            txtTitle.setText("Home");
             fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.home_frame);
+            slidingRootNav.closeMenu();
         } else if (InvoiceFragment != null) {
+            txtTitle.setText("Home");
             fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.home_frame);
+            slidingRootNav.closeMenu();
         } else if (BedFragment != null) {
+            txtTitle.setText("Home");
             fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.home_frame);
+            slidingRootNav.closeMenu();
         } else {
             finish();
         }
     }
+
+    AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Alerts.show(mContext, patientList.get(position).getPatientName());
+            AppPreference.setStringPreference(mContext, Constant.CURRENT_PATENT_ID,
+                    patientList.get(position).getPatientId());
+            AppPreference.setStringPreference(mContext, Constant.CURRENT_PATENT_NAME,
+                    patientList.get(position).getPatientName());
+            Fragment HomeFragment = fragmentManager.findFragmentByTag(Constant.HomeFragment);
+            if (HomeFragment == null) {
+                onBackPressed();
+            }
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
 }

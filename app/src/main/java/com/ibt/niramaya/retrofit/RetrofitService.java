@@ -6,6 +6,10 @@ import android.app.Dialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ibt.niramaya.BuildConfig;
+import com.ibt.niramaya.modal.otp_verifacation_modal.OtpVerificationMainModal;
+import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
+import com.ibt.niramaya.modal.prescription.PrescritionListModel;
+import com.ibt.niramaya.modal.prescription.detail.PrescriptionDetailModel;
 import com.ibt.niramaya.utils.AppProgressDialog;
 
 import java.util.concurrent.TimeUnit;
@@ -24,7 +28,7 @@ public class RetrofitService {
 
     public static RetrofitApiClient client;
 
-    public static String BASE_URL = "http://kolbrogroup.com/SurveyApp/";
+    public static String BASE_URL = "http://niramaya.infobitetechnology.tech/api/";
 
     public RetrofitService() {
 
@@ -75,6 +79,82 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getOtpResponse(final Dialog dialog, final Call<OtpVerificationMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<OtpVerificationMainModal>() {
+            @Override
+            public void onResponse(Call<OtpVerificationMainModal> call, Response<OtpVerificationMainModal> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<OtpVerificationMainModal> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getPatientList(final Dialog dialog, final Call<PatientMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<PatientMainModal>() {
+            @Override
+            public void onResponse(Call<PatientMainModal> call, Response<PatientMainModal> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<PatientMainModal> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void patientPrescriptionList(final Dialog dialog, final Call<PrescritionListModel> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<PrescritionListModel>() {
+            @Override
+            public void onResponse(Call<PrescritionListModel> call, Response<PrescritionListModel> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<PrescritionListModel> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void patientPrescriptionDetail(final Dialog dialog, final Call<PrescriptionDetailModel> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<PrescriptionDetailModel>() {
+            @Override
+            public void onResponse(Call<PrescriptionDetailModel> call, Response<PrescriptionDetailModel> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<PrescriptionDetailModel> call, Throwable throwable) {
                 AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());
             }

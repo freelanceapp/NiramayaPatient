@@ -22,7 +22,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
                 android:gravity="center"
-                android:text="@string/add_user_details"
+                android:text="@string/add_patient_details"
                 android:textStyle="bold" />
             <TextView
                 android:layout_width="match_parent"

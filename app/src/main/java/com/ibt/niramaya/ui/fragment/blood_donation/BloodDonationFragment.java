@@ -33,7 +33,6 @@ public class BloodDonationFragment extends BaseFragment implements View.OnClickL
         imgSearch.setVisibility(View.GONE);
         imgSort.setVisibility(View.VISIBLE);
         setViewPager();
-
     }
 
     @Override
@@ -42,7 +41,6 @@ public class BloodDonationFragment extends BaseFragment implements View.OnClickL
     }
 
     private void setViewPager() {
-
         viewPager = rootView.findViewById(R.id.viewPager);
         tab = rootView.findViewById(R.id.tabs);
         if (viewPager != null) {

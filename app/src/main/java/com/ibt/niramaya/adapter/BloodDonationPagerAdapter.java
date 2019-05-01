@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ibt.niramaya.ui.fragment.AddUserFragment;
 import com.ibt.niramaya.ui.fragment.blood_donation.CheckAvailbilityFragment;
 import com.ibt.niramaya.ui.fragment.blood_donation.DonationFragment;
 import com.ibt.niramaya.ui.fragment.blood_donation.RecievedFragment;

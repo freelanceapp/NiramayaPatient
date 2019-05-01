@@ -5,17 +5,13 @@ package com.ibt.niramaya.constant;
  */
 
 public class Constant {
-    public static final String BASE_URL = "http://codeencrypt.in/must_eat/";
-    public static final String USER_REGISTRATION = "api/user-signup.php";
-    public static final String USER_PROFILE = "api/user-profile.php";
-    public static final String USER_LOGIN = "api/user-login.php";
-    public static final String VERIFICATION = "api/user-verification.php";
-    public static final String VENDOR_DETAIL = "api/vendor-details.php";
-    public static final String VENDOR_LIST = "api/vendor-list.php";
-    public static final String FOROGOT_PASSWORD = "jain/api/forgot.php";
-    public static final String NOTIFICATION_LIST = "api/select-notification.php";
-    public static final String OFFER_LIST = "api/coupon_list.php";
-    public static final String APP_VERSION = "api/check-version.php";
+    public static final String BASE_URL = "http://niramaya.infobitetechnology.tech/api/";
+    public static final String USER_LOGIN = "patient/user-login.php";
+    public static final String OTP_VERIFICATION = "patient/user-contact-verification.php";
+    public static final String CREATE_PATIENT_PROFILE = "patient/create_patient_profile.php";
+    public static final String PATIENT_LIST = "patient/select-patient-list.php";
+    public static final String PATIENT_PRESCRIPTION_LIST = "patient/select_patient_preception.php";
+    public static final String PATIENT_PRESCRIPTION_DETAIL = "patient/select_patient_preception_details.php";
 
 
     // Fragment constant
@@ -32,18 +28,16 @@ public class Constant {
     public static final String BloodDonationFragment = "BloodDonationFragment";
     public static final String DocumentsFragment = "DocumentsFragment";
     public static final String SettingsFragment = "SettingsFragment";
-    public static final String AddUserFragment = "AddUserFragment";
+    public static final String AddUserFragment = "PatientFragment";
 
     public static final String FacilitiesFragment = "FacilitiesFragment";
     public static final String DepartmentsFragment = "DepartmentsFragment";
     public static final String DoctorFragment = "DoctorFragment";
 
     // Preference
-    public static final String User_Id = "user_id";
     public static final String Is_Login = "Is_Login";
-    public static final String User_Data = "User_Data";
-    public static final String RestaurantDetail = "RestaurantDetail";
-    public static final String IMAGE = "https://27jts3o00yy49vo2y30wem91-wpengine.netdna-ssl.com/wp-content/uploads/2018/05/ASSET-USER-ADMIN-300x300.png";
-    public static final String Latitude = "latitude";
-    public static final String Longitude = "longitude";
+    public static final String USER_CONTACT = "userContact";
+    public static final String USER_ID = "userId";
+    public static final String CURRENT_PATENT_ID = "currentPatientId";
+    public static final String CURRENT_PATENT_NAME = "currentPatientName";
 }

@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/layout_bg4"
+        android:paddingLeft="16dp">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Prescription"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:weightSum="10">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="3"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="8dp">
+
+                    <ImageView
+                        android:id="@+id/ivHospitalLogo"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_c" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="16dp">
+
+                        <TextView
+                            android:id="@+id/tvPatientName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:text="David Beckham"
+                            android:textColor="@color/text_color_a"
+                            android:textSize="@dimen/size_14" />
+
+                        <TextView
+                            android:id="@+id/tvPatientId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:text="Patient ID"
+                            android:textColor="@color/text_color_a"
+                            android:textSize="@dimen/size_14" />
+
+                        <TextView
+                            android:id="@+id/tvDoctorName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:baselineAligned="false"
+                            android:text="Dr. Amit trivedi"
+                            android:textColor="@color/text_color_a"
+                            android:textSize="@dimen/size_14" />
+
+                        <TextView
+                            android:id="@+id/tvHospitalName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:text="Apollo Hospital"
+                            android:textColor="@color/text_color_a"
+                            android:textSize="@dimen/size_14" />
+
+                        <TextView
+                            android:id="@+id/tvOpdCreatedDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:text="28/02/2019"
+                            android:textColor="@color/text_color_a"
+                            android:textSize="@dimen/size_14" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="7"
+                    android:visibility="gone"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Age"
+                        android:textColor="@color/text_color_a"
+                        android:textSize="@dimen/size_14" />
+
+                    <TextView
+                        android:id="@+id/tvAge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:gravity="center"
+                        android:text="25 Yrs"
+                        android:textColor="@color/text_color_a"
+                        android:textSize="@dimen/size_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text="Contact"
+                        android:textColor="@color/text_color_a"
+                        android:textSize="@dimen/size_14" />
+
+                    <TextView
+                        android:id="@+id/tvContact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:gravity="center"
+                        android:text="9876543210"
+                        android:textColor="@color/text_color_a"
+                        android:textSize="@dimen/size_14" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_f" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@color/red_h"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="Chief Complaint"
+                        android:textColor="@color/text_color_a"
+                        android:textSize="@dimen/size_14" />
+
+                    <TextView
+                        android:id="@+id/tvComplaint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:background="@color/white"
+                        android:gravity="start"
+                        android:lines="5"
+                        android:padding="8dp"
+                        android:text="Injury in right leg and back pain"
+                        android:textSize="@dimen/size_12"
+                        android:layout_marginLeft="16dp" />
+                </LinearLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_margin="4dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0.8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorPrimaryDark"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="BP"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/size_12" />
+
+                                <TextView
+                                    android:id="@+id/tvBpCount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/white"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="110/70"
+                                    android:textColor="@color/text_color_a"
+                                    android:textSize="@dimen/size_14" />
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_margin="4dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0.8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorPrimaryDark"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="HR/Min"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/size_12" />
+
+                                <TextView
+                                    android:id="@+id/tvHrCount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/white"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="90/100"
+                                    android:textColor="@color/text_color_a"
+                                    android:textSize="@dimen/size_14" />
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_margin="4dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0.8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorPrimaryDark"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="Resp/Min"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/size_12" />
+
+                                <TextView
+                                    android:id="@+id/tvRespCount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/white"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="20/100"
+                                    android:textColor="@color/text_color_a"
+                                    android:textSize="@dimen/size_14" />
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_margin="4dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0.8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorPrimaryDark"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="Temp"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/size_12" />
+
+                                <TextView
+                                    android:id="@+id/tvTempCount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/white"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="98"
+                                    android:textColor="@color/text_color_a"
+                                    android:textSize="@dimen/size_14" />
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_margin="4dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0.8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorPrimaryDark"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="Pain score"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/size_12" />
+
+                                <TextView
+                                    android:id="@+id/tvPainScoreCount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/white"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="02"
+                                    android:textColor="@color/text_color_a"
+                                    android:textSize="@dimen/size_14" />
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    android:text="Type of discharge"
+                    android:textColor="@color/text_color_a" />
+
+                <TextView
+                    android:id="@+id/tvDischargeType"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="5"
+                    android:background="@color/green_dark"
+                    android:gravity="center"
+                    android:text="Normal"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/red_h"
+                    android:padding="8dp"
+                    android:text="Treatment Given"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="16dp"
+                        android:text="Paracitamol"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="16dp"
+                        android:text="M/E After lunch"
+                        android:textColor="@color/text_color_b"
+                        android:textSize="@dimen/size_12" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="16dp"
+                        android:text="Completenate"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="16dp"
+                        android:text="M/E After lunch"
+                        android:textColor="@color/text_color_b"
+                        android:textSize="@dimen/size_12" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/red_h"
+                    android:padding="8dp"
+                    android:text="Treatment Advised"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="16dp"
+                        android:text="Actos"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="16dp"
+                        android:text="1 time after dinner"
+                        android:textColor="@color/text_color_b"
+                        android:textSize="@dimen/size_12" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>
