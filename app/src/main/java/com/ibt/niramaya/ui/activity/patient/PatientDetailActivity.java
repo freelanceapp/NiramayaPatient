@@ -2,6 +2,7 @@ package com.ibt.niramaya.ui.activity.patient;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -35,19 +37,29 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.ibt.niramaya.R;
+import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.modal.patient_modal.PaitentProfile;
+import com.ibt.niramaya.retrofit.RetrofitService;
+import com.ibt.niramaya.retrofit.WebResponse;
 import com.ibt.niramaya.utils.Alerts;
+import com.ibt.niramaya.utils.AppPreference;
 import com.ibt.niramaya.utils.BaseActivity;
 import com.ibt.niramaya.utils.ConnectionDetector;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 public class PatientDetailActivity extends BaseActivity implements View.OnClickListener {
     private ConnectionDetector cd;
@@ -61,7 +73,8 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
     private ArrayAdapter bloodGroupAdapter, relationshipStatusAdapter, patientGardianRelationshipAdapter;
     private String[] bloodGroupList = {"Select blood group", "A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"};
     private String[] relationshipList = {"Select Relationship", "Father", "Mother", "Child", "Wife"};
-    private String strBloodGroup = "", strPatientRelationship = "", strRelationship = "", strGender = "", strmobile = "", strPatientImage = "";
+    private String[] relationshipStatus = {"Select Relationship", "Yes", "No"};
+    private String strBloodGroup = "", strPatientRelationship = "", strPatientRelationshipStatus = "", strRelationship = "", strGender = "", strmobile = "", strPatientImage = "";
     private EditText etPatientName, etPatientMobileNumber, etPaadharNumber, etPatientEmailId, etPatientDateofBirthNumber,
             etPatienthouseNo, etPatientSTreet, etPatientCity, etPatientState, etPatientCountry, etPatientZipCode, etPatientGardian, etPatientGardianContact, etPatientGardianAddress;
     private PaitentProfile paitentProfileData;
@@ -71,6 +84,8 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_detail);
+        cd = new ConnectionDetector(mContext);
+        retrofitApiClient = RetrofitService.getRetrofit();
         init();
     }
 
@@ -141,8 +156,6 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
         etPaadharNumber = findViewById(R.id.etPaadharNumber);
         etPatientEmailId = findViewById(R.id.etPatientEmailId);
         etPatientDateofBirthNumber = findViewById(R.id.etPatientDateofBirthNumber);
-        //  etPGroupGender = findViewById(R.id.etPGroupGender);
-        //   etPspinnerBloodGroup = findViewById(R.id.etPspinnerBloodGroup);
         etPatienthouseNo = findViewById(R.id.etPatienthouseNo);
         etPatientSTreet = findViewById(R.id.etPatientSTreet);
         etPatientCity = findViewById(R.id.etPatientCity);
@@ -150,11 +163,10 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
         etPatientCountry = findViewById(R.id.etPatientCountry);
         etPatientZipCode = findViewById(R.id.etPatientZipCode);
         etPatientGardian = findViewById(R.id.etPatientGardian);
-        //etPllGardianDetail = findViewById(R.id.etPllGardianDetail);
-        // etPspinnerGardianRelationship = findViewById(R.id.etPspinnerGardianRelationship);
         etPatientGardianContact = findViewById(R.id.etPatientGardianContact);
         etPatientGardianAddress = findViewById(R.id.etPatientGardianAddress);
-        //  etPspinnerRelationship = findViewById(R.id.etPspinnerRelationship);
+
+        ((Button) findViewById(R.id.etUpdatePatient)).setOnClickListener(this);
 
         etPatientDateofBirthNumber.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,8 +210,7 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
             etPaadharNumber.setText(paitentProfileData.getPatientAadharNumber());
             etPatientEmailId.setText(paitentProfileData.getPatientEmail());
             etPatientDateofBirthNumber.setText(paitentProfileData.getPatientDateOfBirth());
-            //  tvPatientGender.setText(paitentProfileData.getPatientGender());
-            // tvPatientbloodGroup.setText(paitentProfileData.getPatientBloodgroup());
+
             etPatienthouseNo.setText(paitentProfileData.getPatientHouseNumber());
             etPatientCity.setText(paitentProfileData.getPatientCity());
             etPatientSTreet.setText(paitentProfileData.getPatientStreetName());
@@ -207,7 +218,6 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
             etPatientCountry.setText(paitentProfileData.getPatientCountry());
             etPatientZipCode.setText(paitentProfileData.getPatientZipcode());
             etPatientGardian.setText(paitentProfileData.getPatientGardianName());
-            //.setText(paitentProfileData.getPatientRelationshipWithGardian());
             etPatientGardianContact.setText(paitentProfileData.getPatientGardianContact());
             etPatientGardianAddress.setText(paitentProfileData.getPatientGardianAddress());
 
@@ -240,6 +250,9 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
         /********************************************************
          * Spinner blood group select
          * +++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+        strBloodGroup = paitentProfileData.getPatientBloodgroup();
+
         Spinner spnBloodGroup = findViewById(R.id.etPspinnerBloodGroup);
         bloodGroupAdapter = new ArrayAdapter(mContext, R.layout.row_spn_normal, bloodGroupList);
         spnBloodGroup.setAdapter(bloodGroupAdapter);
@@ -282,16 +295,28 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
         /*******************************************************
          *      Spinner Relationship status
          * *****************************************************/
-        strPatientRelationship = paitentProfileData.getPatientVerificationStatus();
+        strPatientRelationshipStatus = paitentProfileData.getRelationshipStatus();
         Spinner spnRelationshipstatus = findViewById(R.id.etPspinnerRelationship);
-        relationshipStatusAdapter = new ArrayAdapter(mContext, R.layout.row_spn_normal, relationshipList);
+        relationshipStatusAdapter = new ArrayAdapter(mContext, R.layout.row_spn_normal, relationshipStatus);
         spnRelationshipstatus.setAdapter(relationshipStatusAdapter);
-        int position2 = Arrays.asList(relationshipList).indexOf(strPatientRelationship);
-        spnPatientRelationship.setSelection(position2);
+        if (strPatientRelationshipStatus.equals("1")) {
+            spnRelationshipstatus.setSelection(1);
+        } else if (spnRelationshipstatus.equals("0")) {
+            spnRelationshipstatus.setSelection(2);
+        } else {
+            spnRelationshipstatus.setSelection(0);
+        }
         spnRelationshipstatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                strRelationship = relationshipList[position];
+                strPatientRelationshipStatus = relationshipList[position];
+                if (strPatientRelationshipStatus.equals("Yes")) {
+                    strPatientRelationshipStatus = "1";
+                } else if (strPatientRelationshipStatus.equals("No")) {
+                    strPatientRelationshipStatus = "0";
+                } else {
+                    strPatientRelationshipStatus = "";
+                }
             }
 
             @Override
@@ -479,16 +504,77 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
                     e.printStackTrace();
                 }
                 break;
+            case R.id.etUpdatePatient:
+                updatePatientProfileApi();
+                break;
         }
     }
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_product_detail, menu);
-        return super.onCreateOptionsMenu(menu);
+
+    private void updatePatientProfileApi() {
+        if (cd.isNetworkAvailable()) {
+            String strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
+            String strPatientId = AppPreference.getStringPreference(mContext, Constant.PATIENT_ID);
+            String strName = etPatientName.getText().toString();
+            String strAadahr = etPaadharNumber.getText().toString();
+            String strEmailadd = etPatientEmailId.getText().toString();
+            String strDob = etPatientDateofBirthNumber.getText().toString();
+            String strHouseNo = etPatienthouseNo.getText().toString();
+            String strStreet = etPatientSTreet.getText().toString();
+            String strCity = etPatientCity.getText().toString();
+            String strState = etPatientState.getText().toString();
+            String strCountry = etPatientCountry.getText().toString();
+            String strZipcode = etPatientZipCode.getText().toString();
+            String strGardian = etPatientGardian.getText().toString();
+            String strGardianContact = etPatientGardianContact.getText().toString();
+            String strGarAddress = etPatientGardianAddress.getText().toString();
+
+            if (strName.isEmpty()) {
+                Alerts.show(mContext, "Patient name should not be empty!!!");
+            } else if (strAadahr.isEmpty()) {
+                Alerts.show(mContext, "Aadhar number should not be empty!!!");
+            } else if (strEmailadd.isEmpty()) {
+                Alerts.show(mContext, "Email address should not be empty!!!");
+            } else if (strDob.isEmpty()) {
+                Alerts.show(mContext, "Date of birth should not be empty!!!");
+            } else if (strCity.isEmpty()) {
+                Alerts.show(mContext, "City should not be empty!!!");
+            } else if (strState.isEmpty()) {
+                Alerts.show(mContext, "State name should not be empty!!!");
+            } else if (strCountry.isEmpty()) {
+                Alerts.show(mContext, "Country name should not be empty!!!");
+            } else if (strZipcode.isEmpty()) {
+                Alerts.show(mContext, "Zipcode should not be empty!!!");
+            } else {
+                RetrofitService.getServerResponse(new Dialog(mContext), retrofitApiClient.updatePatientProfie(strName, strBloodGroup, strmobile, strDob, strEmailadd,
+                        strHouseNo, strStreet, strCity, strState, strCountry, strZipcode, strGender, strGardian, strPatientRelationship,
+                        strGardianContact, strGarAddress, strAadahr, strUserId, strPatientRelationshipStatus, strPatientId, strPatientImage), new WebResponse() {
+                    @Override
+                    public void onResponseSuccess(Response<?> result) {
+                        ResponseBody responseBody = (ResponseBody) result.body();
+                        try {
+                            JSONObject jsonObject = new JSONObject(responseBody.string());
+                            if (jsonObject.getBoolean("error")) {
+                                onBackPressed();
+                                finish();
+                                Alerts.show(mContext, jsonObject.toString());
+                            } else {
+                                Alerts.show(mContext, jsonObject.toString());
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onResponseFailed(String error) {
+                        Alerts.show(mContext, error);
+                    }
+                });
+            }
+        }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return false;
-    }*/
 }

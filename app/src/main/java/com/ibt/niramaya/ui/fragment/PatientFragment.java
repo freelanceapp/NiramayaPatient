@@ -44,6 +44,7 @@ public class PatientFragment extends BaseFragment implements View.OnClickListene
     private PatientListAdapter patientListAdapter;
     private List<PaitentProfile> patientList = new ArrayList<>();
     private RecyclerView rvPatientList;
+    private int position;
 
     @Nullable
     @Override
@@ -75,7 +76,7 @@ public class PatientFragment extends BaseFragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.llPatient:
-                int position = (int) v.getTag();
+                position = (int) v.getTag();
                 Intent intent = new Intent(mContext, PatientDetailActivity.class);
                 intent.putExtra("patientDetail", patientList.get(position));
                 startActivity(intent);
@@ -92,6 +93,8 @@ public class PatientFragment extends BaseFragment implements View.OnClickListene
                     PatientMainModal mainModal = (PatientMainModal) result.body();
                     if (mainModal != null) {
                         patientList = mainModal.getUser().getPaitentProfile();
+                        String strPatientId = mainModal.getUser().getPaitentProfile().get(position).getPatientId();
+                        AppPreference.setStringPreference(mContext, Constant.PATIENT_ID, strPatientId);
 
                         rvPatientList.setHasFixedSize(true);
                         rvPatientList.setLayoutManager(new GridLayoutManager(mContext, 3));
@@ -102,9 +105,6 @@ public class PatientFragment extends BaseFragment implements View.OnClickListene
                         paitentProfile1.setPatientId("0");
                         paitentProfile1.setPatientName("Add New Patient");
                         patientList.add(patientList.size(), paitentProfile1);
-
-                        Alerts.show(mContext, paitentProfile1.toString());
-
 
                         Alerts.show(mContext, mainModal.getMessage());
                     } else {

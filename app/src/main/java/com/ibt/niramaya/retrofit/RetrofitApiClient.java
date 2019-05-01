@@ -92,4 +92,27 @@ public interface RetrofitApiClient {
                                                             @Field("patient_id") String patient_id,
                                                           @Field("opd_id") String opd_id);
 
+
+    @POST(Constant.UPDATE_PATIENNT_PROFILE)
+    Call<ResponseBody> updatePatientProfie(@Field("name") String name,
+                                           @Field("bloodgroup") String bloodgroup,
+                                           @Field("contact") String contact,
+                                           @Field("date_of_birth") String date_of_birth,
+                                           @Field("email") String email,
+                                           @Field("house_number") String house_number,
+                                           @Field("street_name") String street_name,
+                                           @Field("city") String city,
+                                           @Field("state") String state,
+                                           @Field("country") String country,
+                                           @Field("zipcode") String zipcode,
+                                           @Field("gender") String gender,
+                                           @Field("gardian_name") String gardian_name,
+                                           @Field("relationship_with_gardian") String relationship_with_gardian,
+                                           @Field("gardian_contact") String gardian_contact,
+                                           @Field("gardian_address") String gardian_address,
+                                           @Field("aadhar_number") String aadhar_number,
+                                           @Field("user_id") String user_id,
+                                           @Field("relationship_status") String relationship_status,
+                                           @Field("patient_id") String patient_id,
+                                           @Field("profile_picture") String profile_picture);
 }
