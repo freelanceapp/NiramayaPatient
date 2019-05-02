@@ -109,15 +109,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="Doctor"
+                        android:text="Patient Name"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
-                        android:id="@+id/tvDoctorName"
+                        android:id="@+id/tvpatientName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="Dr. Amit Trivedi"
                         android:textColor="@color/black"
                         android:textSize="@dimen/size_10" />
 
@@ -126,15 +125,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:baselineAligned="false"
-                        android:text="Items"
+                        android:text="Gender"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
-                        android:id="@+id/tvItems"
+                        android:id="@+id/tvPatientGender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="1*Item name, 2*Item name"
                         android:textColor="@color/black"
                         android:textSize="@dimen/size_10" />
 
@@ -143,17 +141,33 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:baselineAligned="false"
-                        android:text="Test"
+                        android:text="PatientContact"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
-                        android:id="@+id/tvTestName"
+                        android:id="@+id/tvPatientContact"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="Abdominal ultrasound, Hemoglobin A1c"
                         android:textColor="@color/black"
                         android:textSize="@dimen/size_10" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:text="Appoint Amount"
+                        android:textSize="@dimen/size_10" />
+
+                    <TextView
+                        android:id="@+id/tvAppoiontmentAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/size_10" />
+
 
                 </LinearLayout>
 
@@ -167,14 +181,31 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="Date"
+                        android:text="Appointment Booking Date"
+                        android:textSize="@dimen/size_10" />
+
+                    <TextView
+                        android:id="@+id/tvAppoiontmentDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:text="20/12/2018"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="20/12/2018"
+                        android:text="Doctor Name"
+                        android:textSize="@dimen/size_10" />
+
+                    <TextView
+                        android:id="@+id/tvDoctorName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
                         android:textColor="@color/black"
                         android:textSize="@dimen/size_10" />
 

@@ -109,11 +109,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="Doctor"
+                        android:text="Medicine Name"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
-                        android:id="@+id/tvDoctorName"
+                        android:id="@+id/tvMedicineName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -126,32 +126,31 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:baselineAligned="false"
-                        android:text="Items"
+                        android:text="Medicine Company Name"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
-                        android:id="@+id/tvItems"
+                        android:id="@+id/tvMedicineCategoryName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="1*Item name, 2*Item name"
                         android:textColor="@color/black"
                         android:textSize="@dimen/size_10" />
+
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:baselineAligned="false"
-                        android:text="Test"
+                        android:text="Medicine Quantity"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
-                        android:id="@+id/tvTestName"
+                        android:id="@+id/tvMedicineQuantity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="Abdominal ultrasound, Hemoglobin A1c"
                         android:textColor="@color/black"
                         android:textSize="@dimen/size_10" />
 
@@ -167,10 +166,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="Date"
+                        android:text="Expire Date"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
+                        android:id="@+id/tvMedicineExpireDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"

@@ -6,7 +6,7 @@
     android:background="@color/white">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardViewItem"
+        android:id="@+id/cardViewPathology"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -77,6 +77,7 @@
                         android:textSize="@dimen/size_10" />
 
                     <TextView
+                        android:id="@+id/tvInvoiceNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -109,11 +110,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="Doctor"
+                        android:text="Patient Name"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
-                        android:id="@+id/tvDoctorName"
+                        android:id="@+id/tvPatientNamme"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -124,17 +125,15 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
                         android:baselineAligned="false"
-                        android:text="Items"
+                        android:text="Patient Age"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
-                        android:id="@+id/tvItems"
+                        android:id="@+id/tvPatientAge"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="1*Item name, 2*Item name"
                         android:textColor="@color/black"
                         android:textSize="@dimen/size_10" />
 
@@ -143,15 +142,31 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:baselineAligned="false"
-                        android:text="Test"
+                        android:text="Patient Gender"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
-                        android:id="@+id/tvTestName"
+                        android:id="@+id/tvPatientGender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="Abdominal ultrasound, Hemoglobin A1c"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/size_10" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:baselineAligned="false"
+                        android:text="Discount"
+                        android:textSize="@dimen/size_10" />
+
+                    <TextView
+                        android:id="@+id/tvTestDiscount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
                         android:textColor="@color/black"
                         android:textSize="@dimen/size_10" />
 
@@ -167,10 +182,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="Date"
+                        android:text="Bill Generate Date"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
+                        android:id="@+id/tvBillGenerateDAte"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -246,7 +262,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/paid"
+                        android:text="Discount"
                         android:textColor="@color/white"
                         android:textSize="@dimen/size_10" />
 
@@ -263,7 +279,7 @@
                             android:textSize="@dimen/size_14" />
 
                         <TextView
-                            android:id="@+id/tvPaidAmount"
+                            android:id="@+id/tvDiscount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="200"

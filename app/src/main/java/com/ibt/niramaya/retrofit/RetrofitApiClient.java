@@ -1,6 +1,10 @@
 package com.ibt.niramaya.retrofit;
 
+import com.ibt.niramaya.adapter.invoices_adapter.PathologyInvoiceListAdapter;
 import com.ibt.niramaya.constant.Constant;
+import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.OpdInvoiceMainModal;
+import com.ibt.niramaya.modal.invoice_modal.pathology_invoice_modal.PahologyInvoiceListMainModal;
+import com.ibt.niramaya.modal.invoice_modal.pharmacy_invoice_modal.PharmacyInvoiceMainModal;
 import com.ibt.niramaya.modal.otp_verifacation_modal.OtpVerificationMainModal;
 import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
 
@@ -75,4 +79,19 @@ public interface RetrofitApiClient {
                                            @Field("relationship_status") String relationship_status,
                                            @Field("patient_id") String patient_id,
                                            @Field("profile_picture") String profile_picture);
+
+    @FormUrlEncoded
+    @POST(Constant.PHARMACY_INVOICE_LIST)
+    Call<PharmacyInvoiceMainModal> pharmacyInvoiceList(@Field("patient_id") String patient_id,
+                                                       @Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST(Constant.PATHOLOGY_INVOICE_LIST)
+    Call<PahologyInvoiceListMainModal> pathologyInvoiceList(@Field("patient_id") String patient_id,
+                                                            @Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST(Constant.OPD_INVOICE_LIST)
+    Call<OpdInvoiceMainModal> opdInvoiceList(@Field("patient_id") String patient_id,
+                                             @Field("user_id") String user_id);
 }

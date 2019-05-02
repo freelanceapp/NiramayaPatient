@@ -201,7 +201,13 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
             tvPatientRelationship.setText(paitentProfileData.getPatientRelationshipWithGardian());
             tvPatientGardianContact.setText(paitentProfileData.getPatientGardianContact());
             tvGardianAddress.setText(paitentProfileData.getPatientGardianAddress());
-            tvPatientRelationshipStatus.setText(paitentProfileData.getRelationshipStatus());
+            strPatientRelationshipStatus = paitentProfileData.getRelationshipStatus();
+            if (strPatientRelationshipStatus.equals("0")) {
+                strPatientRelationshipStatus = "Yes";
+            } else {
+                strPatientRelationshipStatus = "No";
+            }
+            tvPatientRelationshipStatus.setText(strPatientRelationshipStatus);
         } else {
             Alerts.show(mContext, "There is no Data");
         }

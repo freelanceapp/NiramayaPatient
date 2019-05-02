@@ -33,22 +33,6 @@ public class InvoiceListAdapter extends RecyclerView.Adapter<InvoiceListAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        /*holder.restaurent_name.setText(vendorLists.get(position).getVendorName());
-        holder.restaurent_address.setText(vendorLists.get(position).getVendorStreet());
-        holder.cardViewItem.setTag(position);
-        holder.cardViewItem.setOnClickListener(onClickListener);
-
-        String sImg = Constant.BASE_URL + vendorLists.get(position).getVendorLogo();
-        Glide.with(mContext).load(sImg)
-                .into(holder.rc_img);*/
-        /*holder.txtOpen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, HospitalDetailActivity.class);
-                intent.putExtra("from", "detail");
-                mContext.startActivity(intent);
-            }
-        });*/
 
     }
 
