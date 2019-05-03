@@ -411,7 +411,7 @@ public class PatientRagistrationActivity extends BaseActivity implements View.On
                         strmobile,strDob,strEmailadd,strHouseNo,strStreet,strCity,strState,strCountry,strZipcode,strGender,
                         strGardian,strRelation,strGardianContact,strGarAddress,strAadahr,"",strRelationship,""*//*
             } else {
-                RetrofitService.getServerResponse(new Dialog(mContext), retrofitApiClient.createPatientProfie(strName, strBloodGroup,
+                RetrofitService.getServerResponse(new Dialog(mContext), retrofitApiClient.createPatientProfile(strName, strBloodGroup,
                         strmobile, strDob, strEmailadd, strHouseNo, strStreet, strCity, strState, strCountry, strZipcode, strGender,
                         strGardian, strRelation, strGardianContact, strGarAddress, strAadahr, strUserId, strRelationship, ""), new WebResponse() {
                     @Override

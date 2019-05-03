@@ -16,7 +16,6 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -459,7 +458,7 @@ public class AddNewPatientActivity extends BaseActivity implements View.OnClickL
                         strmobile,strDob,strEmailadd,strHouseNo,strStreet,strCity,strState,strCountry,strZipcode,strGender,
                         strGardian,strRelation,strGardianContact,strGarAddress,strAadahr,"",strRelationship,""*//*
             }*/ else {
-                RetrofitService.getServerResponse(new Dialog(mContext), retrofitApiClient.createPatientProfie(strName, strBloodGroup,
+                RetrofitService.getServerResponse(new Dialog(mContext), retrofitApiClient.createPatientProfile(strName, strBloodGroup,
                         strmobile, strDob, strEmailadd, strHouseNo, strStreet, strCity, strState, strCountry, strZipcode, strGender,
                         strGardian, strPatientRelationship, strGardianContact, strGarAddress, strAadahr, strUserId, strRelationship, ""), new WebResponse() {
                     @Override

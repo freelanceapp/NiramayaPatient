@@ -12,6 +12,7 @@ public class Constant {
     public static final String PATIENT_LIST = "patient/select-patient-list.php";
     public static final String PATIENT_PRESCRIPTION_LIST = "patient/select_patient_preception.php";
     public static final String PATIENT_PRESCRIPTION_DETAIL = "patient/select_patient_preception_details.php";
+    public static final String HOSPITAL_LIST = "patient/select-hospital-list.php";
     public static final String UPDATE_PATIENNT_PROFILE = "patient/update_patient_profile.php";
 
 
@@ -45,4 +46,20 @@ public class Constant {
 
     public static final String PATIENT_ID = "patient_id";
 
+    public static final String IS_PRIVACY_POLICY_ACCEPTED = "policy";
+
+    // global topic to receive app wide push notifications
+    public static final String TOPIC_GLOBAL = "global";
+
+    // broadcast receiver intent filters
+    public static final String REGISTRATION_COMPLETE = "registrationComplete";
+    public static final String PUSH_NOTIFICATION = "pushNotification";
+
+    // id to handle the notification in the notification tray
+    public static final int NOTIFICATION_ID = 100;
+    public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
+
+    public static final String SHARED_PREF = "noty_firebase";
+
+    public static final String FIREBASE_TOKEN = "firebaseToke";
 }

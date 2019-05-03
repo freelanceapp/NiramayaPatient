@@ -6,6 +6,7 @@ import android.app.Dialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ibt.niramaya.BuildConfig;
+import com.ibt.niramaya.modal.hospital.HospitalListModel;
 import com.ibt.niramaya.modal.otp_verifacation_modal.OtpVerificationMainModal;
 import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
 import com.ibt.niramaya.modal.prescription.PrescritionListModel;
@@ -155,6 +156,25 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<PrescriptionDetailModel> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getHospitalList(final Dialog dialog, final Call<HospitalListModel> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<HospitalListModel>() {
+            @Override
+            public void onResponse(Call<HospitalListModel> call, Response<HospitalListModel> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<HospitalListModel> call, Throwable throwable) {
                 AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());
             }

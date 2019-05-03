@@ -76,6 +76,22 @@
         <activity android:name=".ui.activity.HospitalDepartmentDetailActivity" />
         <activity android:name=".ui.activity.FindAndBookActivity" />
         <activity android:name=".ui.activity.PrescriptionActivity" />
+
+
+        <!-- Firebase Notifications -->
+        <service android:name=".firebase_service.MyFirebaseMessangingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".firebase_service.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- ./Firebase Notifications -->
+
     </application>
 
 </manifest>

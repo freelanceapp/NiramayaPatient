@@ -1,10 +1,14 @@
 package com.ibt.niramaya.ui.activity;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -53,6 +57,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private FragmentUtils fragmentUtils;
     private FragmentManager fragmentManager;
     private List<PaitentProfile> patientList = new ArrayList<>();
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void init(Bundle savedInstanceState) {
+
         imgSearch = findViewById(R.id.imgSearch);
         imgSort = findViewById(R.id.imgSort);
         txtTitle = findViewById(R.id.txtTitle);
@@ -86,6 +92,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 .inject();
 
         spnPatient = findViewById(R.id.spnPatient);
+
+        Alerts.show(mContext, AppPreference.getStringPreference(mContext, Constant.FIREBASE_TOKEN));
 
         initPatientSpinner();
 
@@ -144,6 +152,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.txtDocuments).setOnClickListener(this);
         findViewById(R.id.txtSettings).setOnClickListener(this);
         findViewById(R.id.txtAddUser).setOnClickListener(this);
+        findViewById(R.id.llLogout).setOnClickListener(this);
     }
 
     @Override
@@ -232,6 +241,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     slidingRootNav.closeMenu();
                 }
                 break;
+            case R.id.llLogout:
+                doLogout();
+                slidingRootNav.closeMenu();
+                break;
         }
     }
 
@@ -287,4 +300,54 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     };
+
+    private void doLogout() {
+        new AlertDialog.Builder(mContext)
+                .setTitle("Logout")
+                .setMessage("Are you sure want to doLogout ?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AppPreference.clearAllPreferences(mContext);
+                        Intent intent = new Intent(mContext, LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("NO", null)
+                .create()
+                .show();
+    }
+
+    /*private void registerBrodcast() {
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+
+                if (intent.getAction().equals(Constant.PUSH_NOTIFICATION)) {
+                    // new push notification is received
+
+                    String message = intent.getStringExtra("message");
+
+                    //Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+
+
+
+                }
+            }
+        };
+        displayFirebaseRegId();
+
+    }
+
+    private void displayFirebaseRegId() {
+        *//*String regId = AppPreference.getStringPreference(mContext, Constant.FIREBASE_TOKEN);
+
+        Alerts.show(mContext,regId);*//*
+
+    }*/
+
 }

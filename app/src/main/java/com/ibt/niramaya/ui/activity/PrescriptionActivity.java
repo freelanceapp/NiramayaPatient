@@ -12,11 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibt.niramaya.R;
-import com.ibt.niramaya.adapter.DoctorReviewRatingAdapter;
+import com.ibt.niramaya.adapter.PrescriptionAdvisedListAdapter;
+import com.ibt.niramaya.adapter.PrescriptionGivenListAdapter;
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.modal.prescription.OpdList;
+import com.ibt.niramaya.modal.prescription.PTAdvisedModel;
+import com.ibt.niramaya.modal.prescription.PTGivenModel;
+import com.ibt.niramaya.modal.prescription.detail.Medicine;
 import com.ibt.niramaya.modal.prescription.detail.Preception;
 import com.ibt.niramaya.modal.prescription.detail.PrescriptionDetailModel;
+import com.ibt.niramaya.modal.prescription.detail.Test;
 import com.ibt.niramaya.retrofit.RetrofitService;
 import com.ibt.niramaya.retrofit.WebResponse;
 import com.ibt.niramaya.utils.AppPreference;
@@ -26,7 +31,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import retrofit2.Response;
 
@@ -36,7 +40,11 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
     private TextView tvPatientName, tvPatientId, tvDoctorName, tvHospitalName, tvOpdCreatedDate, tvAge, tvContact,
             tvComplaint, tvBpCount, tvHrCount, tvRespCount, tvTempCount, tvPainScoreCount, tvDischargeType;
     private ImageView ivHospitalLogo, ivBack;
-    private Preception preceptionData;
+    private Preception perceptionData;
+    private ArrayList<Medicine> medicineList;
+    private ArrayList<Test> testList;
+    private ArrayList<PTAdvisedModel> treatmentAdvisedList = new ArrayList<>();
+    private ArrayList<PTGivenModel> treatmentGivenList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,15 +111,92 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
                 public void onResponseSuccess(Response<?> result) {
                     PrescriptionDetailModel detailModel = (PrescriptionDetailModel) result.body();
                     if (!detailModel.getError()){
-                        preceptionData = detailModel.getPreception();
+                        perceptionData = detailModel.getPreception();
+                        medicineList = (ArrayList<Medicine>) perceptionData.getMedicine();
+                        testList = (ArrayList<Test>) perceptionData.getTest();
                         //tvComplaint, tvBpCount, tvHrCount, tvRespCount, tvTempCount, tvPainScoreCount
-                        tvComplaint.setText(preceptionData.getOpdCheifComplaints());
-                        tvBpCount.setText(preceptionData.getOpdBp());
-                        tvHrCount.setText(preceptionData.getOpdHeartRatePerMin());
-                        tvRespCount.setText(preceptionData.getOpdRespRateMin());
-                        tvTempCount.setText(preceptionData.getOpdTemp());
-                        tvPainScoreCount.setText(preceptionData.getOpdPainScore());
-                        tvDischargeType.setText(preceptionData.getOpdTypeOfDischarge());
+                        tvComplaint.setText(perceptionData.getOpdCheifComplaints());
+                        tvBpCount.setText(perceptionData.getOpdBp());
+                        tvHrCount.setText(perceptionData.getOpdHeartRatePerMin());
+                        tvRespCount.setText(perceptionData.getOpdRespRateMin());
+                        tvTempCount.setText(perceptionData.getOpdTemp());
+                        tvPainScoreCount.setText(perceptionData.getOpdPainScore());
+                        tvDischargeType.setText(perceptionData.getOpdTypeOfDischarge());
+
+                        treatmentAdvisedList.clear();
+                        treatmentGivenList.clear();
+
+                        for (int i = 0; i<medicineList.size(); i++){
+                            PTGivenModel givenModel = new PTGivenModel();
+                            PTAdvisedModel advisedModel = new PTAdvisedModel();
+                            Medicine medicine = medicineList.get(i);
+                            if (medicine.getPreceptionType().equals("0")){
+                                givenModel.setPrescriptionTreatmentType("Medicine");
+                                if (medicine.getPreception().equals(0)){
+                                    givenModel.setPrescriptionContentType("Image");
+                                }else{
+                                    givenModel.setPrescriptionContentType("Text");
+                                }
+                                givenModel.setOpdPrescriptionId(medicine.getOpdPreceptionId());
+                                givenModel.setMedicineId(medicine.getMedicineId());
+                                givenModel.setMedicineName(medicine.getMedicineName());
+                                givenModel.setMedicineDoes(medicine.getMedicineDose());
+                                givenModel.setOpdPrescriptionCreatedDate(medicine.getOpdPreceptionCreatedDate());
+
+                                treatmentGivenList.add(givenModel);
+                            }else{
+                                advisedModel.setPrescriptionTreatmentType("Medicine");
+                                if (medicine.getPreception().equals(0)){
+                                    advisedModel.setPrescriptionContentType("Image");
+                                }else{
+                                    advisedModel.setPrescriptionContentType("Text");
+                                }
+                                advisedModel.setOpdPrescriptionId(medicine.getOpdPreceptionId());
+                                advisedModel.setMedicineId(medicine.getMedicineId());
+                                advisedModel.setMedicineName(medicine.getMedicineName());
+                                advisedModel.setMedicineDoes(medicine.getMedicineDose());
+                                advisedModel.setOpdPrescriptionCreatedDate(medicine.getOpdPreceptionCreatedDate());
+
+                                treatmentAdvisedList.add(advisedModel);
+                            }
+                        }
+
+                        for (int i = 0; i<testList.size(); i++){
+                            PTGivenModel givenModel = new PTGivenModel();
+                            PTAdvisedModel advisedModel = new PTAdvisedModel();
+                            Test test = testList.get(i);
+                            if (test.getOpdPathologyTestType().equals("0")){
+                                givenModel.setPrescriptionTreatmentType("Test");
+                                if (test.getPreception().equals(0)){
+                                    givenModel.setPrescriptionContentType("Image");
+                                }else{
+                                    givenModel.setPrescriptionContentType("Text");
+                                }
+                                givenModel.setOpdPathologyTestId(test.getOpdPathologyTestId());
+                                givenModel.setPathologyId(test.getPathologyId());
+                                givenModel.setTestName(test.getTestName());
+                                givenModel.setOpdPathologyCreatedDate(test.getOpdPathologyTestCreatedDate());
+
+                                treatmentGivenList.add(givenModel);
+
+                            }else{
+                                advisedModel.setPrescriptionTreatmentType("Test");
+                                if (test.getPreception().equals(0)){
+                                    advisedModel.setPrescriptionContentType("Image");
+                                }else{
+                                    advisedModel.setPrescriptionContentType("Text");
+                                }
+                                advisedModel.setOpdPathologyTestId(test.getOpdPathologyTestId());
+                                advisedModel.setPathologyId(test.getPathologyId());
+                                advisedModel.setTestName(test.getTestName());
+                                advisedModel.setOpdPathologyCreatedDate(test.getOpdPathologyTestCreatedDate());
+
+                                treatmentAdvisedList.add(advisedModel);
+                            }
+                        }
+
+                        initPrescriptionList();
+
                     }
                 }
 
@@ -121,6 +206,21 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
                 }
             });
         }
+    }
+
+    private void initPrescriptionList() {
+        RecyclerView rvTrtGiven = findViewById(R.id.rvTrtGiven);
+        RecyclerView rvTrtAdvised = findViewById(R.id.rvTrtAdvised);
+
+        rvTrtGiven.setLayoutManager(new LinearLayoutManager(mContext));
+        PrescriptionGivenListAdapter givenAdapter = new PrescriptionGivenListAdapter(treatmentGivenList, mContext);
+        rvTrtGiven.setAdapter(givenAdapter);
+        givenAdapter.notifyDataSetChanged();
+
+        rvTrtAdvised.setLayoutManager(new LinearLayoutManager(mContext));
+        PrescriptionAdvisedListAdapter advisedAdapter = new PrescriptionAdvisedListAdapter(treatmentAdvisedList, mContext);
+        rvTrtAdvised.setAdapter(advisedAdapter);
+        advisedAdapter.notifyDataSetChanged();
     }
 
     public String changeDateFormat(String time) {

@@ -16,11 +16,9 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -545,7 +543,7 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
             } else if (strZipcode.isEmpty()) {
                 Alerts.show(mContext, "Zipcode should not be empty!!!");
             } else {
-                RetrofitService.getServerResponse(new Dialog(mContext), retrofitApiClient.updatePatientProfie(strName, strBloodGroup, strmobile, strDob, strEmailadd,
+                RetrofitService.getServerResponse(new Dialog(mContext), retrofitApiClient.updatePatientProfile(strName, strBloodGroup, strmobile, strDob, strEmailadd,
                         strHouseNo, strStreet, strCity, strState, strCountry, strZipcode, strGender, strGardian, strPatientRelationship,
                         strGardianContact, strGarAddress, strAadahr, strUserId, strPatientRelationshipStatus, strPatientId, strPatientImage), new WebResponse() {
                     @Override

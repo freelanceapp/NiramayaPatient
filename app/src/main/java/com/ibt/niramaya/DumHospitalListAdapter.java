@@ -1,4 +1,4 @@
-package com.ibt.niramaya.adapter;
+package com.ibt.niramaya;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,19 +11,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.ibt.niramaya.R;
 import com.ibt.niramaya.modal.hospital.HospitalDatum;
 import com.ibt.niramaya.ui.activity.HospitalDetailActivity;
 
 import java.util.List;
 
-public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapter.MyViewHolder> {
+public class DumHospitalListAdapter extends RecyclerView.Adapter<DumHospitalListAdapter.MyViewHolder> {
 
-    private List<HospitalDatum> vendorLists;
+    private List<String> vendorLists;
     private Context mContext;
     private View.OnClickListener onClickListener;
 
-    public HospitalListAdapter(List<HospitalDatum> vendorLists, Context mContext, View.OnClickListener onClickListener) {
+    public DumHospitalListAdapter(List<String> vendorLists, Context mContext, View.OnClickListener onClickListener) {
         this.vendorLists = vendorLists;
         this.mContext = mContext;
         this.onClickListener = onClickListener;
@@ -37,10 +36,6 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-
-        Glide.with(mContext).load(vendorLists.get(position).getHospialLogo())
-                .into(holder.rc_img);
-        holder.restaurent_name.setText(vendorLists.get(position).getHospitalName());
 
         /*holder.restaurent_name.setText(vendorLists.get(position).getVendorName());
         holder.restaurent_address.setText(vendorLists.get(position).getVendorStreet());

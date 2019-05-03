@@ -1,6 +1,7 @@
 package com.ibt.niramaya.retrofit;
 
 import com.ibt.niramaya.constant.Constant;
+import com.ibt.niramaya.modal.hospital.HospitalListModel;
 import com.ibt.niramaya.modal.otp_verifacation_modal.OtpVerificationMainModal;
 import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
 import com.ibt.niramaya.modal.prescription.PrescritionListModel;
@@ -25,30 +26,30 @@ public interface RetrofitApiClient {
 
     @FormUrlEncoded
     @POST(Constant.OTP_VERIFICATION)
-    Call<OtpVerificationMainModal> fatchOtp(@Field("contact") String contact, @Field("otp_number") String otp_number);
+    Call<OtpVerificationMainModal> fetchOtp(@Field("contact") String contact, @Field("otp_number") String otp_number);
 
     @FormUrlEncoded
     @POST(Constant.CREATE_PATIENT_PROFILE)
-    Call<ResponseBody> createPatientProfie(@Field("name") String name,
-                                           @Field("bloodgroup") String bloodgroup,
-                                           @Field("contact") String contact,
-                                           @Field("date_of_birth") String date_of_birth,
-                                           @Field("email") String email,
-                                           @Field("house_number") String house_number,
-                                           @Field("street_name") String street_name,
-                                           @Field("city") String city,
-                                           @Field("state") String state,
-                                           @Field("country") String country,
-                                           @Field("zipcode") String zipcode,
-                                           @Field("gender") String gender,
-                                           @Field("gardian_name") String gardian_name,
-                                           @Field("relationship_with_gardian") String relationship_with_gardian,
-                                           @Field("gardian_contact") String gardian_contact,
-                                           @Field("gardian_address") String gardian_address,
-                                           @Field("aadhar_number") String aadhar_number,
-                                           @Field("user_id") String user_id,
-                                           @Field("relationship_status") String relationship_status,
-                                           @Field("profile_picture") String profile_picture);
+    Call<ResponseBody> createPatientProfile(@Field("name") String name,
+                                            @Field("bloodgroup") String bloodgroup,
+                                            @Field("contact") String contact,
+                                            @Field("date_of_birth") String date_of_birth,
+                                            @Field("email") String email,
+                                            @Field("house_number") String house_number,
+                                            @Field("street_name") String street_name,
+                                            @Field("city") String city,
+                                            @Field("state") String state,
+                                            @Field("country") String country,
+                                            @Field("zipcode") String zipcode,
+                                            @Field("gender") String gender,
+                                            @Field("gardian_name") String gardian_name,
+                                            @Field("relationship_with_gardian") String relationship_with_gardian,
+                                            @Field("gardian_contact") String gardian_contact,
+                                            @Field("gardian_address") String gardian_address,
+                                            @Field("aadhar_number") String aadhar_number,
+                                            @Field("user_id") String user_id,
+                                            @Field("relationship_status") String relationship_status,
+                                            @Field("profile_picture") String profile_picture);
 
     @FormUrlEncoded
     @POST(Constant.PATIENT_LIST)
@@ -94,25 +95,33 @@ public interface RetrofitApiClient {
 
 
     @POST(Constant.UPDATE_PATIENNT_PROFILE)
-    Call<ResponseBody> updatePatientProfie(@Field("name") String name,
-                                           @Field("bloodgroup") String bloodgroup,
-                                           @Field("contact") String contact,
-                                           @Field("date_of_birth") String date_of_birth,
-                                           @Field("email") String email,
-                                           @Field("house_number") String house_number,
-                                           @Field("street_name") String street_name,
-                                           @Field("city") String city,
-                                           @Field("state") String state,
-                                           @Field("country") String country,
-                                           @Field("zipcode") String zipcode,
-                                           @Field("gender") String gender,
-                                           @Field("gardian_name") String gardian_name,
-                                           @Field("relationship_with_gardian") String relationship_with_gardian,
-                                           @Field("gardian_contact") String gardian_contact,
-                                           @Field("gardian_address") String gardian_address,
-                                           @Field("aadhar_number") String aadhar_number,
-                                           @Field("user_id") String user_id,
-                                           @Field("relationship_status") String relationship_status,
-                                           @Field("patient_id") String patient_id,
-                                           @Field("profile_picture") String profile_picture);
+    Call<ResponseBody> updatePatientProfile(@Field("name") String name,
+                                            @Field("bloodgroup") String bloodgroup,
+                                            @Field("contact") String contact,
+                                            @Field("date_of_birth") String date_of_birth,
+                                            @Field("email") String email,
+                                            @Field("house_number") String house_number,
+                                            @Field("street_name") String street_name,
+                                            @Field("city") String city,
+                                            @Field("state") String state,
+                                            @Field("country") String country,
+                                            @Field("zipcode") String zipcode,
+                                            @Field("gender") String gender,
+                                            @Field("gardian_name") String gardian_name,
+                                            @Field("relationship_with_gardian") String relationship_with_gardian,
+                                            @Field("gardian_contact") String gardian_contact,
+                                            @Field("gardian_address") String gardian_address,
+                                            @Field("aadhar_number") String aadhar_number,
+                                            @Field("user_id") String user_id,
+                                            @Field("relationship_status") String relationship_status,
+                                            @Field("patient_id") String patient_id,
+                                            @Field("profile_picture") String profile_picture);
+
+    @FormUrlEncoded
+    @POST(Constant.HOSPITAL_LIST)
+    Call<HospitalListModel> hospitalList(@Field("user_id") String user_id,
+                                         @Field("patient_id") String patient_id,
+                                         @Field("latitude") String latitude,
+                                         @Field("longitude") String longitude,
+                                         @Field("near_by") String near_by);
 }

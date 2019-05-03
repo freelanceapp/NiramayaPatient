@@ -65,7 +65,7 @@ public class OtpFragment extends BaseFragment implements OnClickListener {
             if (strOtpTest.isEmpty()) {
                 Alerts.show(mContext, "OTP should not be empty.");
             } else {
-                RetrofitService.getOtpResponse(new Dialog(mContext), retrofitApiClient.fatchOtp(strMobile, strOtpTest), new WebResponse() {
+                RetrofitService.getOtpResponse(new Dialog(mContext), retrofitApiClient.fetchOtp(strMobile, strOtpTest), new WebResponse() {
                     @Override
                     public void onResponseSuccess(Response<?> result) {
                         OtpVerificationMainModal responseBody = (OtpVerificationMainModal) result.body();
