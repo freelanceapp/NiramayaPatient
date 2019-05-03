@@ -11,17 +11,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibt.niramaya.R;
-import com.ibt.niramaya.ui.activity.PrescriptionActivity;
+import com.ibt.niramaya.modal.prescription.OpdList;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class PrescriptionListAdapter extends RecyclerView.Adapter<PrescriptionListAdapter.MyViewHolder> {
 
-    private List<String> vendorLists;
+    private List<OpdList> vendorLists;
     private Context mContext;
     private View.OnClickListener onClickListener;
 
-    public PrescriptionListAdapter(List<String> vendorLists, Context mContext, View.OnClickListener onClickListener) {
+    public PrescriptionListAdapter(List<OpdList> vendorLists, Context mContext, View.OnClickListener onClickListener) {
         this.vendorLists = vendorLists;
         this.mContext = mContext;
         this.onClickListener = onClickListener;
@@ -35,30 +38,13 @@ public class PrescriptionListAdapter extends RecyclerView.Adapter<PrescriptionLi
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        /*holder.restaurent_name.setText(vendorLists.get(position).getVendorName());
-        holder.restaurent_address.setText(vendorLists.get(position).getVendorStreet());
-        holder.cardViewItem.setTag(position);
-        holder.cardViewItem.setOnClickListener(onClickListener);
 
-        String sImg = Constant.BASE_URL + vendorLists.get(position).getVendorLogo();
-        Glide.with(mContext).load(sImg)
-                .into(holder.rc_img);*/
-        /*holder.txtOpen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, HospitalDetailActivity.class);
-                intent.putExtra("from", "detail");
-                mContext.startActivity(intent);
-            }
-        });*/
+        holder.txtDate.setText(changeDateFormat(vendorLists.get(position).getHospitalCreatedDate()));
+        holder.txtHospitalName.setText(vendorLists.get(position).getHospitalName());
+        holder.txtDoctorName.setText(vendorLists.get(position).getDoctorName());
 
-        holder.txtOpen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, PrescriptionActivity.class);
-                mContext.startActivity(intent);
-            }
-        });
+        holder.txtOpen.setTag(position);
+        holder.txtOpen.setOnClickListener(onClickListener);
 
     }
 
@@ -68,17 +54,33 @@ public class PrescriptionListAdapter extends RecyclerView.Adapter<PrescriptionLi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView restaurent_name, txtOpen;
-        public ImageView rc_img;
-        private CardView cardViewItem;
+        public TextView txtDate, txtHospitalName, txtDoctorName, txtOpen;
 
         public MyViewHolder(View view) {
             super(view);
-            cardViewItem = view.findViewById(R.id.cardViewItem);
+            txtDate = view.findViewById(R.id.txtDate);
+            txtHospitalName = view.findViewById(R.id.txtHospitalName);
+            txtDoctorName = view.findViewById(R.id.txtDoctorName);
             txtOpen = view.findViewById(R.id.txtOpen);
-            restaurent_name = view.findViewById(R.id.restaurent_name);
-            rc_img = view.findViewById(R.id.restaurent_img);
         }
+    }
+
+    public String changeDateFormat(String time) {
+        String inputPattern = "yyyy-MM-dd HH:mm:ss";
+        String outputPattern = "dd/MM/yy";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 
 }

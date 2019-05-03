@@ -5,314 +5,275 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardViewItem"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardPharmacyBill"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imgHospital"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/img_c" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvHospitalName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:baselineAligned="false"
-                            android:text="Apollo Hospital"
-                            android:textColor="@color/text_color_a"
-                            android:textSize="@dimen/size_16" />
-
-                        <TextView
-                            android:id="@+id/tvHospitalLocation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:baselineAligned="false"
-                            android:text="Saket nagar palasia Indore "
-                            android:textSize="@dimen/size_10" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:gravity="center"
-                        android:text="Invoice Id"
-                        android:textSize="@dimen/size_10" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:gravity="center"
-                        android:text="ABCD1234"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/size_10" />
-
-                </LinearLayout>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:background="@color/gray_f" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:text="Medicine Name"
-                        android:textSize="@dimen/size_10" />
-
-                    <TextView
-                        android:id="@+id/tvMedicineName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:text="Dr. Amit Trivedi"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/size_10" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:baselineAligned="false"
-                        android:text="Medicine Company Name"
-                        android:textSize="@dimen/size_10" />
-
-                    <TextView
-                        android:id="@+id/tvMedicineCategoryName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/size_10" />
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:baselineAligned="false"
-                        android:text="Medicine Quantity"
-                        android:textSize="@dimen/size_10" />
-
-                    <TextView
-                        android:id="@+id/tvMedicineQuantity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/size_10" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:text="Expire Date"
-                        android:textSize="@dimen/size_10" />
-
-                    <TextView
-                        android:id="@+id/tvMedicineExpireDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:text="20/12/2018"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/size_10" />
-
-                </LinearLayout>
-            </RelativeLayout>
+            android:layout_margin="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="18dp"
-                android:orientation="horizontal"
-                android:weightSum="30">
+                android:background="@color/white"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_weight="6"
-                    android:background="@drawable/layout_bg9"
-                    android:orientation="vertical"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/total"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/size_10" />
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="6">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="4"
                         android:orientation="horizontal">
 
-                        <TextView
+                        <ImageView
+                            android:id="@+id/imgHospital"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/img_c" />
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/rupee"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_14" />
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvHospitalName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:text="Apollo Hospital"
+                                android:textColor="@color/text_color_a"
+                                android:textSize="@dimen/size_20" />
+
+                            <TextView
+                                android:id="@+id/tvHospitalLocation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:text="Saket nagar palasia Indore "
+                                android:textSize="@dimen/size_16" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tvTotalAmount"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="500"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_14" />
+                            android:baselineAligned="false"
+                            android:gravity="center"
+                            android:text="Invoice Id"
+                            android:textSize="@dimen/size_10" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:gravity="center"
+                            android:text="ABCD1234"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/size_10" />
+
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
-                    android:layout_weight="10"
-                    android:background="@drawable/layout_bg5"
-                    android:orientation="vertical"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
+                    android:background="@color/gray_f" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/paid"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/size_10" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:baselineAligned="false"
+                            android:text="Gst Number"
+                            android:textSize="@dimen/size_10"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/tvBIllGstNUmber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/size_10"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:text="Bill Type"
+                                android:textSize="@dimen/size_10" />
+
+                            <TextView
+                                android:id="@+id/tvBillType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/size_10" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:text="Discount"
+                                android:textSize="@dimen/size_10" />
+
+                            <TextView
+                                android:id="@+id/tvDiscountAmount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/size_10" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:baselineAligned="false"
+                                android:text="Bill Status"
+                                android:textSize="@dimen/size_10" />
+
+                            <TextView
+                                android:id="@+id/tvBillStatus"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/size_10" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:baselineAligned="false"
+                                android:text="Total Amount"
+                                android:textSize="@dimen/size_10" />
+
+                            <TextView
+                                android:id="@+id/tvTotalAmount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/size_10" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/rupee"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_14" />
+                            android:layout_alignParentRight="true"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tvPaidAmount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="200"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_14" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:text="Bill Created Date"
+                                android:textSize="@dimen/size_10" />
+
+                            <TextView
+                                android:id="@+id/tvBillGenerateDAte"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/size_10" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_weight="14"
-                    android:background="@drawable/layout_bg3"
-                    android:orientation="vertical"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/due"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/size_10" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/rupee"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_14" />
-
-                        <TextView
-                            android:id="@+id/tvDueAmount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="300"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_14" />
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 </RelativeLayout>

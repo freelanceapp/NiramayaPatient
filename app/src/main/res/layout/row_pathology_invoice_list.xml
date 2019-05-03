@@ -25,7 +25,7 @@
                 android:layout_margin="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
@@ -33,59 +33,69 @@
                         android:id="@+id/imgHospital"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:scaleType="fitXY"
                         android:src="@drawable/img_c" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:weightSum="4">
 
-                        <TextView
-                            android:id="@+id/tvHospitalName"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:baselineAligned="false"
-                            android:text="Apollo Hospital"
-                            android:textColor="@color/text_color_a"
-                            android:textSize="@dimen/size_16" />
+                            android:layout_marginLeft="8dp"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tvHospitalLocation"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/tvHospitalName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:text="Apollo Hospital"
+                                android:textColor="@color/text_color_a"
+                                android:textSize="@dimen/size_16" />
+
+                            <TextView
+                                android:id="@+id/tvHospitalLocation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:text="Saket nagar palasia Indore "
+                                android:textSize="@dimen/size_10" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:baselineAligned="false"
-                            android:text="Saket nagar palasia Indore "
-                            android:textSize="@dimen/size_10" />
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="6dp"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:gravity="center"
+                                android:text="Invoice Id"
+                                android:textSize="@dimen/size_10" />
+
+                            <TextView
+                                android:id="@+id/tvInvoiceNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:gravity="center"
+                                android:text="ABCD1234"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/size_10" />
+
+                        </LinearLayout>
                     </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:gravity="center"
-                        android:text="Invoice Id"
-                        android:textSize="@dimen/size_10" />
-
-                    <TextView
-                        android:id="@+id/tvInvoiceNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:gravity="center"
-                        android:text="ABCD1234"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/size_10" />
-
                 </LinearLayout>
             </RelativeLayout>
 
@@ -110,15 +120,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="Patient Name"
+                        android:text="Gst Number"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
-                        android:id="@+id/tvPatientNamme"
+                        android:id="@+id/tvBIllGstNUmber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="Dr. Amit Trivedi"
                         android:textColor="@color/black"
                         android:textSize="@dimen/size_10" />
 
@@ -126,11 +135,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
-                        android:text="Patient Age"
+                        android:text="Bill Type"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
-                        android:id="@+id/tvPatientAge"
+                        android:id="@+id/tvBillType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -142,34 +151,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:baselineAligned="false"
-                        android:text="Patient Gender"
+                        android:text="Bill Type"
                         android:textSize="@dimen/size_10" />
 
                     <TextView
-                        android:id="@+id/tvPatientGender"
+                        android:id="@+id/tvBillStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
                         android:textColor="@color/black"
                         android:textSize="@dimen/size_10" />
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:baselineAligned="false"
-                        android:text="Discount"
-                        android:textSize="@dimen/size_10" />
-
-                    <TextView
-                        android:id="@+id/tvTestDiscount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/size_10" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -204,14 +195,14 @@
                 android:layout_marginRight="4dp"
                 android:layout_marginBottom="18dp"
                 android:orientation="horizontal"
-                android:weightSum="30">
+                android:weightSum="2">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
-                    android:layout_weight="6"
+                    android:layout_weight="1"
                     android:background="@drawable/layout_bg9"
                     android:orientation="vertical"
                     android:paddingLeft="12dp"
@@ -248,11 +239,11 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
-                    android:layout_weight="10"
+                    android:layout_weight="1"
                     android:background="@drawable/layout_bg5"
                     android:orientation="vertical"
                     android:paddingLeft="12dp"
@@ -283,47 +274,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="200"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_14" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_weight="14"
-                    android:background="@drawable/layout_bg3"
-                    android:orientation="vertical"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/due"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/size_10" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/rupee"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/size_14" />
-
-                        <TextView
-                            android:id="@+id/tvDueAmount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="300"
                             android:textColor="@color/white"
                             android:textSize="@dimen/size_14" />
                     </LinearLayout>

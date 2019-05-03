@@ -1,47 +1,33 @@
 package com.ibt.niramaya.ui.fragment;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.modal.otp_verifacation_modal.OtpVerificationMainModal;
-import com.ibt.niramaya.modal.otp_verifacation_modal.User;
 import com.ibt.niramaya.retrofit.RetrofitService;
 import com.ibt.niramaya.retrofit.WebResponse;
 import com.ibt.niramaya.ui.activity.HomeActivity;
-import com.ibt.niramaya.ui.activity.PatientRagistrationActivity;
 import com.ibt.niramaya.utils.Alerts;
 import com.ibt.niramaya.utils.AppPreference;
 import com.ibt.niramaya.utils.BaseFragment;
 import com.ibt.niramaya.utils.ConnectionDetector;
 import com.ibt.niramaya.utils.pinview.Pinview;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 public class OtpFragment extends BaseFragment implements OnClickListener {
     private ConnectionDetector cd;
-    private static View view;
-    private static EditText emailId;
-    private static TextView submit;
+    private View view;
+    private TextView submit;
     private Pinview pinview;
-    private User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +42,7 @@ public class OtpFragment extends BaseFragment implements OnClickListener {
 
     // Initialize the views
     private void initViews() {
-        submit = (TextView) view.findViewById(R.id.btnSubmit);
+        submit = view.findViewById(R.id.btnSubmit);
         pinview = view.findViewById(R.id.pinview1);
     }
 
@@ -66,25 +52,24 @@ public class OtpFragment extends BaseFragment implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnSubmit:
-                userOtpVerificationApi();
-                break;
-
+        if (v.getId() == R.id.btnSubmit) {
+            userOtpVerificationApi();
         }
     }
 
     private void userOtpVerificationApi() {
         if (cd.isNetworkAvailable()) {
+            assert getArguments() != null;
             final String strMobile = getArguments().getString("Mobile");
             String strOtpTest = pinview.getValue();
             if (strOtpTest.isEmpty()) {
-                Alerts.show(mContext, "Enter OTP " + getString(R.string.emoji));
+                Alerts.show(mContext, "OTP should not be empty.");
             } else {
                 RetrofitService.getOtpResponse(new Dialog(mContext), retrofitApiClient.fatchOtp(strMobile, strOtpTest), new WebResponse() {
                     @Override
                     public void onResponseSuccess(Response<?> result) {
                         OtpVerificationMainModal responseBody = (OtpVerificationMainModal) result.body();
+                        assert responseBody != null;
                         if (!responseBody.getError()) {
                             String strUserId = responseBody.getUser().getId();
                             String strContact = responseBody.getUser().getUserContact();

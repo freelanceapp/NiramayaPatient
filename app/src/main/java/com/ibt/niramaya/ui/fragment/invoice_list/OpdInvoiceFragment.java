@@ -1,6 +1,7 @@
 package com.ibt.niramaya.ui.fragment.invoice_list;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.BillDatum;
 import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.OpdInvoiceMainModal;
 import com.ibt.niramaya.retrofit.RetrofitService;
 import com.ibt.niramaya.retrofit.WebResponse;
+import com.ibt.niramaya.ui.activity.invoice_data.OpdBillActivity;
 import com.ibt.niramaya.utils.Alerts;
 import com.ibt.niramaya.utils.AppPreference;
 import com.ibt.niramaya.utils.BaseFragment;
@@ -49,12 +51,11 @@ public class OpdInvoiceFragment extends BaseFragment implements View.OnClickList
     private void init() {
         imgSearch.setVisibility(View.GONE);
         imgSort.setVisibility(View.VISIBLE);
-        prescriptionListApi();
         opdInvoiceListApi();
 
     }
 
-    private boolean _hasLoadedOnce= false; // your boolean field
+    private boolean _hasLoadedOnce = false; // your boolean field
 
     @Override
     public void setUserVisibleHint(boolean isFragmentVisible_) {
@@ -69,21 +70,16 @@ public class OpdInvoiceFragment extends BaseFragment implements View.OnClickList
             }
         }
     }
-    private void prescriptionListApi() {
-
-        RecyclerView recyclerViewInvoice = rootView.findViewById(R.id.recyclerViewInvoice);
-        recyclerViewInvoice.setHasFixedSize(true);
-        recyclerViewInvoice.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        invoiceListAdapter = new OpdInvoiceListAdapter(opdInformationList, mContext, this);
-        recyclerViewInvoice.setAdapter(invoiceListAdapter);
-        invoiceListAdapter.notifyDataSetChanged();
-    }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.cardViewItem:
+            case R.id.cardViewOpd:
+                int position = (int) v.getTag();
+               /* Intent intent = new Intent(mContext, OpdBillActivity.class);
+                intent.putExtra("opdSchedule", opdInformationList.get(position).getOpdInformation());
+                startActivity(intent);*/
                 break;
         }
     }
@@ -98,12 +94,17 @@ public class OpdInvoiceFragment extends BaseFragment implements View.OnClickList
         if (cd.isNetworkAvailable()) {
             String strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
             String strPatientId = AppPreference.getStringPreference(mContext, Constant.PATIENT_ID);
-            RetrofitService.getOpdInvoiceList(new Dialog(mContext), retrofitApiClient.opdInvoiceList("2", strUserId), new WebResponse() {
+            RetrofitService.getOpdInvoiceList(new Dialog(mContext), retrofitApiClient.opdInvoiceList("2", "1"), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     opdInformationList.clear();
                     OpdInvoiceMainModal opdInvoiceMainModal = (OpdInvoiceMainModal) result.body();
                     if (opdInvoiceMainModal != null && !opdInvoiceMainModal.getError()) {
+                        RecyclerView recyclerViewInvoice = rootView.findViewById(R.id.recyclerViewInvoice);
+                        recyclerViewInvoice.setHasFixedSize(true);
+                        recyclerViewInvoice.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+                        invoiceListAdapter = new OpdInvoiceListAdapter(opdInformationList, mContext, OpdInvoiceFragment.this);
+                        recyclerViewInvoice.setAdapter(invoiceListAdapter);
                         opdInformationList.addAll(opdInvoiceMainModal.getBillData());
                         invoiceListAdapter.notifyDataSetChanged();
                         Alerts.show(mContext, opdInvoiceMainModal.getMessage());

@@ -1,6 +1,7 @@
 package com.ibt.niramaya.ui.fragment.invoice_list;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.ibt.niramaya.modal.invoice_modal.pathology_invoice_modal.PahologyInvo
 import com.ibt.niramaya.modal.invoice_modal.pathology_invoice_modal.PathologyBillTest;
 import com.ibt.niramaya.retrofit.RetrofitService;
 import com.ibt.niramaya.retrofit.WebResponse;
+import com.ibt.niramaya.ui.activity.invoice_data.PathologTestBillActivity;
 import com.ibt.niramaya.utils.Alerts;
 import com.ibt.niramaya.utils.AppPreference;
 import com.ibt.niramaya.utils.BaseFragment;
@@ -54,7 +56,7 @@ public class PathologyInvoiceFragment extends BaseFragment implements View.OnCli
         pathologyInvoiceListApi();
     }
 
-    private boolean _hasLoadedOnce= false; // your boolean field
+    private boolean _hasLoadedOnce = false; // your boolean field
 
     @Override
     public void setUserVisibleHint(boolean isFragmentVisible_) {
@@ -69,6 +71,7 @@ public class PathologyInvoiceFragment extends BaseFragment implements View.OnCli
             }
         }
     }
+
     private void prescriptionListApi() {
         RecyclerView recyclerViewInvoice = rootView.findViewById(R.id.recyclerViewInvoice);
         recyclerViewInvoice.setHasFixedSize(true);
@@ -83,6 +86,16 @@ public class PathologyInvoiceFragment extends BaseFragment implements View.OnCli
         switch (v.getId()) {
             case R.id.cardViewPathology:
                 position = (int) v.getTag();
+                Intent intent = new Intent(mContext, PathologTestBillActivity.class);
+                intent.putExtra("gst", pathologyInvoiceList.get(position).getBillGstNumber());
+                intent.putExtra("total", pathologyInvoiceList.get(position).getBillAmount());
+                intent.putExtra("discount", pathologyInvoiceList.get(position).getBillDiscount());
+                intent.putExtra("date", pathologyInvoiceList.get(position).getBillCreatedDate());
+                intent.putExtra("billType", pathologyInvoiceList.get(position).getBillType());
+                intent.putExtra("billStatus", pathologyInvoiceList.get(position).getBillStatus());
+                intent.putExtra("testList", (ArrayList) pathologyInvoiceList.get(position).getPathologyBillTest());
+                intent.putExtra("hospitalInformation", pathologyInvoiceList.get(position).getHospitalBillInformation());
+                startActivity(intent);
                 break;
         }
     }
@@ -91,7 +104,7 @@ public class PathologyInvoiceFragment extends BaseFragment implements View.OnCli
         if (cd.isNetworkAvailable()) {
             String strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
             String strPatientId = AppPreference.getStringPreference(mContext, Constant.PATIENT_ID);
-            RetrofitService.getPathologyInvoiceList(new Dialog(mContext), retrofitApiClient.pathologyInvoiceList(strPatientId, strUserId), new WebResponse() {
+            RetrofitService.getPathologyInvoiceList(new Dialog(mContext), retrofitApiClient.pathologyInvoiceList("2", strUserId), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     pathologyInvoiceList.clear();

@@ -3,11 +3,11 @@ package com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BillDatum implements Parcelable {
+public class BillDatum implements Parcelable
+{
 
     @SerializedName("appointment_id")
     @Expose
@@ -60,7 +60,7 @@ public class BillDatum implements Parcelable {
     @SerializedName("opd_information")
     @Expose
     private OpdInformation opdInformation;
-    @SerializedName("hospital_bill_information")
+    @SerializedName("hospital_bill_information1")
     @Expose
     private HospitalBillInformation hospitalBillInformation;
     public final static Parcelable.Creator<BillDatum> CREATOR = new Creator<BillDatum>() {
@@ -77,7 +77,8 @@ public class BillDatum implements Parcelable {
             return (new BillDatum[size]);
         }
 
-    };
+    }
+            ;
 
     protected BillDatum(Parcel in) {
         this.appointmentId = ((String) in.readValue((String.class.getClassLoader())));

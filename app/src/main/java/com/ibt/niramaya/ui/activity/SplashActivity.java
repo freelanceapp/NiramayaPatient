@@ -27,6 +27,7 @@ public class SplashActivity extends BaseActivity {
             public void run() {
                 if (isLogin) {
                     startActivity(new Intent(mContext, HomeActivity.class));
+                    finish();
                 } else {
                     Intent intent = new Intent(mContext, LoginActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

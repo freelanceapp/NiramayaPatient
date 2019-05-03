@@ -1,7 +1,9 @@
 package com.ibt.niramaya.ui.fragment.invoice_list;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +21,7 @@ import com.ibt.niramaya.modal.invoice_modal.pharmacy_invoice_modal.PharmacyBillM
 import com.ibt.niramaya.modal.invoice_modal.pharmacy_invoice_modal.PharmacyInvoiceMainModal;
 import com.ibt.niramaya.retrofit.RetrofitService;
 import com.ibt.niramaya.retrofit.WebResponse;
+import com.ibt.niramaya.ui.activity.invoice_data.PharmacyMedicineBillActivity;
 import com.ibt.niramaya.ui.fragment.PatientFragment;
 import com.ibt.niramaya.utils.Alerts;
 import com.ibt.niramaya.utils.AppPreference;
@@ -93,8 +96,18 @@ public class PharmacyInvoiceFragment extends BaseFragment implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.cardViewItem:
+            case R.id.cardPharmacyBill:
                 position = (int) v.getTag();
+                Intent intent = new Intent(mContext, PharmacyMedicineBillActivity.class);
+                intent.putExtra("gst", pharmacyBillMedicineList.get(position).getBillGstNumber());
+                intent.putExtra("total", pharmacyBillMedicineList.get(position).getBillAmount());
+                intent.putExtra("discount", pharmacyBillMedicineList.get(position).getBillDiscount());
+                intent.putExtra("date", pharmacyBillMedicineList.get(position).getBillCreatedDate());
+                intent.putExtra("billStatus", pharmacyBillMedicineList.get(position).getBillStatus());
+                intent.putExtra("billType", pharmacyBillMedicineList.get(position).getBillType());
+                intent.putExtra("medicineList", (ArrayList) pharmacyBillMedicineList.get(position).getPharmacyBillMedicine());
+                intent.putExtra("hospitalInformation", pharmacyBillMedicineList.get(position).getHospitalBillInformation());
+                startActivity(intent);
                 break;
         }
     }

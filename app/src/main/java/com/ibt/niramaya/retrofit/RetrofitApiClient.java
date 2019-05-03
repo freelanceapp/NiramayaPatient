@@ -7,6 +7,8 @@ import com.ibt.niramaya.modal.invoice_modal.pathology_invoice_modal.PahologyInvo
 import com.ibt.niramaya.modal.invoice_modal.pharmacy_invoice_modal.PharmacyInvoiceMainModal;
 import com.ibt.niramaya.modal.otp_verifacation_modal.OtpVerificationMainModal;
 import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
+import com.ibt.niramaya.modal.prescription.PrescritionListModel;
+import com.ibt.niramaya.modal.prescription.detail.PrescriptionDetailModel;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -57,6 +59,44 @@ public interface RetrofitApiClient {
     Call<PatientMainModal> patientList(@Field("user_id") String user_id);
 
     @FormUrlEncoded
+    @POST("Add_Property.php")
+    Call<ResponseBody> uploadPropertyDataToServer(@Field("Image1") String Image1,
+                                                  @Field("Image2") String Image2,
+                                                  @Field("Image3") String Image3,
+                                                  @Field("Image4") String Image4,
+
+                                                  @Field("WardName") String WardName,
+                                                  @Field("ZoneName") String ZoneName,
+                                                  @Field("BlockNumber") String BlockNumber,
+                                                  @Field("PropertyNumber") String PropertyNumber,
+                                                  @Field("PropertyName") String PropertyName,
+                                                  @Field("Address") String Address,
+
+                                                  @Field("CorporationPropertyNumber") String CorporationPropertyNumber,
+                                                  @Field("PropertyUsageType") String PropertyUsageType,
+                                                  @Field("PropertyType") String PropertyType,
+                                                  @Field("ResidentialCount") String ResidentialCount,
+                                                  @Field("CommercialCount") String CommercialCount,
+                                                  @Field("Remark1") String Remark1,
+                                                  @Field("Remark2") String Remark2,
+                                                  @Field("DeviceId") String DeviceId,
+
+                                                  @Field("Longitude") String Longitude,
+                                                  @Field("Latitude") String Latitude,
+                                                  @Field("UserId") String UserId);
+
+    @FormUrlEncoded
+    @POST(Constant.PATIENT_PRESCRIPTION_LIST)
+    Call<PrescritionListModel> patientPrescriptionList(@Field("user_id") String user_id,
+                                           @Field("patient_id") String patient_id);
+
+    @FormUrlEncoded
+    @POST(Constant.PATIENT_PRESCRIPTION_DETAIL)
+    Call<PrescriptionDetailModel> patientPrescriptionDetail(@Field("user_id") String user_id,
+                                                            @Field("patient_id") String patient_id,
+                                                          @Field("opd_id") String opd_id);
+
+
     @POST(Constant.UPDATE_PATIENNT_PROFILE)
     Call<ResponseBody> updatePatientProfie(@Field("name") String name,
                                            @Field("bloodgroup") String bloodgroup,

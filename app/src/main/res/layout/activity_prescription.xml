@@ -13,10 +13,12 @@
         android:paddingLeft="16dp">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:id="@+id/ivBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_back_b" />
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,20 +51,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="3"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginRight="8dp">
 
                     <ImageView
+                        android:id="@+id/ivHospitalLogo"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/img_c" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginLeft="16dp">
 
                         <TextView
+                            android:id="@+id/tvPatientName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:baselineAligned="false"
@@ -71,6 +78,7 @@
                             android:textSize="@dimen/size_14" />
 
                         <TextView
+                            android:id="@+id/tvPatientId"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:baselineAligned="false"
@@ -79,6 +87,7 @@
                             android:textSize="@dimen/size_14" />
 
                         <TextView
+                            android:id="@+id/tvDoctorName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -88,6 +97,7 @@
                             android:textSize="@dimen/size_14" />
 
                         <TextView
+                            android:id="@+id/tvHospitalName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:baselineAligned="false"
@@ -96,6 +106,7 @@
                             android:textSize="@dimen/size_14" />
 
                         <TextView
+                            android:id="@+id/tvOpdCreatedDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:baselineAligned="false"
@@ -112,7 +123,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="7"
-                    android:orientation="vertical">
+                    android:visibility="gone"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -123,6 +136,7 @@
                         android:textSize="@dimen/size_14" />
 
                     <TextView
+                        android:id="@+id/tvAge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -141,6 +155,7 @@
                         android:textSize="@dimen/size_14" />
 
                     <TextView
+                        android:id="@+id/tvContact"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -178,7 +193,8 @@
                         android:textColor="@color/text_color_a"
                         android:textSize="@dimen/size_14" />
 
-                    <EditText
+                    <TextView
+                        android:id="@+id/tvComplaint"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -187,7 +203,8 @@
                         android:lines="5"
                         android:padding="8dp"
                         android:text="Injury in right leg and back pain"
-                        android:textSize="@dimen/size_12" />
+                        android:textSize="@dimen/size_12"
+                        android:layout_marginLeft="16dp" />
                 </LinearLayout>
 
                 <HorizontalScrollView
@@ -224,6 +241,7 @@
                                     android:textSize="@dimen/size_12" />
 
                                 <TextView
+                                    android:id="@+id/tvBpCount"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@color/white"
@@ -259,6 +277,7 @@
                                     android:textSize="@dimen/size_12" />
 
                                 <TextView
+                                    android:id="@+id/tvHrCount"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@color/white"
@@ -294,6 +313,7 @@
                                     android:textSize="@dimen/size_12" />
 
                                 <TextView
+                                    android:id="@+id/tvRespCount"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@color/white"
@@ -329,6 +349,7 @@
                                     android:textSize="@dimen/size_12" />
 
                                 <TextView
+                                    android:id="@+id/tvTempCount"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@color/white"
@@ -364,6 +385,7 @@
                                     android:textSize="@dimen/size_12" />
 
                                 <TextView
+                                    android:id="@+id/tvPainScoreCount"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@color/white"
@@ -394,6 +416,7 @@
                     android:textColor="@color/text_color_a" />
 
                 <TextView
+                    android:id="@+id/tvDischargeType"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_weight="5"

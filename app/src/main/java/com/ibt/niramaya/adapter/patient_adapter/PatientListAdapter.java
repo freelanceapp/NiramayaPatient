@@ -73,7 +73,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvPatientProfile;
-        public CircleImageView ivPatientProfile;
+        public ImageView ivPatientProfile;
         private LinearLayout llPatient, llAddNewPatient;
 
         public MyViewHolder(View view) {

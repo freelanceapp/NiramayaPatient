@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.BillDatum;
+import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.HospitalBillInformation;
+import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.OpdInformation;
 
 import java.util.List;
 
@@ -19,6 +22,8 @@ public class OpdInvoiceListAdapter extends RecyclerView.Adapter<OpdInvoiceListAd
     private List<BillDatum> opdInformationList;
     private Context mContext;
     private View.OnClickListener onClickListener;
+    private HospitalBillInformation hospitalBillInformation;
+    private OpdInformation opdInformation;
 
     public OpdInvoiceListAdapter(List<BillDatum> opdInformationList, Context mContext, View.OnClickListener onClickListener) {
         this.opdInformationList = opdInformationList;
@@ -35,16 +40,25 @@ public class OpdInvoiceListAdapter extends RecyclerView.Adapter<OpdInvoiceListAd
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         BillDatum datum = opdInformationList.get(position);
-        holder.cardViewItem.setTag(position);
-        holder.cardViewItem.setOnClickListener(onClickListener);
+        //   hospitalBillInformation = datum.getHospitalBillInformation();
 
-        holder.tvpatientName.setText(datum.getPatientName());
-        holder.tvPatientGender.setText(datum.getPatientGender());
-        holder.tvPatientContact.setText(datum.getPatinetContact());
-        holder.tvAppoiontmentAmount.setText(datum.getAppointmentAmount());
-        holder.tvDoctorName.setText(datum.getAppointmentReferredDoctorName());
+        holder.cardViewOpd.setTag(position);
+        holder.cardViewOpd.setOnClickListener(onClickListener);
+/*
+        holder.tvHospitalName.setText(hospitalBillInformation.getHospitalName());
+        Glide.with(mContext).load(hospitalBillInformation.getHospialLogo()).into(holder.imgHospital);
+        holder.tvHospitalLocation.setText(hospitalBillInformation.getHospitalStreetName())*/
+        ;
+
+        holder.tvAppoiontmentAmount.setText(" : " + datum.getAppointmentAmount());
         holder.tvAppoiontmentDate.setText(datum.getAppointmentBookingDate());
-
+        holder.tvDoctorName.setText(datum.getAppointmentReferredDoctorName());
+        holder.tvAppoiontmentAmount.setText(datum.getAppointmentAmount());
+        holder.tvPaymentType.setText(datum.getAppointmentType());
+        holder.tvBillStatus.setText(datum.getAppointmentStatus());
+        holder.tvOpdTitle.setText(datum.getOpdInformation().getTitle());
+        holder.tvOpdAmount.setText(datum.getOpdInformation().getAmount());
+        holder.tvOpdDescription.setText(datum.getOpdInformation().getDescription());
     }
 
     @Override
@@ -53,19 +67,25 @@ public class OpdInvoiceListAdapter extends RecyclerView.Adapter<OpdInvoiceListAd
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvpatientName, tvPatientGender, tvPatientContact, tvAppoiontmentAmount, tvDoctorName, tvAppoiontmentDate;
-        public ImageView rc_img;
-        private CardView cardViewItem;
+        public TextView tvHospitalName, tvHospitalLocation, tvInvoiceNumber, tvDoctorName, tvAppoiontmentAmount, tvAppoiontmentDate, tvPaymentType, tvBillStatus, tvOpdTitle, tvOpdAmount, tvOpdDescription;
+        public ImageView imgHospital;
+        private CardView cardViewOpd;
 
         public MyViewHolder(View view) {
             super(view);
-            cardViewItem = view.findViewById(R.id.cardViewItem);
-            tvpatientName = view.findViewById(R.id.tvpatientName);
-            tvPatientGender = view.findViewById(R.id.tvPatientGender);
-            tvPatientContact = view.findViewById(R.id.tvPatientContact);
+            cardViewOpd = view.findViewById(R.id.cardViewOpd);
+            imgHospital = view.findViewById(R.id.imgHospital);
+            tvHospitalName = view.findViewById(R.id.tvHospitalName);
+            tvHospitalLocation = view.findViewById(R.id.tvHospitalLocation);
+            tvInvoiceNumber = view.findViewById(R.id.tvInvoiceNumber);
             tvAppoiontmentAmount = view.findViewById(R.id.tvAppoiontmentAmount);
             tvDoctorName = view.findViewById(R.id.tvDoctorName);
             tvAppoiontmentDate = view.findViewById(R.id.tvAppoiontmentDate);
+            tvPaymentType = view.findViewById(R.id.tvPaymentType);
+            tvBillStatus = view.findViewById(R.id.tvBillStatus);
+            tvOpdTitle = view.findViewById(R.id.tvOpdTitle);
+            tvOpdAmount = view.findViewById(R.id.tvOpdAmount);
+            tvOpdDescription = view.findViewById(R.id.tvOpdDescription);
         }
     }
 
