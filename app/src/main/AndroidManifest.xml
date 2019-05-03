@@ -23,7 +23,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activity.patient.PatientDetailActivity"></activity>
+        <activity android:name=".ui.activity.invoice_data.OpdBillActivity"></activity>
+        <activity android:name=".ui.activity.invoice_data.PathologTestBillActivity" />
+        <activity android:name=".ui.activity.invoice_data.PharmacyMedicineBillActivity" />
+        <activity android:name=".ui.activity.patient.PatientDetailActivity" />
         <activity
             android:name=".ui.activity.patient.AddNewPatientActivity"
             android:screenOrientation="portrait" />

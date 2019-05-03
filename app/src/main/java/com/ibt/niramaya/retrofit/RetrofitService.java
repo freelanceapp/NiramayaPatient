@@ -7,6 +7,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ibt.niramaya.BuildConfig;
 import com.ibt.niramaya.modal.hospital.HospitalListModel;
+import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.OpdInvoiceMainModal;
+import com.ibt.niramaya.modal.invoice_modal.pathology_invoice_modal.PahologyInvoiceListMainModal;
+import com.ibt.niramaya.modal.invoice_modal.pharmacy_invoice_modal.PharmacyInvoiceMainModal;
 import com.ibt.niramaya.modal.otp_verifacation_modal.OtpVerificationMainModal;
 import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
 import com.ibt.niramaya.modal.prescription.PrescritionListModel;
@@ -156,6 +159,60 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<PrescriptionDetailModel> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+    public static void getPharmacyInvoiceList(final Dialog dialog, final Call<PharmacyInvoiceMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<PharmacyInvoiceMainModal>() {
+            @Override
+            public void onResponse(Call<PharmacyInvoiceMainModal> call, Response<PharmacyInvoiceMainModal> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<PharmacyInvoiceMainModal> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+    public static void getOpdInvoiceList(final Dialog dialog, final Call<OpdInvoiceMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<OpdInvoiceMainModal>() {
+            @Override
+            public void onResponse(Call<OpdInvoiceMainModal> call, Response<OpdInvoiceMainModal> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<OpdInvoiceMainModal> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+    public static void getPathologyInvoiceList(final Dialog dialog, final Call<PahologyInvoiceListMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<PahologyInvoiceListMainModal>() {
+            @Override
+            public void onResponse(Call<PahologyInvoiceListMainModal> call, Response<PahologyInvoiceListMainModal> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<PahologyInvoiceListMainModal> call, Throwable throwable) {
                 AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());
             }
