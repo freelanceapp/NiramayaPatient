@@ -89,15 +89,15 @@ public interface RetrofitApiClient {
     @FormUrlEncoded
     @POST(Constant.PATIENT_PRESCRIPTION_LIST)
     Call<PrescritionListModel> patientPrescriptionList(@Field("user_id") String user_id,
-                                           @Field("patient_id") String patient_id);
+                                                       @Field("patient_id") String patient_id);
 
     @FormUrlEncoded
     @POST(Constant.PATIENT_PRESCRIPTION_DETAIL)
     Call<PrescriptionDetailModel> patientPrescriptionDetail(@Field("user_id") String user_id,
                                                             @Field("patient_id") String patient_id,
-                                                          @Field("opd_id") String opd_id);
+                                                            @Field("opd_id") String opd_id);
 
-
+    @FormUrlEncoded
     @POST(Constant.UPDATE_PATIENNT_PROFILE)
     Call<ResponseBody> updatePatientProfile(@Field("name") String name,
                                             @Field("bloodgroup") String bloodgroup,
@@ -128,7 +128,7 @@ public interface RetrofitApiClient {
                                          @Field("latitude") String latitude,
                                          @Field("longitude") String longitude,
                                          @Field("near_by") String near_by);
-    Call<ResponseBody> updatePatientProfie(@Field("name") String name,
+  /*  Call<ResponseBody> updatePatientProfie(@Field("name") String name,
                                            @Field("bloodgroup") String bloodgroup,
                                            @Field("contact") String contact,
                                            @Field("date_of_birth") String date_of_birth,
@@ -148,7 +148,7 @@ public interface RetrofitApiClient {
                                            @Field("user_id") String user_id,
                                            @Field("relationship_status") String relationship_status,
                                            @Field("patient_id") String patient_id,
-                                           @Field("profile_picture") String profile_picture);
+                                           @Field("profile_picture") String profile_picture);*/
 
     @FormUrlEncoded
     @POST(Constant.PHARMACY_INVOICE_LIST)

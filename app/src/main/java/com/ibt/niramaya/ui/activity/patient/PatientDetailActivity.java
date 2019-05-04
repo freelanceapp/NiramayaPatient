@@ -11,14 +11,15 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -49,19 +50,23 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 public class PatientDetailActivity extends BaseActivity implements View.OnClickListener {
+    private Pattern regexPattern = Pattern.compile("^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$");
     private ConnectionDetector cd;
     Toolbar toolbar;
+    private MenuItem menuItem;
     private CircleImageView imgProfilePatient, imgEditProfilePatient;
     private TextView tvPatientName, tvPatientMobileNumber, tvPatientaadharNumber, tvPatientEmailId, tvPatientDateofBirthNumber, tvPatientGender, tvPatientbloodGroup, tvPatienthouseNo, patientSTreet, tvPatientCity, tvPatientState, tvPatientCountry, tvPatientZipCode, tvPatientGardian, tvPatientRelationship, tvPatientGardianContact, tvGardianAddress, tvPatientRelationshipStatus;
     private static final int LOAD_IMAGE_GALLERY = 123;
@@ -89,31 +94,17 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     private void init() {
-        final Toolbar toolbar = findViewById(R.id.toolbarPatientDetail);
-        toolbar.setTitle("Patient Detail");
+        toolbar = findViewById(R.id.toolbarPatientDetail);
+        toolbar.setTitle("Product Detail");
+        setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
-        toolbar.inflateMenu(R.menu.menu_product_detail);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.action_edit) {
-                    toolbar.setTitle("Update Patient Detail");
-                    ((LinearLayout) findViewById(R.id.llEditPatientDetail)).setVisibility(View.VISIBLE);
-                    ((LinearLayout) findViewById(R.id.llShowPatientDetail)).setVisibility(View.GONE);
 
-                } else {
-                    ((LinearLayout) findViewById(R.id.llEditPatientDetail)).setVisibility(View.GONE);
-                    ((LinearLayout) findViewById(R.id.llShowPatientDetail)).setVisibility(View.VISIBLE);
-                }
-                return false;
-            }
-        });
 
         if (checkPermission()) {
             Alerts.show(mContext, "Permission granted");
@@ -124,6 +115,30 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
         getIntentData();
         spinnerData();
         radioGroupData();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_product_detail, menu);
+        menuItem = menu.findItem(R.id.action_edit);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                menuItem.setVisible(false);
+                toolbar.setTitle("Update Patient Detail");
+                ((LinearLayout) findViewById(R.id.llEditPatientDetail)).setVisibility(View.VISIBLE);
+                ((LinearLayout) findViewById(R.id.llShowPatientDetail)).setVisibility(View.GONE);
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+        return true;
     }
 
     private void findId() {
@@ -177,11 +192,14 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
         });
     }
 
+
     private void getIntentData() {
         Intent intent = getIntent();
         paitentProfileData = (PaitentProfile) intent.getParcelableExtra("patientDetail");
         if (paitentProfileData != null) {
-            Glide.with(mContext).load(paitentProfileData.getPatientProfilePicture()).into(imgProfilePatient);
+            String strPatientProfile = paitentProfileData.getPatientProfilePicture();
+            Glide.with(mContext).load(strPatientProfile).error(R.drawable.ic_profile).into(imgProfilePatient);
+
             tvPatientName.setText(paitentProfileData.getPatientName());
             tvPatientMobileNumber.setText(paitentProfileData.getPatientContact());
             tvPatientaadharNumber.setText(paitentProfileData.getPatientAadharNumber());
@@ -211,7 +229,8 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
         }
 
         if (paitentProfileData != null) {
-            Glide.with(mContext).load(paitentProfileData.getPatientProfilePicture()).into(imgEditProfilePatient);
+            String strPatientProfile = paitentProfileData.getPatientProfilePicture();
+            Glide.with(mContext).load(strPatientProfile).error(getResources().getDrawable(R.drawable.ic_profile)).into(imgEditProfilePatient);
             etPatientName.setText(paitentProfileData.getPatientName());
             etPatientMobileNumber.setText(paitentProfileData.getPatientContact());
             etPaadharNumber.setText(paitentProfileData.getPatientAadharNumber());
@@ -408,6 +427,7 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
                 imgEditProfilePatient.setImageBitmap(photo);
                 Uri tempUri = getImageUri(mContext, photo);
                 finalFile = new File(getRealPathFromURI(tempUri));
+                strPatientImage = convertToBase64(finalFile.getAbsolutePath());
 
                 //api hit
 
@@ -420,10 +440,10 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
             try {
                 inputStream = mContext.getContentResolver().openInputStream(uriImage);
                 final Bitmap imageMap = BitmapFactory.decodeStream(inputStream);
-                imgEditProfilePatient.setImageBitmap(imageMap);
 
                 String imagePath2 = getPath(uriImage);
                 File imageFile = new File(imagePath2);
+                imgEditProfilePatient.setImageBitmap(getBitmap(imagePath2));
 
                 finalFile = imageFile;
                 strPatientImage = convertToBase64(finalFile.getAbsolutePath());
@@ -544,6 +564,8 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
                 Alerts.show(mContext, "Mobile number should not be empty!!!");
             } else if (strEmailadd.isEmpty()) {
                 Alerts.show(mContext, "Email address should not be empty!!!");
+            } else if (!strEmailadd.matches(String.valueOf(regexPattern))) {
+                Alerts.show(mContext, "Email address is invalid!!!");
             } else if (strDob.isEmpty()) {
                 Alerts.show(mContext, "Date of birth should not be empty!!!");
             } else if (strCity.isEmpty()) {
@@ -584,6 +606,22 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
                 });
             }
         }
+    }
+
+    public Bitmap getBitmap(String path) {
+        Bitmap bitmap = null;
+        try {
+
+            File f = new File(path);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+            bitmap = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap;
     }
 
 }

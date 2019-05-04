@@ -55,11 +55,8 @@ public class PatientListAdapter extends RecyclerView.Adapter<PatientListAdapter.
 
             holder.tvPatientProfile.setText(paitentProfile.getPatientName());
             String strImageUrl = paitentProfile.getPatientProfilePicture();
-            if (strImageUrl != null) {
-                Glide.with(mContext).load(strImageUrl).into(holder.ivPatientProfile);
-            } else {
-                holder.ivPatientProfile.setVisibility(View.GONE);
-            }
+
+                Glide.with(mContext).load(strImageUrl).error(R.drawable.ic_profile).into(holder.ivPatientProfile);
             holder.llPatient.setTag(position);
             holder.llPatient.setOnClickListener(onClickListener);
         }

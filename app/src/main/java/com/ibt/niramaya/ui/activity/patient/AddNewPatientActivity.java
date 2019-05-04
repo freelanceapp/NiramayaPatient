@@ -52,12 +52,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 public class AddNewPatientActivity extends BaseActivity implements View.OnClickListener {
+    private Pattern regexPattern = Pattern.compile("^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$");
     private ConnectionDetector cd;
     private static final int LOAD_IMAGE_GALLERY = 123;
     private static int PICK_IMAGE_CAMERA = 124;
@@ -284,6 +287,7 @@ public class AddNewPatientActivity extends BaseActivity implements View.OnClickL
                 imgProfilePatient.setImageBitmap(photo);
                 Uri tempUri = getImageUri(mContext, photo);
                 finalFile = new File(getRealPathFromURI(tempUri));
+                strMedicineImage = convertToBase64(finalFile.getAbsolutePath());
 
                 //api hit
 
@@ -335,6 +339,7 @@ public class AddNewPatientActivity extends BaseActivity implements View.OnClickL
 
         return encodedImage;
     }
+
 
     private void selectImage() {
         try {
@@ -439,6 +444,8 @@ public class AddNewPatientActivity extends BaseActivity implements View.OnClickL
                 Alerts.show(mContext, "Aadhar number should not be empty!!!");
             } else if (strEmailadd.isEmpty()) {
                 Alerts.show(mContext, "Email address should not be empty!!!");
+            } else if (!strEmailadd.matches(String.valueOf(regexPattern))) {
+                Alerts.show(mContext, "Email address is invalid!!!");
             } else if (strDob.isEmpty()) {
                 Alerts.show(mContext, "Date of birth should not be empty!!!");
             } else if (strCity.isEmpty()) {
@@ -468,6 +475,7 @@ public class AddNewPatientActivity extends BaseActivity implements View.OnClickL
                             JSONObject jsonObject = new JSONObject(responseBody.string());
                             if (jsonObject.getBoolean("error")) {
                                 onBackPressed();
+                                finish();
                                 Alerts.show(mContext, jsonObject.toString());
                             } else {
                                 Alerts.show(mContext, jsonObject.toString());
