@@ -94,7 +94,7 @@ public class OpdInvoiceFragment extends BaseFragment implements View.OnClickList
         if (cd.isNetworkAvailable()) {
             String strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
             String strPatientId = AppPreference.getStringPreference(mContext, Constant.PATIENT_ID);
-            RetrofitService.getOpdInvoiceList(new Dialog(mContext), retrofitApiClient.opdInvoiceList("2", "1"), new WebResponse() {
+            RetrofitService.getOpdInvoiceList(new Dialog(mContext), retrofitApiClient.opdInvoiceList(strPatientId, strUserId), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     opdInformationList.clear();
