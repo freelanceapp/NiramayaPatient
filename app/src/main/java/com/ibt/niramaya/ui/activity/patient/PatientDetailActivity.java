@@ -230,7 +230,12 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
 
         if (paitentProfileData != null) {
             String strPatientProfile = paitentProfileData.getPatientProfilePicture();
-            Glide.with(mContext).load(strPatientProfile).error(getResources().getDrawable(R.drawable.ic_profile)).into(imgEditProfilePatient);
+            //Glide.with(mContext).load(strPatientProfile).error(getResources().getDrawable(R.drawable.ic_profile)).into(imgEditProfilePatient);
+            if (strPatientProfile.length()>100) {
+                Glide.with(mContext).load(strPatientProfile).into(imgEditProfilePatient);
+            } else {
+                imgEditProfilePatient.setImageResource(R.drawable.ic_profile);
+            }
             etPatientName.setText(paitentProfileData.getPatientName());
             etPatientMobileNumber.setText(paitentProfileData.getPatientContact());
             etPaadharNumber.setText(paitentProfileData.getPatientAadharNumber());
@@ -540,7 +545,7 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
     private void updatePatientProfileApi() {
         if (cd.isNetworkAvailable()) {
             String strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
-            String strPatientId = AppPreference.getStringPreference(mContext, Constant.PATIENT_ID);
+            String strPatientId = paitentProfileData.getPatientId();
             String strName = etPatientName.getText().toString();
             strmobile = etPatientMobileNumber.getText().toString();
             String strAadahr = etPaadharNumber.getText().toString();

@@ -69,6 +69,12 @@ public class PatientFragment extends BaseFragment implements View.OnClickListene
         imgSort.setVisibility(View.VISIBLE);
         rvPatientList = rootView.findViewById(R.id.rvPatientList);
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         patientListApi();
     }
 

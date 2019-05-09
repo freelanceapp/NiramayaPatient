@@ -9,6 +9,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class HospitalDatum implements Parcelable {
 
+    @SerializedName("hospital_id")
+    @Expose
+    private String hospitalId;
     @SerializedName("hospital_name")
     @Expose
     private String hospitalName;
@@ -60,6 +63,7 @@ public class HospitalDatum implements Parcelable {
 
     protected HospitalDatum(Parcel in) {
         this.hospitalName = ((String) in.readValue((String.class.getClassLoader())));
+        this.hospitalId = ((String) in.readValue((String.class.getClassLoader())));
         this.hospitalHouseNumber = ((String) in.readValue((String.class.getClassLoader())));
         this.hospitalStreetName = ((String) in.readValue((String.class.getClassLoader())));
         this.hospitalCity = ((String) in.readValue((String.class.getClassLoader())));
@@ -73,6 +77,14 @@ public class HospitalDatum implements Parcelable {
     }
 
     public HospitalDatum() {
+    }
+
+    public String getHospitalId() {
+        return hospitalId;
+    }
+
+    public void setHospitalId(String hospitalId) {
+        this.hospitalId = hospitalId;
     }
 
     public String getHospitalName() {
@@ -165,6 +177,7 @@ public class HospitalDatum implements Parcelable {
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(hospitalName);
+        dest.writeValue(hospitalId);
         dest.writeValue(hospitalHouseNumber);
         dest.writeValue(hospitalStreetName);
         dest.writeValue(hospitalCity);

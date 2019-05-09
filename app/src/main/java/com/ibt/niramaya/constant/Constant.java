@@ -17,6 +17,7 @@ public class Constant {
     public static final String PHARMACY_INVOICE_LIST = "patient/select_pharmacy_bill.php";
     public static final String PATHOLOGY_INVOICE_LIST = "patient/select_pathology_bill.php";
     public static final String OPD_INVOICE_LIST = "patient/select_opd_bill.php";
+    public static final String DOCTOR_OPD_LIST = "patient/select-hospital-doctor-opd-list.php";
 
 
     // Fragment constant

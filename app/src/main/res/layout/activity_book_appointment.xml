@@ -6,6 +6,16 @@
     android:background="@color/gray_i"
     android:orientation="vertical">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp">
@@ -99,13 +109,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="16dp"
-            android:paddingTop="24dp"
-            android:paddingRight="16dp"
             android:paddingBottom="24dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -126,9 +134,65 @@
                     android:textSize="@dimen/size_16" />
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#B71C1C">
+
+                    <ImageView
+                        android:id="@+id/ivPrevious"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_keyboard_arrow_left"/>
+                    <ImageView
+                        android:id="@+id/ivNext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_keyboard_arrow_right"/>
+
+                    <TextView
+                        android:id="@+id/tvMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textSize="18sp"
+                        android:text="May"
+                        android:textColor="@color/white"/>
+
+                </RelativeLayout>
+
+                <com.github.sundeepk.compactcalendarview.CompactCalendarView
+                    android:id="@+id/calView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="220dp"
+                    android:nestedScrollingEnabled="false"
+                    app:compactCalendarBackgroundColor="@color/colorPrimary"
+                    app:compactCalendarCurrentDayBackgroundColor="#FDFF3D3D"
+                    app:compactCalendarCurrentDayIndicatorStyle="fill_large_indicator"
+                    app:compactCalendarCurrentSelectedDayBackgroundColor="#D5FF3D3D"
+                    app:compactCalendarEventIndicatorStyle="small_indicator"
+                    app:compactCalendarOtherMonthDaysTextColor="#534c4c"
+                    app:compactCalendarShouldSelectFirstDayOfMonthOnScroll="false"
+                    app:compactCalendarTargetHeight="250dp"
+                    app:compactCalendarTextColor="#fff"
+                    app:compactCalendarTextSize="12sp" />
+
+            </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="36dp">
 
                 <ImageView
@@ -152,13 +216,25 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp">
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:id="@+id/tvSelectedDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Selected Date"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/size_18" />
 
                 <TextView
                     android:id="@+id/tvServices"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Services"
+                    android:layout_marginTop="16dp"
+                    android:layout_below="@+id/tvSelectedDate"
                     android:textColor="@color/black"
                     android:textSize="@dimen/size_18" />
 
@@ -202,5 +278,9 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/size_20" />
+
+    </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

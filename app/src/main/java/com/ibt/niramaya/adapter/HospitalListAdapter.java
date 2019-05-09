@@ -36,7 +36,7 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         Glide.with(mContext).load(vendorLists.get(position).getHospialLogo())
                 .into(holder.rc_img);
@@ -54,6 +54,7 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, HospitalDetailActivity.class);
+                intent.putExtra("HospitalId", vendorLists.get(position).getHospitalId());
                 mContext.startActivity(intent);
             }
         });

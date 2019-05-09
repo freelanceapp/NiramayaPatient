@@ -1,7 +1,7 @@
 package com.ibt.niramaya.retrofit;
 
-import com.ibt.niramaya.adapter.invoices_adapter.PathologyInvoiceListAdapter;
 import com.ibt.niramaya.constant.Constant;
+import com.ibt.niramaya.modal.doctor_opd.DoctorOpdModel;
 import com.ibt.niramaya.modal.hospital.HospitalListModel;
 import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.OpdInvoiceMainModal;
 import com.ibt.niramaya.modal.invoice_modal.pathology_invoice_modal.PahologyInvoiceListMainModal;
@@ -11,15 +11,11 @@ import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
 import com.ibt.niramaya.modal.prescription.PrescritionListModel;
 import com.ibt.niramaya.modal.prescription.detail.PrescriptionDetailModel;
 
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 
 public interface RetrofitApiClient {
 
@@ -164,4 +160,10 @@ public interface RetrofitApiClient {
     @POST(Constant.OPD_INVOICE_LIST)
     Call<OpdInvoiceMainModal> opdInvoiceList(@Field("patient_id") String patient_id,
                                              @Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST(Constant.DOCTOR_OPD_LIST)
+    Call<DoctorOpdModel> doctorOpdList(@Field("hospital_id") String hospital_id,
+                                       @Field("user_id") String user_id,
+                                       @Field("patient_id") String patient_id);
 }

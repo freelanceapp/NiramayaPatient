@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvDoctorOpdList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <include layout="@layout/custom_peditrician" />
@@ -19,4 +26,4 @@
 
         <include layout="@layout/custom_peditrician" />
     </LinearLayout>
-</ScrollView>
+</RelativeLayout>
