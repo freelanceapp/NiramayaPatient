@@ -228,13 +228,52 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/size_18" />
 
+                <LinearLayout
+                    android:id="@+id/llAppointment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/tvSelectedDate"
+                    android:padding="8dp"
+                    android:background="@color/gray_f"
+                    android:layout_marginTop="16dp">
+                    <TextView
+                        android:id="@+id/tvWeaklyAppointment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Weakly Appointment"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/size_18" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvWeekly"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:nestedScrollingEnabled="false"/>
+                    <TextView
+                        android:id="@+id/tvDateAppointment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Date Appointment"
+                        android:layout_marginTop="8dp"
+                        android:layout_below="@+id/llAppointment"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/size_18" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:nestedScrollingEnabled="false"/>
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/tvServices"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Services"
                     android:layout_marginTop="16dp"
-                    android:layout_below="@+id/tvSelectedDate"
+                    android:layout_below="@+id/llAppointment"
                     android:textColor="@color/black"
                     android:textSize="@dimen/size_18" />
 

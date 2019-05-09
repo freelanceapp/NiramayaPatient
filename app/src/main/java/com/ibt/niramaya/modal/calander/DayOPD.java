@@ -6,13 +6,15 @@ public class DayOPD {
     private String scheduleId;
     private String startTime;
     private String endTime;
+    private String date;
     private String status;
 
-    public DayOPD(String type, String startTime, String endTime, String status, String scheduleId) {
+    public DayOPD(String type, String startTime, String endTime, String status, String scheduleId, String date) {
         this.type = type;
         this.scheduleId = scheduleId;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.date = date;
         this.status = status;
     }
 
@@ -50,6 +52,14 @@ public class DayOPD {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getStatus() {

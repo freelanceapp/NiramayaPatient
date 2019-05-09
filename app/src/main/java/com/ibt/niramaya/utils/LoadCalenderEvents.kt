@@ -25,7 +25,7 @@ class LoadCalenderEvents(private val mEvent: List<AppointmentModel>, private val
                 val date = serverDateFormat.parse(item.date)
                 var count = 1
                 try {
-                    count = item.dayOpdList.size
+                    count = item.dayOpdList.size+item.dateOpdList.size
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -46,11 +46,11 @@ class LoadCalenderEvents(private val mEvent: List<AppointmentModel>, private val
             day < 2 -> Arrays.asList(Event(Color.argb(255, 0, 255, 0), timeInMillis, "MonthEvent at " + Date(timeInMillis)))
             day == 2 -> Arrays.asList(
                     Event(Color.argb(255, 0, 255, 0), timeInMillis, "MonthEvent at " + Date(timeInMillis)),
-                    Event(Color.argb(255, 100, 68, 65), timeInMillis, "MonthEvent 2 at " + Date(timeInMillis)))
+                    Event(Color.argb(255, 93, 164, 42), timeInMillis, "MonthEvent 2 at " + Date(timeInMillis)))
             else -> Arrays.asList(
                     Event(Color.argb(255, 0, 255, 0), timeInMillis, "MonthEvent at " + Date(timeInMillis)),
-                    Event(Color.argb(255, 100, 68, 65), timeInMillis, "MonthEvent 2 at " + Date(timeInMillis)),
-                    Event(Color.argb(255, 70, 68, 65), timeInMillis, "MonthEvent 3 at " + Date(timeInMillis)))
+                    Event(Color.argb(255, 93, 212, 42), timeInMillis, "MonthEvent 2 at " + Date(timeInMillis)),
+                    Event(Color.argb(255, 93, 164, 42), timeInMillis, "MonthEvent 3 at " + Date(timeInMillis)))
         }
     }
 

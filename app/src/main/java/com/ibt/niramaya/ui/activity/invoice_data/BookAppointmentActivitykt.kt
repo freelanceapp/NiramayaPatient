@@ -3,6 +3,7 @@ package com.ibt.niramaya.ui.activity.invoice_data
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,7 +11,10 @@ import android.widget.TextView
 import com.github.sundeepk.compactcalendarview.CompactCalendarView
 import com.github.sundeepk.compactcalendarview.domain.Event
 import com.ibt.niramaya.R
+import com.ibt.niramaya.adapter.AppointmentDateTimeListAdapter
+import com.ibt.niramaya.adapter.AppointmentWeeklyTimeListAdapter
 import com.ibt.niramaya.modal.calander.AppointmentModel
+import com.ibt.niramaya.modal.calander.DateOPD
 import com.ibt.niramaya.modal.calander.DayOPD
 import com.ibt.niramaya.modal.doctor_opd.DoctorDatum
 import com.ibt.niramaya.modal.doctor_opd.OpdList
@@ -22,6 +26,7 @@ import kotlinx.android.synthetic.main.activity_book_appointment.*
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.ArrayList
 import java.util.Calendar
 import java.util.Date
@@ -30,6 +35,7 @@ import java.util.Locale
 class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
 
     private val dateFormatForMonth = SimpleDateFormat("MMM - yyyy", Locale.getDefault())
+    private val dateFormatForCheckDiffrennce = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     private val dateFormatForSelectedMonth = SimpleDateFormat("MMM-yyyy", Locale.getDefault())
     private val dateFormatForSelectedDay = SimpleDateFormat("EEE dd-MMM-yyyy", Locale.getDefault())
     private val dateFormatWithDay = SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault())
@@ -43,6 +49,9 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
     private var currentMonth = 0
     private var isPrevious = false
     private var appointmentList = ArrayList<AppointmentModel>()
+
+    private var cdForDifference = ""
+    private var sdForDifference = ""
 
     private var eventTask: LoadCalenderEvents? = null
 
@@ -102,11 +111,15 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
         var monthName = ""
 
         try {
+
+            cdForDifference = dateFormatForCheckDiffrennce.format(Calendar.getInstance().time)
+
             currentMonth = Integer.parseInt(dateFormatMonthN.format(Calendar.getInstance().time))
             monthName = dateFormatMonthString.format(Calendar.getInstance().time)
             currentYear = Integer.parseInt(dateFormatYear.format(Calendar.getInstance().time))
             tvSelectedDate.text = dateFormatForSelectedDay.format(Calendar.getInstance().time)
             loadCalendarEvents(monthName, currentYear)
+
         } catch (e: NumberFormatException) {
             e.printStackTrace()
         }
@@ -125,9 +138,10 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
 
         comCal!!.setListener(object : CompactCalendarView.CompactCalendarViewListener {
             override fun onDayClick(dateClicked: Date) {
-                // tvDate.setText(dateFormatWithDay.format(dateClicked));
                 tvSelectedDate.text = dateFormatForSelectedDay.format(dateClicked)
-                //Alerts.show(mContext, dateFormatWithDay.format(dateClicked))
+                sdForDifference = dateFormatForCheckDiffrennce.format(dateClicked)
+                refreshAppointmentRecycler()
+                validateClickedDate()
             }
 
             override fun onMonthScroll(firstDayOfNewMonth: Date) {
@@ -172,6 +186,18 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
 
     }
 
+    private fun refreshAppointmentRecycler() {
+        val wAdapter = AppointmentWeeklyTimeListAdapter(appointmentList.get(5).dayOpdList, this@BookAppointmentActivitykt, this@BookAppointmentActivitykt)
+        rvWeekly.layoutManager = LinearLayoutManager(this@BookAppointmentActivitykt, LinearLayoutManager.HORIZONTAL, true)
+        rvWeekly.adapter = wAdapter
+        wAdapter.notifyDataSetChanged()
+
+        val dAdapter = AppointmentDateTimeListAdapter(appointmentList.get(16).dateOpdList, this@BookAppointmentActivitykt, this@BookAppointmentActivitykt)
+        rvDate.layoutManager = LinearLayoutManager(this@BookAppointmentActivitykt, LinearLayoutManager.HORIZONTAL, true)
+        rvDate.adapter = dAdapter
+        dAdapter.notifyDataSetChanged()
+    }
+
     private fun loadCalendarEvents(monthName: String, year: Int) {
         appointmentList = FindDate.getDate(monthName, year, null)
         val mondayOpdList = ArrayList<DayOPD>()
@@ -181,6 +207,7 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
         val fridayOpdList = ArrayList<DayOPD>()
         val saturdayOpdList = ArrayList<DayOPD>()
         val sundayOpdList = ArrayList<DayOPD>()
+        val dateOpdList = ArrayList<DateOPD>()
         if (doctorData!!.opdList.size > 0) {
             for (myOpd in doctorData!!.opdList) {
                 if (myOpd.scheduleType == "1") {
@@ -204,12 +231,14 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
 
                 }else if (myOpd.scheduleType == "0" && myOpd.schedule.size>0){
                     for (daySchedule in myOpd.schedule) {
-                        val dOPD = DayOPD()
-                        dOPD.type = "0"
-                        dOPD.scheduleId = myOpd.scheduleId
-                        dOPD.startTime = daySchedule.startTime
-                        dOPD.endTime = daySchedule.endTime
-                        dOPD.status = daySchedule.status
+                        val dateOPD = DateOPD()
+                        dateOPD.type = "0"
+                        dateOPD.scheduleId = myOpd.scheduleId
+                        dateOPD.date = daySchedule.date
+                        dateOPD.startTime = daySchedule.startTime
+                        dateOPD.endTime = daySchedule.endTime
+                        dateOPD.status = daySchedule.status
+                        dateOpdList.add(dateOPD)
                     }
                 }
             }
@@ -225,7 +254,22 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
                 "Saturday" -> appointmentList[i].dayOpdList = saturdayOpdList
                 "Sunday" -> appointmentList[i].dayOpdList = sundayOpdList
             }
+
+            for (daOpd in dateOpdList){
+                if (appointmentList[i].date == daOpd.date){
+                    appointmentList[i].dateOpdList.add(daOpd)
+                }
+            }
+
         }
+
+        /*for (i in appointmentList.indices) {
+            for (daOpd in dateOpdList){
+                if (appointmentList[i].date == daOpd.date){
+                    appointmentList[i].dateOpdList.add(daOpd)
+                }
+            }
+        }*/
 
         /*Log.d("TAg", appointmentList[0].day)
         Log.d("TAg", appointmentList[0].day)*/
@@ -351,5 +395,9 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
         }
 
         return str
+    }
+
+    private fun validateClickedDate() {
+
     }
 }

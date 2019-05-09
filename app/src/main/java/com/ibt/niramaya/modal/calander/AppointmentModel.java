@@ -7,6 +7,7 @@ public class AppointmentModel {
     private String day;
     private String date;
     private ArrayList<DayOPD> dayOpdList = new ArrayList();
+    private ArrayList<DateOPD> dateOpdList = new ArrayList();
 
     public AppointmentModel(String day, String date, ArrayList<DayOPD> dayOpdList) {
         this.day = day;
@@ -36,5 +37,13 @@ public class AppointmentModel {
 
     public void setDayOpdList(ArrayList<DayOPD> dayOpdList) {
         this.dayOpdList = dayOpdList;
+    }
+
+    public ArrayList<DateOPD> getDateOpdList() {
+        return dateOpdList;
+    }
+
+    public void setDateOpdList(ArrayList<DateOPD> dateOpdList) {
+        this.dateOpdList = dateOpdList;
     }
 }
