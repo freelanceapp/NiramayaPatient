@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -54,6 +55,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public static ImageView imgSearch, imgSort;
     private SlidingRootNav slidingRootNav;
     private Spinner spnPatient;
+    private CardView cvPatient;
     private FragmentUtils fragmentUtils;
     private FragmentManager fragmentManager;
     private List<PaitentProfile> patientList = new ArrayList<>();
@@ -92,6 +94,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 .inject();
 
         spnPatient = findViewById(R.id.spnPatient);
+        cvPatient = findViewById(R.id.cvPatient);
 
         Alerts.show(mContext, AppPreference.getStringPreference(mContext, Constant.FIREBASE_TOKEN));
 
@@ -112,8 +115,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
                         if (patientList.size() > 0) {
                             spnPatient.setVisibility(View.VISIBLE);
+                            cvPatient.setVisibility(View.VISIBLE);
                         } else {
                             spnPatient.setVisibility(View.GONE);
+                            cvPatient.setVisibility(View.GONE);
                         }
 
                         PaitentProfile paitentProfile1 = new PaitentProfile();

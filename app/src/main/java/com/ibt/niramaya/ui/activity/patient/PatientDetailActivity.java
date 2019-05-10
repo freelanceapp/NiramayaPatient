@@ -4,12 +4,14 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,8 +19,10 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,13 +56,19 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
@@ -73,10 +83,11 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
     private static int PICK_IMAGE_CAMERA = 124;
     private static int PERMISSION_REQUEST_CODE = 456;
     private File finalFile = null;
+    private File myTempFile = null;
     private int selectedPosition = 0;
     private ArrayAdapter bloodGroupAdapter, relationshipStatusAdapter, patientGardianRelationshipAdapter;
     private String[] bloodGroupList = {"Select blood group", "A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"};
-    private String[] relationshipList = {"Select Relationship", "Father", "Mother", "Child", "Wife"};
+    private String[] relationshipList = {"Select Relationship", "Father", "Mother", "Brother", "Sister", "Child", "Wife", "Husband", "Other"};
     private String[] relationshipStatus = {"Select Relationship", "Yes", "No"};
     private String strBloodGroup = "", strPatientRelationship = "", strPatientRelationshipStatus = "", strRelationship = "", strGender = "", strmobile = "", strPatientImage = "";
     private EditText etPatientName, etPatientMobileNumber, etPaadharNumber, etPatientEmailId, etPatientDateofBirthNumber,
@@ -105,10 +116,9 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
             }
         });
 
+        creteTempFile();
 
-        if (checkPermission()) {
-            Alerts.show(mContext, "Permission granted");
-        } else {
+        if (!checkPermission()) {
             requestPermission();
         }
         findId();
@@ -582,9 +592,42 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
             } else if (strZipcode.isEmpty()) {
                 Alerts.show(mContext, "Zipcode should not be empty!!!");
             } else {
-                RetrofitService.getServerResponse(new Dialog(mContext), retrofitApiClient.updatePatientProfile(strName, strBloodGroup, strmobile, strDob, strEmailadd,
-                        strHouseNo, strStreet, strCity, strState, strCountry, strZipcode, strGender, strGardian, strPatientRelationship,
-                        strGardianContact, strGarAddress, strAadahr, strUserId, strPatientRelationshipStatus, strPatientId, strPatientImage), new WebResponse() {
+
+                RequestBody strNameBody = RequestBody.create(MediaType.parse("text/plain"), strName);
+                RequestBody strBloodGroupBody = RequestBody.create(MediaType.parse("text/plain"), strBloodGroup);
+                RequestBody strmobileBody = RequestBody.create(MediaType.parse("text/plain"), strmobile);
+                RequestBody strDobBody = RequestBody.create(MediaType.parse("text/plain"), strDob);
+                RequestBody strEmailaddBody = RequestBody.create(MediaType.parse("text/plain"), strEmailadd);
+                RequestBody strHouseNoBody = RequestBody.create(MediaType.parse("text/plain"), strHouseNo);
+                RequestBody strStreetBody = RequestBody.create(MediaType.parse("text/plain"), strStreet);
+                RequestBody strCityBody = RequestBody.create(MediaType.parse("text/plain"), strCity);
+                RequestBody strStateBody = RequestBody.create(MediaType.parse("text/plain"), strState);
+                RequestBody strCountryBody = RequestBody.create(MediaType.parse("text/plain"), strCountry);
+                RequestBody strZipcodeBody = RequestBody.create(MediaType.parse("text/plain"), strZipcode);
+                RequestBody strGenderBody = RequestBody.create(MediaType.parse("text/plain"), strGender);
+                RequestBody strGardianBody = RequestBody.create(MediaType.parse("text/plain"), strGardian);
+                RequestBody strPatientRelationshipBody = RequestBody.create(MediaType.parse("text/plain"), strPatientRelationship);
+                RequestBody strGardianContactBody = RequestBody.create(MediaType.parse("text/plain"), strGardianContact);
+                RequestBody strGarAddressBody = RequestBody.create(MediaType.parse("text/plain"), strGarAddress);
+                RequestBody strAadahrBody = RequestBody.create(MediaType.parse("text/plain"), strAadahr);
+                RequestBody strUserIdBody = RequestBody.create(MediaType.parse("text/plain"), strUserId);
+                RequestBody strPatientRelationshipStatusBody = RequestBody.create(MediaType.parse("text/plain"), strPatientRelationshipStatus);
+                RequestBody strPatientIdBody = RequestBody.create(MediaType.parse("text/plain"), strPatientId);
+
+                MultipartBody.Part profileFilePart;
+                if (finalFile!=null) {
+                    RequestBody trFile = RequestBody.create(MediaType.parse("image/*"), finalFile);
+                    profileFilePart = MultipartBody.Part.createFormData("profile_picture", finalFile.getName(), trFile);
+                } else {
+                    RequestBody trFile = RequestBody.create(MediaType.parse("image/*"), myTempFile);
+                    profileFilePart = MultipartBody.Part.createFormData("profile_picture", "false", trFile);
+                }
+
+                RetrofitService.getServerResponse(new Dialog(mContext), retrofitApiClient.updatePatientProfile(
+                        strNameBody, strBloodGroupBody, strmobileBody, strDobBody, strEmailaddBody, strHouseNoBody, strStreetBody,
+                        strCityBody, strStateBody, strCountryBody, strZipcodeBody, strGenderBody, strGardianBody,
+                        strPatientRelationshipBody, strGardianContactBody, strGarAddressBody, strAadahrBody, strUserIdBody,
+                        strPatientRelationshipStatusBody, strPatientIdBody, profileFilePart), new WebResponse() {
                     @Override
                     public void onResponseSuccess(Response<?> result) {
                         ResponseBody responseBody = (ResponseBody) result.body();
@@ -592,9 +635,10 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
                             JSONObject jsonObject = new JSONObject(responseBody.string());
                             if (!jsonObject.getBoolean("error")) {
                                 onBackPressed();
-                                Alerts.show(mContext, jsonObject.toString());
+                                Alerts.show(mContext, jsonObject.getString("message"));
+
                             } else {
-                                Alerts.show(mContext, jsonObject.toString());
+                                Alerts.show(mContext, jsonObject.getString("message"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -627,6 +671,34 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
             e.printStackTrace();
         }
         return bitmap;
+    }
+
+    private void creteTempFile(){
+        Bitmap myLogo = ((BitmapDrawable)ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_star, null)).getBitmap();
+                myTempFile = bitmapToFile(myLogo);
+    }
+    // Method to save an bitmap to a file
+    private File bitmapToFile(Bitmap bitmap) {
+        // Get the context wrapper
+        ContextWrapper wrapper = new ContextWrapper(getApplicationContext());
+
+        // Initialize a new file instance to save bitmap object
+        File file = wrapper.getDir("Images", Context.MODE_PRIVATE);
+        file = new File(file, UUID.randomUUID()+".jpg");
+
+        try{
+            // Compress the bitmap and save in jpg format
+            OutputStream stream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+            stream.flush();
+            stream.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Log.v("NIRAMAYA_HOSPITAL", file.getAbsolutePath());
+        // Return the saved bitmap uri
+        //return Uri.parse(file.absolutePath)
+        return file;
     }
 
 }

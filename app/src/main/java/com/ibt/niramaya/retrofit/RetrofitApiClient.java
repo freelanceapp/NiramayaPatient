@@ -11,11 +11,15 @@ import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
 import com.ibt.niramaya.modal.prescription.PrescritionListModel;
 import com.ibt.niramaya.modal.prescription.detail.PrescriptionDetailModel;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface RetrofitApiClient {
 
@@ -28,28 +32,28 @@ public interface RetrofitApiClient {
     @POST(Constant.OTP_VERIFICATION)
     Call<OtpVerificationMainModal> fetchOtp(@Field("contact") String contact, @Field("otp_number") String otp_number);
 
-    @FormUrlEncoded
+    @Multipart
     @POST(Constant.CREATE_PATIENT_PROFILE)
-    Call<ResponseBody> createPatientProfile(@Field("name") String name,
-                                            @Field("bloodgroup") String bloodgroup,
-                                            @Field("contact") String contact,
-                                            @Field("date_of_birth") String date_of_birth,
-                                            @Field("email") String email,
-                                            @Field("house_number") String house_number,
-                                            @Field("street_name") String street_name,
-                                            @Field("city") String city,
-                                            @Field("state") String state,
-                                            @Field("country") String country,
-                                            @Field("zipcode") String zipcode,
-                                            @Field("gender") String gender,
-                                            @Field("gardian_name") String gardian_name,
-                                            @Field("relationship_with_gardian") String relationship_with_gardian,
-                                            @Field("gardian_contact") String gardian_contact,
-                                            @Field("gardian_address") String gardian_address,
-                                            @Field("aadhar_number") String aadhar_number,
-                                            @Field("user_id") String user_id,
-                                            @Field("relationship_status") String relationship_status,
-                                            @Field("profile_picture") String profile_picture);
+    Call<ResponseBody> createPatientProfile(@Part("name") RequestBody name,
+                                            @Part("bloodgroup") RequestBody bloodgroup,
+                                            @Part("contact") RequestBody contact,
+                                            @Part("date_of_birth") RequestBody date_of_birth,
+                                            @Part("email") RequestBody email,
+                                            @Part("house_number") RequestBody house_number,
+                                            @Part("street_name") RequestBody street_name,
+                                            @Part("city") RequestBody city,
+                                            @Part("state") RequestBody state,
+                                            @Part("country") RequestBody country,
+                                            @Part("zipcode") RequestBody zipcode,
+                                            @Part("gender") RequestBody gender,
+                                            @Part("gardian_name") RequestBody gardian_name,
+                                            @Part("relationship_with_gardian") RequestBody relationship_with_gardian,
+                                            @Part("gardian_contact") RequestBody gardian_contact,
+                                            @Part("gardian_address") RequestBody gardian_address,
+                                            @Part("aadhar_number") RequestBody aadhar_number,
+                                            @Part("user_id") RequestBody user_id,
+                                            @Part("relationship_status") RequestBody relationship_status,
+                                            @Part MultipartBody.Part profile_picture);
 
     @FormUrlEncoded
     @POST(Constant.PATIENT_LIST)
@@ -93,29 +97,29 @@ public interface RetrofitApiClient {
                                                             @Field("patient_id") String patient_id,
                                                             @Field("opd_id") String opd_id);
 
-    @FormUrlEncoded
+    @Multipart
     @POST(Constant.UPDATE_PATIENNT_PROFILE)
-    Call<ResponseBody> updatePatientProfile(@Field("name") String name,
-                                            @Field("bloodgroup") String bloodgroup,
-                                            @Field("contact") String contact,
-                                            @Field("date_of_birth") String date_of_birth,
-                                            @Field("email") String email,
-                                            @Field("house_number") String house_number,
-                                            @Field("street_name") String street_name,
-                                            @Field("city") String city,
-                                            @Field("state") String state,
-                                            @Field("country") String country,
-                                            @Field("zipcode") String zipcode,
-                                            @Field("gender") String gender,
-                                            @Field("gardian_name") String gardian_name,
-                                            @Field("relationship_with_gardian") String relationship_with_gardian,
-                                            @Field("gardian_contact") String gardian_contact,
-                                            @Field("gardian_address") String gardian_address,
-                                            @Field("aadhar_number") String aadhar_number,
-                                            @Field("user_id") String user_id,
-                                            @Field("relationship_status") String relationship_status,
-                                            @Field("patient_id") String patient_id,
-                                            @Field("profile_picture") String profile_picture);
+    Call<ResponseBody> updatePatientProfile(@Part("name") RequestBody name,
+                                            @Part("bloodgroup") RequestBody bloodgroup,
+                                            @Part("contact") RequestBody contact,
+                                            @Part("date_of_birth") RequestBody date_of_birth,
+                                            @Part("email") RequestBody email,
+                                            @Part("house_number") RequestBody house_number,
+                                            @Part("street_name") RequestBody street_name,
+                                            @Part("city") RequestBody city,
+                                            @Part("state") RequestBody state,
+                                            @Part("country") RequestBody country,
+                                            @Part("zipcode") RequestBody zipcode,
+                                            @Part("gender") RequestBody gender,
+                                            @Part("gardian_name") RequestBody gardian_name,
+                                            @Part("relationship_with_gardian") RequestBody relationship_with_gardian,
+                                            @Part("gardian_contact") RequestBody gardian_contact,
+                                            @Part("gardian_address") RequestBody gardian_address,
+                                            @Part("aadhar_number") RequestBody aadhar_number,
+                                            @Part("user_id") RequestBody user_id,
+                                            @Part("relationship_status") RequestBody relationship_status,
+                                            @Part("patient_id") RequestBody patient_id,
+                                            @Part MultipartBody.Part profile_picture);
 
     @FormUrlEncoded
     @POST(Constant.HOSPITAL_LIST)
