@@ -118,8 +118,6 @@ public class OpdInvoiceFragment extends BaseFragment implements View.OnClickList
                     Alerts.show(mContext, error);
                 }
             });
-        } else {
-            cd.show(mContext);
         }
     }
 

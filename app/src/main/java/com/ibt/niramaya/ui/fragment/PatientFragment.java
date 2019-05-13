@@ -137,8 +137,6 @@ public class PatientFragment extends BaseFragment implements View.OnClickListene
                     Alerts.show(mContext, error);
                 }
             });
-        } else {
-            cd.show(mContext);
         }
     }
 

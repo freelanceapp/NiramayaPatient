@@ -128,8 +128,6 @@ public class PathologyInvoiceFragment extends BaseFragment implements View.OnCli
                     Alerts.show(mContext, error);
                 }
             });
-        } else {
-            cd.show(mContext);
         }
     }
 

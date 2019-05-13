@@ -141,8 +141,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     Alerts.show(mContext, error);
                 }
             });
-        } else {
-            cd.show(mContext);
         }
     }
 

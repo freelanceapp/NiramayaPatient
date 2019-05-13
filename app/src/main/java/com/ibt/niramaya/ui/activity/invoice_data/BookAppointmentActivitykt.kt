@@ -1,41 +1,49 @@
 package com.ibt.niramaya.ui.activity.invoice_data
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView
 import com.github.sundeepk.compactcalendarview.domain.Event
 import com.ibt.niramaya.R
 import com.ibt.niramaya.adapter.AppointmentDateTimeListAdapter
 import com.ibt.niramaya.adapter.AppointmentWeeklyTimeListAdapter
+import com.ibt.niramaya.constant.Constant
+import com.ibt.niramaya.interfaces.InitScheduleList
 import com.ibt.niramaya.modal.calander.AppointmentModel
 import com.ibt.niramaya.modal.calander.DateOPD
 import com.ibt.niramaya.modal.calander.DayOPD
 import com.ibt.niramaya.modal.doctor_opd.DoctorDatum
 import com.ibt.niramaya.modal.doctor_opd.OpdList
+import com.ibt.niramaya.modal.patient_modal.PaitentProfile
+import com.ibt.niramaya.modal.patient_modal.PatientMainModal
+import com.ibt.niramaya.retrofit.RetrofitService
+import com.ibt.niramaya.retrofit.WebResponse
 import com.ibt.niramaya.utils.Alerts
+import com.ibt.niramaya.utils.AppPreference
 import com.ibt.niramaya.utils.BaseActivity
 import com.ibt.niramaya.utils.LoadCalenderEvents
 import com.ibt.niramaya.utils.cal.FindDate
 import kotlinx.android.synthetic.main.activity_book_appointment.*
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import retrofit2.Response
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.util.ArrayList
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
-class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
+class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitScheduleList {
 
     private val dateFormatForMonth = SimpleDateFormat("MMM - yyyy", Locale.getDefault())
     private val dateFormatForCheckDiffrennce = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private val dateFormatForServer = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     private val dateFormatForSelectedMonth = SimpleDateFormat("MMM-yyyy", Locale.getDefault())
     private val dateFormatForSelectedDay = SimpleDateFormat("EEE dd-MMM-yyyy", Locale.getDefault())
     private val dateFormatWithDay = SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault())
@@ -49,6 +57,8 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
     private var currentMonth = 0
     private var isPrevious = false
     private var appointmentList = ArrayList<AppointmentModel>()
+    private var availableAppointmentList = ArrayList<AppointmentModel>()
+    private var patientList: MutableList<PaitentProfile> = ArrayList()
 
     private var cdForDifference = ""
     private var sdForDifference = ""
@@ -71,6 +81,13 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
     private var tvSelectTime: TextView? = null
     private var doctorData: DoctorDatum? = null
     private val opdList = ArrayList<OpdList>()
+    private var spnPatient: Spinner? = null
+
+    private var selectedPatientId = ""
+    private var selectedOpdId = ""
+    private var selectedOpdPrice = ""
+    private var opdBookingDate = ""
+    private var selectedOpdDate = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,10 +104,13 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
         tvDrName = findViewById(R.id.tvDrName)
         tvDrDesignation = findViewById(R.id.tvDrDesignation)
         tvDrAddress = findViewById(R.id.tvDrAddress)
+        spnPatient = findViewById(R.id.spnPatient)
 
         tvMonth = findViewById(R.id.tvMonth)
         ivPrevious = findViewById(R.id.ivPrevious)
         ivNext = findViewById(R.id.ivNext)
+
+        initPatientSpinner()
 
         tvDrName!!.text = doctorData!!.name
         //tvDrDesignation.setText(doctorData.getName());
@@ -99,11 +119,60 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
         tvSelectTime = findViewById(R.id.tvSelectTime)
         tvSelectDate!!.setOnClickListener(this)
         tvSelectTime!!.setOnClickListener(this)
+        btnBookNow!!.setOnClickListener(this)
 
         initCalenderViews()
 
 
     }
+
+    private fun initPatientSpinner() {
+        if (cd.isNetworkAvailable) {
+            val strUserId = AppPreference.getStringPreference(mContext, Constant.USER_ID)
+            RetrofitService.getPatientList(Dialog(mContext), retrofitApiClient.patientList(strUserId), object : WebResponse {
+                override fun onResponseSuccess(result: Response<*>) {
+                    val mainModal = result.body() as PatientMainModal?
+                    if (mainModal != null) {
+                        patientList = mainModal.user.paitentProfile
+
+                        if (patientList.size > 0) {
+                            spnPatient?.setVisibility(View.VISIBLE)
+                        }
+
+                        val paitentProfile1 = PaitentProfile()
+                        paitentProfile1.patientId = "0"
+                        paitentProfile1.patientName = "Select Patient"
+                        patientList.add(0, paitentProfile1)
+
+                        val aa = ArrayAdapter(mContext, R.layout.row_light_spinner_item, patientList)
+                        //aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        //Setting the ArrayAdapter data on the Spinner
+                        spnPatient?.setAdapter(aa)
+                        spnPatient?.setOnItemSelectedListener(spinnerListener)
+                    } else {
+                        Alerts.show(mContext, mainModal!!.message)
+                    }
+                }
+
+                override fun onResponseFailed(error: String) {
+                    Alerts.show(mContext, error)
+                }
+            })
+        }
+    }
+
+    internal var spinnerListener: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            if (position>0) {
+                selectedPatientId =  patientList[position].patientId
+            }
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>) {
+
+        }
+    }
+
 
     private fun initCalenderViews() {
         comCal = findViewById(R.id.calView)
@@ -138,10 +207,9 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
 
         comCal!!.setListener(object : CompactCalendarView.CompactCalendarViewListener {
             override fun onDayClick(dateClicked: Date) {
-                tvSelectedDate.text = dateFormatForSelectedDay.format(dateClicked)
                 sdForDifference = dateFormatForCheckDiffrennce.format(dateClicked)
-                refreshAppointmentRecycler()
-                validateClickedDate()
+                selectedOpdDate = dateFormatForServer.format(dateClicked)
+                validateClickedDate(dateClicked)
             }
 
             override fun onMonthScroll(firstDayOfNewMonth: Date) {
@@ -186,13 +254,13 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
 
     }
 
-    private fun refreshAppointmentRecycler() {
-        val wAdapter = AppointmentWeeklyTimeListAdapter(appointmentList.get(5).dayOpdList, this@BookAppointmentActivitykt, this@BookAppointmentActivitykt)
+    private fun refreshAppointmentRecycler(selectedDayOpdList: ArrayList<DayOPD>, selectedDateOpdList: ArrayList<DateOPD>) {
+        val wAdapter = AppointmentWeeklyTimeListAdapter(selectedDayOpdList, this@BookAppointmentActivitykt, this@BookAppointmentActivitykt)
         rvWeekly.layoutManager = LinearLayoutManager(this@BookAppointmentActivitykt, LinearLayoutManager.HORIZONTAL, true)
         rvWeekly.adapter = wAdapter
         wAdapter.notifyDataSetChanged()
 
-        val dAdapter = AppointmentDateTimeListAdapter(appointmentList.get(16).dateOpdList, this@BookAppointmentActivitykt, this@BookAppointmentActivitykt)
+        val dAdapter = AppointmentDateTimeListAdapter(selectedDateOpdList, this@BookAppointmentActivitykt, this@BookAppointmentActivitykt)
         rvDate.layoutManager = LinearLayoutManager(this@BookAppointmentActivitykt, LinearLayoutManager.HORIZONTAL, true)
         rvDate.adapter = dAdapter
         dAdapter.notifyDataSetChanged()
@@ -210,10 +278,10 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
         val dateOpdList = ArrayList<DateOPD>()
         if (doctorData!!.opdList.size > 0) {
             for (myOpd in doctorData!!.opdList) {
-                if (myOpd.scheduleType == "1") {
+                if (myOpd.scheduleType == "0") {
                     for (daySchedule in myOpd.schedule) {
                         val dOPD = DayOPD()
-                        dOPD.type = "1"
+                        dOPD.type = "0"
                         dOPD.scheduleId = myOpd.scheduleId
                         dOPD.startTime = daySchedule.startTime
                         dOPD.endTime = daySchedule.endTime
@@ -229,10 +297,10 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
                         }
                     }
 
-                }else if (myOpd.scheduleType == "0" && myOpd.schedule.size>0){
+                } else if (myOpd.scheduleType == "1" && myOpd.schedule.size > 0) {
                     for (daySchedule in myOpd.schedule) {
                         val dateOPD = DateOPD()
-                        dateOPD.type = "0"
+                        dateOPD.type = "1"
                         dateOPD.scheduleId = myOpd.scheduleId
                         dateOPD.date = daySchedule.date
                         dateOPD.startTime = daySchedule.startTime
@@ -255,8 +323,8 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
                 "Sunday" -> appointmentList[i].dayOpdList = sundayOpdList
             }
 
-            for (daOpd in dateOpdList){
-                if (appointmentList[i].date == daOpd.date){
+            for (daOpd in dateOpdList) {
+                if (appointmentList[i].date == daOpd.date) {
                     appointmentList[i].dateOpdList.add(daOpd)
                 }
             }
@@ -273,7 +341,50 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
 
         /*Log.d("TAg", appointmentList[0].day)
         Log.d("TAg", appointmentList[0].day)*/
-        LoadCalenderEvents(appointmentList)
+
+
+        appointmentList.forEach {
+            if (it.dateOpdList.size > 0 || it.dayOpdList.size > 0) {
+                availableAppointmentList.add(it)
+            }
+        }
+        if (availableAppointmentList.size > 0) {
+            LoadCalenderEvents(availableAppointmentList)
+            var day = 0
+            var date = 0
+            for (i in availableAppointmentList.indices) {
+                if (availableAppointmentList[i].dayOpdList.size > 0) {
+                    day = 1
+                }
+                if (availableAppointmentList[i].dateOpdList.size > 0) {
+                    date = 1
+                }
+            }
+            if (day == 1) {
+                tvWeaklyAppointment.visibility = View.VISIBLE
+                rvWeekly.visibility = View.VISIBLE
+            } else {
+                tvWeaklyAppointment.visibility = View.GONE
+                rvWeekly.visibility = View.GONE
+            }
+            if (date == 1) {
+                tvDateAppointment.visibility = View.VISIBLE
+                rvDate.visibility = View.VISIBLE
+            } else {
+                tvDateAppointment.visibility = View.GONE
+                rvDate.visibility = View.GONE
+            }
+            if (day == 0 && date == 0) {
+                llAppointment.visibility = View.GONE
+            } else {
+                llAppointment.visibility = View.VISIBLE
+            }
+        }
+        availableAppointmentList.forEach {
+            if (it.date.equals(cdForDifference)) {
+                refreshAppointmentRecycler(it.dayOpdList, it.dateOpdList)
+            }
+        }
     }
 
     private fun LoadCalenderEvents(myEvent: List<AppointmentModel>) {
@@ -296,6 +407,7 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
         when (v.id) {
             R.id.tvSelectDate -> openDatePicker()
             R.id.tvSelectTime -> openTimePicker()
+            R.id.btnBookNow -> createAppointment()
         }
     }
 
@@ -397,7 +509,91 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener {
         return str
     }
 
-    private fun validateClickedDate() {
-
+    private fun validateClickedDate(dateClicked: Date) {
+        if (isDateAfter(sdForDifference, cdForDifference)) {
+            tvSelectedDate.text = dateFormatForSelectedDay.format(dateClicked)
+            availableAppointmentList.forEach {
+                if (it.date.equals(sdForDifference)) {
+                    refreshAppointmentRecycler(it.dayOpdList, it.dateOpdList)
+                }
+            }
+        } else {
+            Alerts.show(mContext, "You can't book an OPD to Old date.")
+        }
     }
+
+    private fun isDateAfter(str1: String, str2: String): Boolean {
+        var isAfter = false
+        try {
+            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+            val date1 = formatter.parse(str1)
+            val date2 = formatter.parse(str2)
+            if (date1.compareTo(date2) >= 0) {
+                /*System.out.println("date2 is Greater than my date1");*/
+                isAfter = true
+            }
+        } catch (e1: ParseException) {
+            e1.printStackTrace()
+        }
+
+        return isAfter
+    }
+
+    override fun initScheduleList(i: Int, type: String?, dOPD: DayOPD?, dateOPD: DateOPD?) {
+        when (type) {
+            "Date" -> {
+                Alerts.show(mContext, "Week")
+                for (i in doctorData!!.opdList.indices) {
+                    val opdL = doctorData!!.opdList[i]
+                    if (opdL.scheduleId.equals(dateOPD?.scheduleId)) {
+                        tvServicePrice.text = "₹ ${opdL.amount}"
+                        selectedOpdPrice = opdL.amount
+                        selectedOpdId = opdL.scheduleId
+                    }
+                }
+            }
+            "Week" -> {
+                for (i in doctorData!!.opdList.indices) {
+                    val opdL = doctorData!!.opdList[i]
+                    if (opdL.scheduleId.equals(dOPD?.scheduleId)) {
+                        tvServicePrice.text = "₹ ${opdL.amount}"
+                        selectedOpdPrice = opdL.amount
+                        selectedOpdId = opdL.scheduleId
+                    }
+                }
+            }
+        }
+    }
+
+    private fun createAppointment() {
+        val userId = AppPreference.getStringPreference(mContext, Constant.USER_ID)
+        val referredDoctorName = tvDoctorName.text.toString()
+        when {
+            selectedPatientId.isEmpty() -> Alerts.show(mContext, "No Patient Selected!")
+
+            selectedOpdId.isEmpty() -> Alerts.show(mContext, "No OPD Selected!")
+
+            selectedOpdDate.isEmpty() -> Alerts.show(mContext, "No Date Selected!")
+
+            cd.isNetworkAvailable -> {
+                RetrofitService.getServerResponse(Dialog(mContext), retrofitApiClient.bookPatientApponitment(
+                        selectedPatientId, userId, selectedOpdId, "1", "1", "1", selectedOpdPrice,
+                        selectedOpdDate, "0", referredDoctorName), object : WebResponse {
+                    override fun onResponseSuccess(result: Response<*>?) {
+                        val response = result!!.body() as ResponseBody
+                        val jsonObject = JSONObject(response.string())
+                        if (!jsonObject.getBoolean("error")) {
+                            Alerts.show(mContext, jsonObject.getString("message"))
+                        }
+                    }
+
+                    override fun onResponseFailed(error: String?) {
+                        Log.v("TAG", error)
+                    }
+                })
+            }
+        }
+    }
+
 }
+

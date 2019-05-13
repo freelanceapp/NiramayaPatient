@@ -128,6 +128,7 @@ public interface RetrofitApiClient {
                                          @Field("latitude") String latitude,
                                          @Field("longitude") String longitude,
                                          @Field("near_by") String near_by);
+
   /*  Call<ResponseBody> updatePatientProfie(@Field("name") String name,
                                            @Field("bloodgroup") String bloodgroup,
                                            @Field("contact") String contact,
@@ -170,4 +171,17 @@ public interface RetrofitApiClient {
     Call<DoctorOpdModel> doctorOpdList(@Field("hospital_id") String hospital_id,
                                        @Field("user_id") String user_id,
                                        @Field("patient_id") String patient_id);
+
+    @FormUrlEncoded
+    @POST(Constant.BOOK_APPOINTMENT)
+    Call<ResponseBody> bookPatientApponitment(@Field("patient_id") String patient_id,
+                                       @Field("user_id") String user_id,
+                                       @Field("opd_id") String opd_id,
+                                       @Field("payment_status") String payment_status,
+                                       @Field("type") String type,
+                                       @Field("status") String status,
+                                       @Field("amount") String amount,
+                                       @Field("booking_date") String booking_date,
+                                       @Field("referred_by") String referred_by,
+                                       @Field("referred_doctor_name") String referred_doctor_name);
 }

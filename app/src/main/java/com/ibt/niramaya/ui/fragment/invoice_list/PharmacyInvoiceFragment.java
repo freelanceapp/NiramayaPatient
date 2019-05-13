@@ -135,8 +135,6 @@ public class PharmacyInvoiceFragment extends BaseFragment implements View.OnClic
                     Alerts.show(mContext, error);
                 }
             });
-        } else {
-            cd.show(mContext);
         }
     }
 

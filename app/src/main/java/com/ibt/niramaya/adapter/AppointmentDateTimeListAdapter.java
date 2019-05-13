@@ -5,9 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ibt.niramaya.R;
+import com.ibt.niramaya.interfaces.InitScheduleList;
 import com.ibt.niramaya.modal.calander.DateOPD;
 import com.ibt.niramaya.modal.calander.DayOPD;
 
@@ -17,12 +19,13 @@ public class AppointmentDateTimeListAdapter extends RecyclerView.Adapter<Appoint
 
     private List<DateOPD> vendorLists;
     private Context mContext;
-    private View.OnClickListener onClickListener;
+    private InitScheduleList listener;
+    private int row_index = -1;
 
-    public AppointmentDateTimeListAdapter(List<DateOPD> vendorLists, Context mContext, View.OnClickListener onClickListener) {
+    public AppointmentDateTimeListAdapter(List<DateOPD> vendorLists, Context mContext, InitScheduleList onClickListener) {
         this.vendorLists = vendorLists;
         this.mContext = mContext;
-        this.onClickListener = onClickListener;
+        this.listener = onClickListener;
     }
 
     @Override
@@ -32,9 +35,23 @@ public class AppointmentDateTimeListAdapter extends RecyclerView.Adapter<Appoint
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        DateOPD dOPD = vendorLists.get(position);
-       holder.tvAppointmentTime.setText(dOPD.getStartTime()+" - "+dOPD.getEndTime());
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
+        final DateOPD dOPD = vendorLists.get(position);
+        holder.tvAppointmentTime.setText(dOPD.getStartTime()+" - "+dOPD.getEndTime());
+        holder.rlSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                row_index = position;
+                notifyDataSetChanged();
+                listener.initScheduleList(position, "Week", null, dOPD);
+            }
+        });
+
+        if (row_index == position) {
+            holder.rlSchedule.setBackground(mContext.getResources().getDrawable(R.drawable.layout_bg_rhl7));
+        } else {
+            holder.rlSchedule.setBackground(mContext.getResources().getDrawable(R.drawable.layout_bg_rhl8));
+        }
     }
 
     @Override
@@ -44,9 +61,11 @@ public class AppointmentDateTimeListAdapter extends RecyclerView.Adapter<Appoint
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tvAppointmentTime;
+        RelativeLayout rlSchedule;
         public MyViewHolder(View view) {
             super(view);
             tvAppointmentTime = view.findViewById(R.id.tvAppointmentTime);
+            rlSchedule = view.findViewById(R.id.rlSchedule);
         }
     }
 
