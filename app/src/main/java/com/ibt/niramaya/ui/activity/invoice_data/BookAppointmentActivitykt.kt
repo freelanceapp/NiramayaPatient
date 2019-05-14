@@ -379,6 +379,8 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitSche
             } else {
                 llAppointment.visibility = View.VISIBLE
             }
+        }else{
+            llAppointment.visibility = View.GONE
         }
         availableAppointmentList.forEach {
             if (it.date.equals(cdForDifference)) {
