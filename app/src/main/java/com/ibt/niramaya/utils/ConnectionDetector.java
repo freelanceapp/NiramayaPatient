@@ -16,10 +16,10 @@ public class ConnectionDetector {
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo==null || !activeNetworkInfo.isConnected()){
+            Toast.makeText(mContext, "Internet connection not available!!!", Toast.LENGTH_SHORT).show();
+        }
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public void show(Context context) {
-        Toast.makeText(context, "Internet connection not available!!!", Toast.LENGTH_SHORT).show();
-    }
 }

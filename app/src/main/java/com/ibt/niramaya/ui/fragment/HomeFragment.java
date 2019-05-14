@@ -1,10 +1,16 @@
 package com.ibt.niramaya.ui.fragment;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ibt.niramaya.DumHospitalListAdapter;
 import com.ibt.niramaya.R;
@@ -26,12 +34,15 @@ import com.ibt.niramaya.retrofit.RetrofitService;
 import com.ibt.niramaya.retrofit.WebResponse;
 import com.ibt.niramaya.utils.Alerts;
 import com.ibt.niramaya.utils.AppPreference;
+import com.ibt.niramaya.utils.AppProgressDialog;
 import com.ibt.niramaya.utils.BaseFragment;
 import com.ibt.niramaya.utils.ConnectionDetector;
 import com.ibt.niramaya.utils.GpsTracker;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Response;
 
@@ -40,6 +51,8 @@ import static com.ibt.niramaya.ui.activity.HomeActivity.imgSort;
 import static com.ibt.niramaya.ui.activity.HomeActivity.txtTitle;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
+
+    private static final int PERMISSION_REQUEST_CODE = 1;
 
     private View rootView;
     private Handler imageHandler;
@@ -50,6 +63,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private List<Integer> successImagesList = new ArrayList<>();
 
     private GpsTracker gpsTracker;
+    private TextView txtLocationAddress;
 
     private HospitalListAdapter hospitalListAdapter;
     private DumHospitalListAdapter popularHospitalAdapter;
@@ -71,6 +85,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void init() {
+
         imgSearch.setVisibility(View.VISIBLE);
         imgSort.setVisibility(View.GONE);
 
@@ -82,14 +97,24 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         popularHospitalList();
         hospitalCategoryList();
 
-        Alerts.show(mContext, "Latitude : "+gpsTracker.getLatitude()+"Longitude : "+gpsTracker.getLongitude());
+        /*Alerts.show(mContext, "Latitude : "+gpsTracker.getLatitude()+"Longitude : "+gpsTracker.getLongitude());
         Log.v("CURRENT_LOCATION", "Latitude : "+gpsTracker.getLatitude()+", Longitude : "+gpsTracker.getLongitude());
+
+
+        myCurrentAddress(currentLat, currentLong);*/
     }
 
     private void initViewPager() {
         pagerSuccess = rootView.findViewById(R.id.viewPager);
+        txtLocationAddress = rootView.findViewById(R.id.txtLocationAddress);
         TabLayout tabLayout = rootView.findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(pagerSuccess, true);
+
+        if (checkPermission()) {
+            txtLocationAddress.setText(myCurrentAddress(currentLat, currentLong));
+        } else {
+            requestPermission();
+        }
 
         successImagesList.clear();
         for (int i = 0; i < 6; i++) {
@@ -206,4 +231,70 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
 
     }
+
+    /*private void getLatLong() {
+        GpsTracker gpsTracker = new GpsTracker(ctx);
+        latitude = gpsTracker.getLatitude();
+        longitude = gpsTracker.getLongitude();
+        getAddressList();
+    }*/
+
+    private String myCurrentAddress(Double latitude, Double longitude){
+
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(mContext, Locale.getDefault());
+
+        String address = "";
+
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+            address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            String city = addresses.get(0).getLocality();
+            String state = addresses.get(0).getAdminArea();
+            String country = addresses.get(0).getCountryName();
+            String postalCode = addresses.get(0).getPostalCode();
+            String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+
+            /*Alerts.show(mContext, "Address : "+address+"\nCity : "+city+"\nState : "+state+"\nCountry : "+country+
+                    "\nPostal Code : "+postalCode+"\nknown Name : "+knownName);*/
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return address;
+    }
+
+    private void requestPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            Toast.makeText(mContext, " Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(mContext, "Permission Granted Successfully! ", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(mContext, "Permission Denied 🙁 ", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+
 }

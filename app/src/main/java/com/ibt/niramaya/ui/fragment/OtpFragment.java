@@ -89,8 +89,6 @@ public class OtpFragment extends BaseFragment implements OnClickListener {
                 });
             }
 
-        } else {
-            cd.show(mContext);
         }
     }
 

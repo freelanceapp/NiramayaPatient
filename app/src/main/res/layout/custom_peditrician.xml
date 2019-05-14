@@ -9,11 +9,13 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/llDoctor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civDoctorProfile"
                 android:layout_width="match_parent"
                 android:layout_height="80sp"
                 android:layout_gravity="center"
@@ -32,6 +34,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvDoctorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Dr. Vivek Thakur"
@@ -40,12 +43,14 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvDoctorSpecialization"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Peditrician"
                     android:textSize="@dimen/size_14" />
 
                 <TextView
+                    android:id="@+id/tvDoctorAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:drawableLeft="@drawable/ic_location"
@@ -80,6 +85,7 @@
                     android:stepSize="1.0" />
 
                 <TextView
+                    android:id="@+id/tvDoctorRatings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

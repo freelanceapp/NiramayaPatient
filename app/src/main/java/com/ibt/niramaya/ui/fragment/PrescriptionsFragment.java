@@ -90,8 +90,6 @@ public class PrescriptionsFragment extends BaseFragment implements View.OnClickL
                     Alerts.show(mContext, error);
                 }
             });
-        } else {
-            cd.show(mContext);
         }
     }
 

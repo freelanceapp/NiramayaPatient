@@ -35,7 +35,7 @@ public class DumHospitalListAdapter extends RecyclerView.Adapter<DumHospitalList
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         /*holder.restaurent_name.setText(vendorLists.get(position).getVendorName());
         holder.restaurent_address.setText(vendorLists.get(position).getVendorStreet());

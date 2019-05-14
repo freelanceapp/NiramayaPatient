@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
 
 import com.ibt.niramaya.R;
@@ -44,6 +45,7 @@ public class PatientFragment extends BaseFragment implements View.OnClickListene
     private PatientListAdapter patientListAdapter;
     private List<PaitentProfile> patientList = new ArrayList<>();
     private RecyclerView rvPatientList;
+    private LinearLayout llAddPatient;
     private int position;
 
     @Nullable
@@ -68,7 +70,15 @@ public class PatientFragment extends BaseFragment implements View.OnClickListene
         imgSearch.setVisibility(View.GONE);
         imgSort.setVisibility(View.VISIBLE);
         rvPatientList = rootView.findViewById(R.id.rvPatientList);
+        llAddPatient = rootView.findViewById(R.id.llAddPatient);
+        llAddPatient.setOnClickListener(this);
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         patientListApi();
     }
 
@@ -81,6 +91,9 @@ public class PatientFragment extends BaseFragment implements View.OnClickListene
                 intent.putExtra("patientDetail", patientList.get(position));
                 startActivity(intent);
                 break;
+            case R.id.llAddPatient:
+                startActivity(new Intent(mContext, AddNewPatientActivity.class));
+                break;
         }
     }
 
@@ -91,10 +104,14 @@ public class PatientFragment extends BaseFragment implements View.OnClickListene
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     PatientMainModal mainModal = (PatientMainModal) result.body();
-                    if (mainModal != null) {
+                    assert mainModal != null;
+                    if (!mainModal.getError() && mainModal.getUser().getPaitentProfile().size()>0) {
                         patientList = mainModal.getUser().getPaitentProfile();
                         String strPatientId = mainModal.getUser().getPaitentProfile().get(position).getPatientId();
                         AppPreference.setStringPreference(mContext, Constant.PATIENT_ID, strPatientId);
+
+                        llAddPatient.setVisibility(View.GONE);
+                        rvPatientList.setVisibility(View.VISIBLE);
 
                         rvPatientList.setHasFixedSize(true);
                         rvPatientList.setLayoutManager(new GridLayoutManager(mContext, 3));
@@ -109,6 +126,9 @@ public class PatientFragment extends BaseFragment implements View.OnClickListene
                         Alerts.show(mContext, mainModal.getMessage());
                     } else {
                         Alerts.show(mContext, mainModal.getMessage());
+
+                        llAddPatient.setVisibility(View.VISIBLE);
+                        rvPatientList.setVisibility(View.GONE);
                     }
                 }
 
@@ -117,8 +137,6 @@ public class PatientFragment extends BaseFragment implements View.OnClickListene
                     Alerts.show(mContext, error);
                 }
             });
-        } else {
-            cd.show(mContext);
         }
     }
 

@@ -17,6 +17,7 @@ public class HospitalDetailActivity extends BaseActivity implements View.OnClick
 
     private FragmentManager fragmentManager;
     private FragmentUtils fragmentUtils;
+    public static String hospitalId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,9 @@ public class HospitalDetailActivity extends BaseActivity implements View.OnClick
     }
 
     private void init() {
+
+        hospitalId = getIntent().getExtras().getString("HospitalId");
+
         fragmentManager = getSupportFragmentManager();
         fragmentUtils = new FragmentUtils(fragmentManager);
         fragmentUtils.replaceFragment(new FacilitiesFragment(), Constant.FacilitiesFragment, R.id.frameLayout);

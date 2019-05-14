@@ -28,7 +28,6 @@ public class SplashActivity extends BaseActivity {
         Log.e("Login" , String.valueOf(AppPreference.getBooleanPreference(mContext , Constant.Is_Login)));
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.e("Firebase ", "Refreshed token: " + refreshedToken);
-        Alerts.show(mContext, "Refreshed token: " + refreshedToken);
 
         init();
     }

@@ -79,6 +79,7 @@
         <activity android:name=".ui.activity.HospitalDepartmentDetailActivity" />
         <activity android:name=".ui.activity.FindAndBookActivity" />
         <activity android:name=".ui.activity.PrescriptionActivity" />
+        <activity android:name=".ui.activity.invoice_data.BookAppointmentActivitykt" />
 
 
         <!-- Firebase Notifications -->

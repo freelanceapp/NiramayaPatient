@@ -174,8 +174,6 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
                 });
             }
 
-        } else {
-            cd.show(mContext);
         }
     }
 

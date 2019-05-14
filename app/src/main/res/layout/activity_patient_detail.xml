@@ -31,14 +31,22 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="45dp"
+                    android:layout_gravity="center_horizontal"
+                    app:cardElevation="8dp">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgProfilePatient"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
+                    android:background="@color/white"
                     android:src="@drawable/ic_profile" />
+
+                </android.support.v7.widget.CardView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -410,14 +418,34 @@
                 android:padding="16dp"
                 android:visibility="gone">
 
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardImgEdit"
+                    android:clickable="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="45dp"
+                    android:layout_gravity="center_horizontal"
+                    app:cardElevation="8dp"
+                    android:focusable="true">
+
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgEditProfilePatient"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:background="@color/white"
+                    android:src="@drawable/ic_profile" />
+
+                </android.support.v7.widget.CardView>
+
+                <!--<de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgEditProfilePatient"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:src="@drawable/ic_profile" />
+                    android:src="@drawable/ic_profile" />-->
 
                 <TextView
                     android:layout_width="wrap_content"
