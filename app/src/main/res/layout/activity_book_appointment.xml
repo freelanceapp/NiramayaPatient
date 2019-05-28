@@ -285,12 +285,31 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/size_18" />
 
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp">
+
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/rvWeekly"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
                                 android:nestedScrollingEnabled="false" />
+
+                                <TextView
+                                    android:id="@+id/tvRecyclerWeeklyMessage"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    android:gravity="center"
+                                    android:layout_centerHorizontal="true"
+                                    android:paddingRight="10dp"
+                                    android:paddingLeft="10dp"
+                                    android:textColor="@color/black"
+                                    android:background="@drawable/layout_bg_rhl7"
+                                    android:visibility="gone"
+                                    android:textSize="@dimen/size_14" />
+
+                            </RelativeLayout>
 
                             <TextView
                                 android:id="@+id/tvDateAppointment"
@@ -302,12 +321,30 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/size_18" />
 
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp">
+
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/rvDate"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
                                 android:nestedScrollingEnabled="false" />
+                                <TextView
+                                    android:id="@+id/tvRecyclerDateMessage"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    android:gravity="center"
+                                    android:layout_centerHorizontal="true"
+                                    android:paddingRight="10dp"
+                                    android:paddingLeft="10dp"
+                                    android:textColor="@color/black"
+                                    android:background="@drawable/layout_bg_rhl7"
+                                    android:visibility="gone"
+                                    android:textSize="@dimen/size_14" />
+
+                            </RelativeLayout>
                         </LinearLayout>
 
                         <TextView

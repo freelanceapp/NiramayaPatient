@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.adapter.DoctorReviewRatingAdapter;
 import com.ibt.niramaya.modal.doctor_opd.DoctorDatum;
-import com.ibt.niramaya.ui.activity.invoice_data.BookAppointmentActivitykt;
+import com.ibt.niramaya.ui.activity.invoice_data.BookAppointmentActivityKt;
 import com.ibt.niramaya.utils.BaseActivity;
 
 import java.util.ArrayList;
@@ -75,8 +75,8 @@ public class DoctorActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnBookAppointment :
-                //startActivity(new Intent(mContext, BookAppointmentActivitykt.class));
-                startActivity(new Intent(mContext, BookAppointmentActivitykt.class).putExtra("DoctorData", doctorData));
+                //startActivity(new Intent(mContext, BookAppointmentActivityKt.class));
+                startActivity(new Intent(mContext, BookAppointmentActivityKt.class).putExtra("DoctorData", doctorData));
             break;
             case R.id.ivBack :
                 onBackPressed();

@@ -39,7 +39,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitScheduleList {
+class BookAppointmentActivityKt : BaseActivity(), View.OnClickListener, InitScheduleList {
 
     private val dateFormatForMonth = SimpleDateFormat("MMM - yyyy", Locale.getDefault())
     private val dateFormatForCheckDiffrennce = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -74,6 +74,8 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitSche
     private var ivPrevious: ImageView? = null
     private var ivNext: ImageView? = null
 
+    // new string = oldSTring+replaceAll("changeble","")
+
     private var tvDrName: TextView? = null
     private var tvDrDesignation: TextView? = null
     private var tvDrAddress: TextView? = null
@@ -100,6 +102,8 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitSche
     }
 
     private fun initViews() {
+
+        isValidDate()
 
         tvDrName = findViewById(R.id.tvDrName)
         tvDrDesignation = findViewById(R.id.tvDrDesignation)
@@ -255,15 +259,48 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitSche
     }
 
     private fun refreshAppointmentRecycler(selectedDayOpdList: ArrayList<DayOPD>, selectedDateOpdList: ArrayList<DateOPD>) {
-        val wAdapter = AppointmentWeeklyTimeListAdapter(selectedDayOpdList, this@BookAppointmentActivitykt, this@BookAppointmentActivitykt)
-        rvWeekly.layoutManager = LinearLayoutManager(this@BookAppointmentActivitykt, LinearLayoutManager.HORIZONTAL, true)
-        rvWeekly.adapter = wAdapter
-        wAdapter.notifyDataSetChanged()
+        tvWeaklyAppointment.visibility = View.VISIBLE
+        tvDateAppointment.visibility = View.VISIBLE
+        if (selectedDayOpdList.size>0) {
+            rvWeekly.visibility = View.VISIBLE
+            tvRecyclerWeeklyMessage.visibility = View.GONE
+            val wAdapter = AppointmentWeeklyTimeListAdapter(selectedDayOpdList, this@BookAppointmentActivityKt, this@BookAppointmentActivityKt)
+            rvWeekly.layoutManager = LinearLayoutManager(this@BookAppointmentActivityKt, LinearLayoutManager.HORIZONTAL, true)
+            rvWeekly.adapter = wAdapter
+            wAdapter.notifyDataSetChanged()
+        } else {
+            rvWeekly.visibility = View.GONE
+            tvRecyclerWeeklyMessage.visibility = View.VISIBLE
+            tvRecyclerWeeklyMessage.text = "No Appointment Available!"
+        }
 
-        val dAdapter = AppointmentDateTimeListAdapter(selectedDateOpdList, this@BookAppointmentActivitykt, this@BookAppointmentActivitykt)
-        rvDate.layoutManager = LinearLayoutManager(this@BookAppointmentActivitykt, LinearLayoutManager.HORIZONTAL, true)
-        rvDate.adapter = dAdapter
-        dAdapter.notifyDataSetChanged()
+        if (selectedDateOpdList.size>0) {
+            rvDate.visibility = View.VISIBLE
+            tvRecyclerDateMessage.visibility = View.GONE
+            val dAdapter = AppointmentDateTimeListAdapter(selectedDateOpdList, this@BookAppointmentActivityKt, this@BookAppointmentActivityKt)
+            rvDate.layoutManager = LinearLayoutManager(this@BookAppointmentActivityKt, LinearLayoutManager.HORIZONTAL, true)
+            rvDate.adapter = dAdapter
+            dAdapter.notifyDataSetChanged()
+        } else {
+            rvDate.visibility = View.GONE
+            tvRecyclerDateMessage.visibility = View.VISIBLE
+            tvRecyclerDateMessage.text = "No Appointment Available!"
+        }
+
+        /*if (day == 1) {
+                tvWeaklyAppointment.visibility = View.VISIBLE
+                rvWeekly.visibility = View.VISIBLE
+            } else {
+                tvWeaklyAppointment.visibility = View.GONE
+                rvWeekly.visibility = View.GONE
+            }
+            if (date == 1) {
+                tvDateAppointment.visibility = View.VISIBLE
+                rvDate.visibility = View.VISIBLE
+            } else {
+                tvDateAppointment.visibility = View.GONE
+                rvDate.visibility = View.GONE
+            }*/
     }
 
     private fun loadCalendarEvents(monthName: String, year: Int) {
@@ -278,11 +315,15 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitSche
         val dateOpdList = ArrayList<DateOPD>()
         if (doctorData!!.opdList.size > 0) {
             for (myOpd in doctorData!!.opdList) {
+                var opdStartDate = changeDateFormatFromServer(myOpd.startDate)
+                var opdEndDate =changeDateFormatFromServer(myOpd.endDate)
                 if (myOpd.scheduleType == "0") {
                     for (daySchedule in myOpd.schedule) {
                         val dOPD = DayOPD()
                         dOPD.type = "0"
                         dOPD.scheduleId = myOpd.scheduleId
+                        dOPD.opdStartDate = opdStartDate
+                        dOPD.opdEndDate = opdEndDate
                         dOPD.startTime = daySchedule.startTime
                         dOPD.endTime = daySchedule.endTime
                         dOPD.status = daySchedule.status
@@ -302,6 +343,8 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitSche
                         val dateOPD = DateOPD()
                         dateOPD.type = "1"
                         dateOPD.scheduleId = myOpd.scheduleId
+                        dateOPD.opdStartDate = opdStartDate
+                        dateOPD.opdEndDate = opdEndDate
                         dateOPD.date = daySchedule.date
                         dateOPD.startTime = daySchedule.startTime
                         dateOPD.endTime = daySchedule.endTime
@@ -314,13 +357,27 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitSche
 
         for (i in appointmentList.indices) {
             when (appointmentList[i].day) {
-                "Monday" -> appointmentList[i].dayOpdList = mondayOpdList
-                "Tuesday" -> appointmentList[i].dayOpdList = tuesdayOpdList
-                "Wednesday" -> appointmentList[i].dayOpdList = wednesdayOpdList
-                "Thursday" -> appointmentList[i].dayOpdList = thursdayOpdList
-                "Friday" -> appointmentList[i].dayOpdList = fridayOpdList
-                "Saturday" -> appointmentList[i].dayOpdList = saturdayOpdList
-                "Sunday" -> appointmentList[i].dayOpdList = sundayOpdList
+                "Monday" -> {
+                    appointmentList[i].dayOpdList = mondayOpdList
+                }
+                "Tuesday" -> {
+                    appointmentList[i].dayOpdList = tuesdayOpdList
+                }
+                "Wednesday" -> {
+                    appointmentList[i].dayOpdList = wednesdayOpdList
+                }
+                "Thursday" -> {
+                    appointmentList[i].dayOpdList = thursdayOpdList
+                }
+                "Friday" -> {
+                    appointmentList[i].dayOpdList = fridayOpdList
+                }
+                "Saturday" -> {
+                    appointmentList[i].dayOpdList = saturdayOpdList
+                }
+                "Sunday" -> {
+                    appointmentList[i].dayOpdList = sundayOpdList
+                }
             }
 
             for (daOpd in dateOpdList) {
@@ -342,6 +399,7 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitSche
         /*Log.d("TAg", appointmentList[0].day)
         Log.d("TAg", appointmentList[0].day)*/
 
+        availableAppointmentList.clear()
 
         appointmentList.forEach {
             if (it.dateOpdList.size > 0 || it.dayOpdList.size > 0) {
@@ -360,7 +418,7 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitSche
                     date = 1
                 }
             }
-            if (day == 1) {
+            /*if (day == 1) {
                 tvWeaklyAppointment.visibility = View.VISIBLE
                 rvWeekly.visibility = View.VISIBLE
             } else {
@@ -373,7 +431,7 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitSche
             } else {
                 tvDateAppointment.visibility = View.GONE
                 rvDate.visibility = View.GONE
-            }
+            }*/
             if (day == 0 && date == 0) {
                 llAppointment.visibility = View.GONE
             } else {
@@ -383,6 +441,13 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitSche
         availableAppointmentList.forEach {
             if (it.date.equals(cdForDifference)) {
                 refreshAppointmentRecycler(it.dayOpdList, it.dateOpdList)
+            }else{
+                rvWeekly.visibility = View.GONE
+                tvRecyclerWeeklyMessage.visibility = View.VISIBLE
+                tvRecyclerWeeklyMessage.text = "No Appointment Available!"
+                rvDate.visibility = View.GONE
+                tvRecyclerDateMessage.visibility = View.VISIBLE
+                tvRecyclerDateMessage.text = "No Appointment Available!"
             }
         }
     }
@@ -515,6 +580,13 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitSche
             availableAppointmentList.forEach {
                 if (it.date.equals(sdForDifference)) {
                     refreshAppointmentRecycler(it.dayOpdList, it.dateOpdList)
+                }else{
+                    rvWeekly.visibility = View.GONE
+                    tvRecyclerWeeklyMessage.visibility = View.VISIBLE
+                    tvRecyclerWeeklyMessage.text = "No Appointment Available!"
+                    rvDate.visibility = View.GONE
+                    tvRecyclerDateMessage.visibility = View.VISIBLE
+                    tvRecyclerDateMessage.text = "No Appointment Available!"
                 }
             }
         } else {
@@ -594,6 +666,50 @@ class BookAppointmentActivitykt : BaseActivity(), View.OnClickListener, InitSche
             }
         }
     }
+
+    private fun isValidDate(): Boolean{
+        var status = false
+        try {
+            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+
+            val str1 = "10/10/2015"
+            val date1 = formatter.parse(str1)
+
+            val str2 = "10/10/2015"
+            val date2 = formatter.parse(str2)
+
+            status = date1.compareTo(date2) <= 0
+            /*status = if (date1.compareTo(date2) <= 0) {
+                true //Date 2 is Greater or Equal top date 1
+            }else{
+                false //Date 2 is Greater or Equal top date 1
+            }*/
+
+        } catch (e1:ParseException) {
+            e1.printStackTrace()
+        }
+        return status
+    }
+
+    fun changeDateFormatFromServer(serverDate: String): String? {
+        val inputPattern = "yyyy-MM-dd HH:mm:ss"
+        val outputPattern = "dd/mm/yyyy"
+        val inputFormat = SimpleDateFormat(inputPattern, Locale.ENGLISH)
+        val outputFormat = SimpleDateFormat(outputPattern, Locale.ENGLISH)
+
+        var date: Date? = null
+        var str: String? = null
+
+        try {
+            date = inputFormat.parse(serverDate)
+            str = outputFormat.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return str
+    }
+
 
 }
 

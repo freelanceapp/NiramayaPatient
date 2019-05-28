@@ -3,71 +3,89 @@ package com.ibt.niramaya.modal.calander;
 public class DateOPD {
 
     private String type;
-        private String scheduleId;
-        private String startTime;
-        private String endTime;
-        private String date;
-        private String status;
+    private String scheduleId;
+    private String opdStartDate;
+    private String opdEndDate;
+    private String startTime;
+    private String endTime;
+    private String date;
+    private String status;
 
-        public DateOPD(String type, String startTime, String endTime, String status, String scheduleId, String date) {
-            this.type = type;
-            this.scheduleId = scheduleId;
-            this.startTime = startTime;
-            this.endTime = endTime;
-            this.date = date;
-            this.status = status;
-        }
+    public DateOPD(String type, String startTime, String endTime, String status, String scheduleId, String date) {
+        this.type = type;
+        this.scheduleId = scheduleId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.date = date;
+        this.status = status;
+    }
 
-        public DateOPD() {
+    public DateOPD() {
 
-        }
+    }
 
-        public String getType() {
-            return type;
-        }
+    public String getType() {
+        return type;
+    }
 
-        public void setType(String type) {
-            this.type = type;
-        }
+    public void setType(String type) {
+        this.type = type;
+    }
 
-        public String getScheduleId() {
-            return scheduleId;
-        }
+    public String getScheduleId() {
+        return scheduleId;
+    }
 
-        public void setScheduleId(String scheduleId) {
-            this.scheduleId = scheduleId;
-        }
+    public void setScheduleId(String scheduleId) {
+        this.scheduleId = scheduleId;
+    }
 
-        public String getStartTime() {
-            return startTime;
-        }
+    public String getOpdStartDate() {
+        return opdStartDate;
+    }
 
-        public void setStartTime(String startTime) {
-            this.startTime = startTime;
-        }
+    public void setOpdStartDate(String opdStartDate) {
+        this.opdStartDate = opdStartDate;
+    }
 
-        public String getEndTime() {
-            return endTime;
-        }
+    public String getOpdEndDate() {
+        return opdEndDate;
+    }
 
-        public void setEndTime(String endTime) {
-            this.endTime = endTime;
-        }
+    public void setOpdEndDate(String opdEndDate) {
+        this.opdEndDate = opdEndDate;
+    }
 
-        public String getDate() {
-            return date;
-        }
+    public String getStartTime() {
+        return startTime;
+    }
 
-        public void setDate(String date) {
-            this.date = date;
-        }
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
 
-        public String getStatus() {
-            return status;
-        }
+    public String getEndTime() {
+        return endTime;
+    }
 
-        public void setStatus(String status) {
-            this.status = status;
-        }
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
 }

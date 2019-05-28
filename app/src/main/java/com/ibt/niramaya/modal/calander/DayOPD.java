@@ -4,19 +4,12 @@ public class DayOPD {
 
     private String type;
     private String scheduleId;
+    private String opdStartDate;
+    private String opdEndDate;
     private String startTime;
     private String endTime;
     private String date;
     private String status;
-
-    public DayOPD(String type, String startTime, String endTime, String status, String scheduleId, String date) {
-        this.type = type;
-        this.scheduleId = scheduleId;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.date = date;
-        this.status = status;
-    }
 
     public DayOPD() {
 
@@ -36,6 +29,22 @@ public class DayOPD {
 
     public void setScheduleId(String scheduleId) {
         this.scheduleId = scheduleId;
+    }
+
+    public String getOpdStartDate() {
+        return opdStartDate;
+    }
+
+    public void setOpdStartDate(String opdStartDate) {
+        this.opdStartDate = opdStartDate;
+    }
+
+    public String getOpdEndDate() {
+        return opdEndDate;
+    }
+
+    public void setOpdEndDate(String opdEndDate) {
+        this.opdEndDate = opdEndDate;
     }
 
     public String getStartTime() {

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ibt.niramaya.R;
-import com.ibt.niramaya.ui.activity.invoice_data.BookAppointmentActivitykt;
+import com.ibt.niramaya.ui.activity.invoice_data.BookAppointmentActivityKt;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class HospitalCategoryAdapter extends RecyclerView.Adapter<HospitalCatego
         holder.imgCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, BookAppointmentActivitykt.class);
+                Intent intent = new Intent(mContext, BookAppointmentActivityKt.class);
                 mContext.startActivity(intent);
             }
         });
