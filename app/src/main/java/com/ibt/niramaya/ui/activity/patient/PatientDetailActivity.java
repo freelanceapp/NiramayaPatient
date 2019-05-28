@@ -106,7 +106,7 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
 
     private void init() {
         toolbar = findViewById(R.id.toolbarPatientDetail);
-        toolbar.setTitle("Product Detail");
+        toolbar.setTitle("Patient Detail");
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -418,7 +418,6 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
-
     public String getRealPathFromURI(Uri uri) {
         String path = "";
         if (mContext.getContentResolver() != null) {
@@ -432,7 +431,6 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
         }
         return path;
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -472,7 +470,6 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
 
         }
     }
-
     public String getPath(Uri uri) {
         String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = mContext.getContentResolver().query(uri, projection, null, null, null);
@@ -482,7 +479,6 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
         cursor.close();
         return strPath;
     }
-
     private String convertToBase64(String path) {
 
         Bitmap bm = BitmapFactory.decodeFile(path);
