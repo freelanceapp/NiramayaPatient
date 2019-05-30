@@ -31,6 +31,7 @@ import com.ibt.niramaya.ui.fragment.BedFragment;
 import com.ibt.niramaya.ui.fragment.DocumentsFragment;
 import com.ibt.niramaya.ui.fragment.HomeFragment;
 import com.ibt.niramaya.ui.fragment.InvoiceFragment;
+import com.ibt.niramaya.ui.fragment.PatientFinanceDetailFragment;
 import com.ibt.niramaya.ui.fragment.PrescriptionsFragment;
 import com.ibt.niramaya.ui.fragment.ReportFragment;
 import com.ibt.niramaya.ui.fragment.blood_donation.BloodDonationFragment;
@@ -149,6 +150,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.txtPrescription).setOnClickListener(this);
         findViewById(R.id.txtReports).setOnClickListener(this);
         findViewById(R.id.txtInvoice).setOnClickListener(this);
+        findViewById(R.id.txtFinance).setOnClickListener(this);
         findViewById(R.id.txtBed).setOnClickListener(this);
         findViewById(R.id.txtHistory).setOnClickListener(this);
         findViewById(R.id.txtBloodDonation).setOnClickListener(this);
@@ -165,6 +167,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Fragment BedFragment = fragmentManager.findFragmentByTag(Constant.BedFragment);
         Fragment HomeFragment = fragmentManager.findFragmentByTag(Constant.HomeFragment);
         Fragment InvoiceFragment = fragmentManager.findFragmentByTag(Constant.InvoiceFragment);
+        Fragment PatientFinanceDetailFragment = fragmentManager.findFragmentByTag(Constant.PatientFinanceDetailFragment);
         Fragment DocumentsFragment = fragmentManager.findFragmentByTag(Constant.DocumentsFragment);
         Fragment PrescriptionFragment = fragmentManager.findFragmentByTag(Constant.PrescriptionFragment);
         Fragment ReportFragment = fragmentManager.findFragmentByTag(Constant.ReportsFragment);
@@ -206,6 +209,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 if (InvoiceFragment == null) {
                     if (!patientId.isEmpty() && !patientId.equals("0")) {
                         fragmentUtils.replaceFragment(new InvoiceFragment(), Constant.InvoiceFragment, R.id.home_frame);
+                        slidingRootNav.closeMenu();
+                    } else {
+                        Alerts.show(mContext, "No Patient Selected!");
+                    }
+                }
+                break;
+            case R.id.txtFinance:
+                txtTitle.setText("Finance");
+                if (PatientFinanceDetailFragment == null) {
+                    if (!patientId.isEmpty() && !patientId.equals("0")) {
+                        fragmentUtils.replaceFragment(new PatientFinanceDetailFragment(), Constant.PatientFinanceDetailFragment, R.id.home_frame);
                         slidingRootNav.closeMenu();
                     } else {
                         Alerts.show(mContext, "No Patient Selected!");
@@ -257,12 +271,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Fragment BedFragment = fragmentManager.findFragmentByTag(Constant.BedFragment);
         Fragment HomeFragment = fragmentManager.findFragmentByTag(Constant.HomeFragment);
         Fragment InvoiceFragment = fragmentManager.findFragmentByTag(Constant.InvoiceFragment);
+        Fragment PatientFinanceDetailFragment = fragmentManager.findFragmentByTag(Constant.PatientFinanceDetailFragment);
         Fragment PrescriptionFragment = fragmentManager.findFragmentByTag(Constant.PrescriptionFragment);
         Fragment ReportFragment = fragmentManager.findFragmentByTag(Constant.ReportsFragment);
 
         if (HomeFragment != null) {
             finish();
         } else if (PrescriptionFragment != null) {
+            txtTitle.setText("Home");
+            fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.home_frame);
+            slidingRootNav.closeMenu();
+        } else if (PatientFinanceDetailFragment != null) {
             txtTitle.setText("Home");
             fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.home_frame);
             slidingRootNav.closeMenu();

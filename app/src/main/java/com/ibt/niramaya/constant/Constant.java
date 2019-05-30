@@ -30,6 +30,7 @@ public class Constant {
     public static final String Verification_Fragment = "Verification_Fragment";
     public static final String ReportsFragment = "ReportsFragment";
     public static final String InvoiceFragment = "InvoiceFragment";
+    public static final String PatientFinanceDetailFragment = "PatientFinanceDetailFragment";
     public static final String BedFragment = "BedFragment";
     public static final String HistoryFragment = "HistoryFragment";
     public static final String BloodDonationFragment = "BloodDonationFragment";

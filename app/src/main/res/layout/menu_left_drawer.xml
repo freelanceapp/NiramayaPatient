@@ -190,6 +190,48 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="4dp"
+                        app:cardBackgroundColor="@color/red_b"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp">
+
+                        <TextView
+                            android:id="@+id/txtFinance"
+                            android:layout_width="100dp"
+                            android:layout_height="60dp"
+                            android:gravity="center"
+                            android:text="Finance"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/size_14" />
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        app:cardBackgroundColor="@color/red_b"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp">
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="60dp"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/size_14" />
+                    </android.support.v7.widget.CardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="4dp"
                         app:cardBackgroundColor="@color/red_c"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="0dp">
