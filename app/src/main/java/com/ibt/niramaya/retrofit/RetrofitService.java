@@ -5,6 +5,7 @@ import android.app.Dialog;
 
 import com.ibt.niramaya.BuildConfig;
 import com.ibt.niramaya.modal.doctor_opd.DoctorOpdModel;
+import com.ibt.niramaya.modal.finance.PatientFinanceListModel;
 import com.ibt.niramaya.modal.hospital.HospitalListModel;
 import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.OpdInvoiceMainModal;
 import com.ibt.niramaya.modal.invoice_modal.pathology_invoice_modal.PahologyInvoiceListMainModal;
@@ -250,6 +251,25 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<DoctorOpdModel> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void patientFinanceList(final Dialog dialog, final Call<PatientFinanceListModel> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<PatientFinanceListModel>() {
+            @Override
+            public void onResponse(Call<PatientFinanceListModel> call, Response<PatientFinanceListModel> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<PatientFinanceListModel> call, Throwable throwable) {
                 AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());
             }

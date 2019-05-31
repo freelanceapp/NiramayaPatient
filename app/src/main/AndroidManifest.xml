@@ -23,7 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activity.invoice_data.OpdBillActivity"></activity>
+        <activity android:name=".ui.activity.AddPatientFinanceDetailActivity"/>
+        <activity android:name=".ui.activity.invoice_data.OpdBillActivity" />
         <activity android:name=".ui.activity.invoice_data.PathologTestBillActivity" />
         <activity android:name=".ui.activity.invoice_data.PharmacyMedicineBillActivity" />
         <activity android:name=".ui.activity.patient.PatientDetailActivity" />
@@ -79,23 +80,17 @@
         <activity android:name=".ui.activity.HospitalDepartmentDetailActivity" />
         <activity android:name=".ui.activity.FindAndBookActivity" />
         <activity android:name=".ui.activity.PrescriptionActivity" />
-        <activity android:name=".ui.activity.invoice_data.BookAppointmentActivityKt" />
-
-
-        <!-- Firebase Notifications -->
+        <activity android:name=".ui.activity.invoice_data.BookAppointmentActivityKt" /> <!-- Firebase Notifications -->
         <service android:name=".firebase_service.MyFirebaseMessangingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".firebase_service.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <!-- ./Firebase Notifications -->
-
     </application>
 
 </manifest>

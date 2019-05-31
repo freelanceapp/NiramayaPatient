@@ -1,213 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginRight="16dp"
-        android:gravity="center"
-        android:text="Add Patient Finance Detail"
-        android:textSize="@dimen/size_18"
-        android:textStyle="bold" />
 
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvFinance"
         android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabAddFinance"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_add"
         android:layout_margin="16dp"
-        android:background="@drawable/layout_bg_rhl3"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:backgroundTint="@color/colorPrimary"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Fill The Form*"
-            android:textSize="@dimen/size_12" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Policy Title"
-            android:textSize="@dimen/size_14" />
-
-        <EditText
-            android:id="@+id/etPolicyTitle"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/layout_bg_rhl4"
-            android:gravity="center_vertical"
-            android:hint="Enter policy title"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            android:maxLength="50"
-            android:paddingLeft="10dp"
-            android:paddingRight="5dp"
-            android:textSize="@dimen/size_14" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Policy provider"
-            android:textSize="@dimen/size_14" />
-
-        <EditText
-            android:id="@+id/etPolicyProviderName"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/layout_bg_rhl4"
-            android:gravity="center_vertical"
-            android:hint="Enter Policy provider name"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            android:maxLength="10"
-            android:paddingLeft="10dp"
-            android:paddingRight="5dp"
-            android:textSize="@dimen/size_14" />
-
-        <!--patient_finance_id,
-        patient_id,
-        title,
-        provider,
-        policy_number,
-        policy_valid_time,
-
-        status,
-        policy_document(FILE)-->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Policy Reg. Number"
-            android:textSize="@dimen/size_14" />
-
-        <EditText
-            android:id="@+id/etPolicyNumber"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/layout_bg_rhl4"
-            android:gravity="center_vertical"
-            android:hint="Enter Policy reg. number"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            android:maxLength="12"
-            android:paddingLeft="10dp"
-            android:paddingRight="5dp"
-            android:textSize="@dimen/size_14" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Policy Validity"
-            android:textSize="@dimen/size_14" />
-
-        <EditText
-            android:id="@+id/etPolicyValidity"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/layout_bg_rhl4"
-            android:drawableRight="@drawable/icf_appointment2"
-            android:editable="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:gravity="center_vertical"
-            android:hint="Click to select date"
-            android:imeOptions="actionNext"
-            android:inputType="date"
-            android:paddingLeft="10dp"
-            android:paddingRight="5dp"
-            android:textSize="@dimen/size_14" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Policy Status"
-            android:textSize="@dimen/size_14" />
-
-        <RadioGroup
-            android:id="@+id/rgPolicyStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <RadioButton
-                android:id="@+id/rbActive"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Active" />
-
-            <RadioButton
-                android:id="@+id/rbDActive"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="De-active" />
-
-        </RadioGroup>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Attach Policy File"
-            android:textSize="@dimen/size_14" />
-
-        <EditText
-            android:id="@+id/etAttachFile"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/layout_bg_rhl4"
-            android:gravity="center_vertical"
-            android:editable="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:hint="Click here to select file"
-            android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="10dp"
-            android:paddingRight="5dp"
-            android:textSize="@dimen/size_14" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnSubmit"
+    <TextView
+        android:id="@+id/tvMessage"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="20dp"
-        android:background="@color/colorAccent"
-        android:text="Submit"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:textSize="18sp"/>
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="It seems no Finance/Policy added yet."/>
 
-</LinearLayout>
-    </ScrollView>
+    <!--http://niramaya.infobitetechnology.tech/api/patient/select_opd_bill.php-->
 
-</LinearLayout>
+</RelativeLayout>

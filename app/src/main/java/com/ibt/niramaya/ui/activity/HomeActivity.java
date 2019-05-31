@@ -305,7 +305,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Alerts.show(mContext, patientList.get(position).getPatientName());
             AppPreference.setStringPreference(mContext, Constant.CURRENT_PATENT_ID,
                     patientList.get(position).getPatientId());
             AppPreference.setStringPreference(mContext, Constant.CURRENT_PATENT_NAME,

@@ -2,6 +2,7 @@ package com.ibt.niramaya.retrofit;
 
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.modal.doctor_opd.DoctorOpdModel;
+import com.ibt.niramaya.modal.finance.PatientFinanceListModel;
 import com.ibt.niramaya.modal.hospital.HospitalListModel;
 import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.OpdInvoiceMainModal;
 import com.ibt.niramaya.modal.invoice_modal.pathology_invoice_modal.PahologyInvoiceListMainModal;
@@ -184,4 +185,19 @@ public interface RetrofitApiClient {
                                        @Field("booking_date") String booking_date,
                                        @Field("referred_by") String referred_by,
                                        @Field("referred_doctor_name") String referred_doctor_name);
+
+    @Multipart
+    @POST(Constant.ADD_PATIENT_FINANCE_REPORT)
+    Call<ResponseBody> addPatientFinanceReprot(@Part("patient_finance_id") RequestBody patient_finance_id,
+                                                  @Part("patient_id") RequestBody patient_id,
+                                                  @Part("title") RequestBody title,
+                                                  @Part("provider") RequestBody provider,
+                                                  @Part("policy_number") RequestBody policy_number,
+                                                  @Part("policy_valid_time") RequestBody policy_valid_time,
+                                                  @Part("status") RequestBody status ,
+                                                  @Part MultipartBody.Part policy_document);
+
+    @FormUrlEncoded
+    @POST(Constant.PATIENT_FINANCE_LIST)
+    Call<PatientFinanceListModel> patientFinanceList(@Field("patient_id") String patient_id);
 }

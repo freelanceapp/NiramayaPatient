@@ -60,6 +60,6 @@
     <string name="gardian_address">Gardian Address</string>
     <string name="referred_by_doctor_name_if_any">Referred by Doctor name if any</string>
     <string name="referred_by_doctor_name_optional">Referred by Doctor name (optional)</string>
-    >>>>>>> 7bdcafb214e5bb5f19ff569e7e537b45f49cfe55
+    <string name="add_finance_detail">Finance Detail</string>
 
 </resources>
