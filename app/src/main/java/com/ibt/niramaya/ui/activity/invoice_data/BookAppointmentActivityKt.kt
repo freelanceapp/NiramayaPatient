@@ -19,8 +19,9 @@ import com.ibt.niramaya.interfaces.InitScheduleList
 import com.ibt.niramaya.modal.calander.AppointmentModel
 import com.ibt.niramaya.modal.calander.DateOPD
 import com.ibt.niramaya.modal.calander.DayOPD
-import com.ibt.niramaya.modal.doctor_opd.DoctorDatum
+import com.ibt.niramaya.modal.doctor_opd.DoctorData
 import com.ibt.niramaya.modal.doctor_opd.OpdList
+import com.ibt.niramaya.modal.doctor_opd_model.DoctorOpdData
 import com.ibt.niramaya.modal.patient_modal.PaitentProfile
 import com.ibt.niramaya.modal.patient_modal.PatientMainModal
 import com.ibt.niramaya.retrofit.RetrofitService
@@ -81,8 +82,8 @@ class BookAppointmentActivityKt : BaseActivity(), View.OnClickListener, InitSche
     private var tvDrAddress: TextView? = null
     private var tvSelectDate: TextView? = null
     private var tvSelectTime: TextView? = null
-    private var doctorData: DoctorDatum? = null
-    private val opdList = ArrayList<OpdList>()
+    private var doctorData: DoctorOpdData = DoctorOpdData()
+    private var opdList = ArrayList<OpdList>()
     private var spnPatient: Spinner? = null
 
     private var selectedPatientId = ""
@@ -95,7 +96,10 @@ class BookAppointmentActivityKt : BaseActivity(), View.OnClickListener, InitSche
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_appointment)
 
-        doctorData = intent.extras!!.getParcelable("DoctorData")
+        try {
+            doctorData = intent.extras!!.getParcelable("DoctorOpdData") as DoctorOpdData
+        } catch (e: Exception) {
+        }
 
         initViews()
 
@@ -126,7 +130,6 @@ class BookAppointmentActivityKt : BaseActivity(), View.OnClickListener, InitSche
         btnBookNow!!.setOnClickListener(this)
 
         initCalenderViews()
-
 
     }
 
@@ -322,6 +325,8 @@ class BookAppointmentActivityKt : BaseActivity(), View.OnClickListener, InitSche
                         val dOPD = DayOPD()
                         dOPD.type = "0"
                         dOPD.scheduleId = myOpd.scheduleId
+                        dOPD.title = myOpd.title
+                        dOPD.description = myOpd.description
                         dOPD.opdStartDate = opdStartDate
                         dOPD.opdEndDate = opdEndDate
                         dOPD.startTime = daySchedule.startTime
@@ -343,6 +348,8 @@ class BookAppointmentActivityKt : BaseActivity(), View.OnClickListener, InitSche
                         val dateOPD = DateOPD()
                         dateOPD.type = "1"
                         dateOPD.scheduleId = myOpd.scheduleId
+                        dateOPD.title = myOpd.title
+                        dateOPD.description = myOpd.description
                         dateOPD.opdStartDate = opdStartDate
                         dateOPD.opdEndDate = opdEndDate
                         dateOPD.date = daySchedule.date
@@ -583,12 +590,12 @@ class BookAppointmentActivityKt : BaseActivity(), View.OnClickListener, InitSche
                 if (it.date.equals(sdForDifference)) {
                     refreshAppointmentRecycler(it.dayOpdList, it.dateOpdList)
                 }else{
-                    rvWeekly.visibility = View.GONE
+                    /*rvWeekly.visibility = View.GONE
                     tvRecyclerWeeklyMessage.visibility = View.VISIBLE
                     tvRecyclerWeeklyMessage.text = "No Appointment Available!"
                     rvDate.visibility = View.GONE
                     tvRecyclerDateMessage.visibility = View.VISIBLE
-                    tvRecyclerDateMessage.text = "No Appointment Available!"
+                    tvRecyclerDateMessage.text = "No Appointment Available!"*/
                 }
             }
         } else {
@@ -621,6 +628,7 @@ class BookAppointmentActivityKt : BaseActivity(), View.OnClickListener, InitSche
                     val opdL = doctorData!!.opdList[i]
                     if (opdL.scheduleId.equals(dateOPD?.scheduleId)) {
                         tvServicePrice.text = "₹ ${opdL.amount}"
+                        tvOpdTitleName.text = opdL.title
                         selectedOpdPrice = opdL.amount
                         selectedOpdId = opdL.scheduleId
                     }
@@ -631,6 +639,7 @@ class BookAppointmentActivityKt : BaseActivity(), View.OnClickListener, InitSche
                     val opdL = doctorData!!.opdList[i]
                     if (opdL.scheduleId.equals(dOPD?.scheduleId)) {
                         tvServicePrice.text = "₹ ${opdL.amount}"
+                        tvOpdTitleName.text = opdL.title
                         selectedOpdPrice = opdL.amount
                         selectedOpdId = opdL.scheduleId
                     }
@@ -695,7 +704,7 @@ class BookAppointmentActivityKt : BaseActivity(), View.OnClickListener, InitSche
 
     fun changeDateFormatFromServer(serverDate: String): String? {
         val inputPattern = "yyyy-MM-dd HH:mm:ss"
-        val outputPattern = "dd/mm/yyyy"
+        val outputPattern = "dd/MM/yyyy"
         val inputFormat = SimpleDateFormat(inputPattern, Locale.ENGLISH)
         val outputFormat = SimpleDateFormat(outputPattern, Locale.ENGLISH)
 

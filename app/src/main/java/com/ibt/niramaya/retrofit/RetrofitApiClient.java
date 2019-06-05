@@ -2,8 +2,11 @@ package com.ibt.niramaya.retrofit;
 
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.modal.doctor_opd.DoctorOpdModel;
+import com.ibt.niramaya.modal.doctor_opd_model.DoctorOpdDataModel;
 import com.ibt.niramaya.modal.finance.PatientFinanceListModel;
+import com.ibt.niramaya.modal.home.HomeDataModel;
 import com.ibt.niramaya.modal.hospital.HospitalListModel;
+import com.ibt.niramaya.modal.hospital_detail.HospitalDetailModel;
 import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.OpdInvoiceMainModal;
 import com.ibt.niramaya.modal.invoice_modal.pathology_invoice_modal.PahologyInvoiceListMainModal;
 import com.ibt.niramaya.modal.invoice_modal.pharmacy_invoice_modal.PharmacyInvoiceMainModal;
@@ -11,6 +14,8 @@ import com.ibt.niramaya.modal.otp_verifacation_modal.OtpVerificationMainModal;
 import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
 import com.ibt.niramaya.modal.prescription.PrescritionListModel;
 import com.ibt.niramaya.modal.prescription.detail.PrescriptionDetailModel;
+import com.ibt.niramaya.modal.specialization.all.SpecialistDoctorModel;
+import com.ibt.niramaya.modal.specialization.hospital.HospitalSpecialistDoctorModel;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -124,11 +129,11 @@ public interface RetrofitApiClient {
 
     @FormUrlEncoded
     @POST(Constant.HOSPITAL_LIST)
-    Call<HospitalListModel> hospitalList(@Field("user_id") String user_id,
-                                         @Field("patient_id") String patient_id,
-                                         @Field("latitude") String latitude,
-                                         @Field("longitude") String longitude,
-                                         @Field("near_by") String near_by);
+    Call<HomeDataModel> hospitalList(@Field("user_id") String user_id,
+                                     @Field("patient_id") String patient_id,
+                                     @Field("latitude") String latitude,
+                                     @Field("longitude") String longitude,
+                                     @Field("near_by") String near_by);
 
   /*  Call<ResponseBody> updatePatientProfie(@Field("name") String name,
                                            @Field("bloodgroup") String bloodgroup,
@@ -169,9 +174,29 @@ public interface RetrofitApiClient {
 
     @FormUrlEncoded
     @POST(Constant.DOCTOR_OPD_LIST)
-    Call<DoctorOpdModel> doctorOpdList(@Field("hospital_id") String hospital_id,
+    Call<HospitalDetailModel> doctorOpdList(@Field("hospital_id") String hospital_id,
+                                            @Field("user_id") String user_id,
+                                            @Field("patient_id") String patient_id);
+
+    @FormUrlEncoded
+    @POST(Constant.SPECIALIST_DOCTOR_OPD)
+    Call<SpecialistDoctorModel> getSpecialistDoctor(@Field("specialization_id") String specialization_id,
+                                                    @Field("user_id") String user_id,
+                                                    @Field("patient_id") String patient_id);
+
+    @FormUrlEncoded
+    @POST(Constant.HOSPITAL_SPECIALIST_DOCTOR_OPD)
+    Call<HospitalSpecialistDoctorModel> getHospitalSpecialistDoctor(@Field("specialization_id") String specialization_id,
+                                                                    @Field("hospital_id") String hospital_id,
+                                                                    @Field("user_id") String user_id,
+                                                                    @Field("patient_id") String patient_id);
+
+    @FormUrlEncoded
+    @POST(Constant.DOCTOR_OPD)
+    Call<DoctorOpdDataModel> doctorOpd(@Field("hospital_id") String hospital_id,
                                        @Field("user_id") String user_id,
-                                       @Field("patient_id") String patient_id);
+                                       @Field("patient_id") String patient_id,
+                                       @Field("doctor_id") String doctor_id);
 
     @FormUrlEncoded
     @POST(Constant.BOOK_APPOINTMENT)

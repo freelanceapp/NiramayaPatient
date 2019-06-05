@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ibt.niramaya.R;
-import com.ibt.niramaya.modal.doctor_opd.DoctorDatum;
+import com.ibt.niramaya.modal.hospital_detail.DoctorDatum;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class DoctorOpdListAdapter extends RecyclerView.Adapter<DoctorOpdListAdap
         holder.tvDoctorName.setText(doctorData.getName());
         holder.tvDoctorSpecialization.setText(doctorData.getDoctorSpecialization().get(0).getSpecializationTitle());
         //holder.tvDoctorAddress.setText(doctorData.get);
-        holder.tvDoctorRatings.setText(doctorData.getDoctorId());
+        holder.tvDoctorRatings.setText(doctorData.getRating());
         holder.llDoctor.setTag(position);
         holder.llDoctor.setOnClickListener(onClickListener);
 

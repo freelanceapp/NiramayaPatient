@@ -3,6 +3,8 @@ package com.ibt.niramaya.modal.calander;
 public class DayOPD {
 
     private String type;
+    private String title;
+    private String description;
     private String scheduleId;
     private String opdStartDate;
     private String opdEndDate;
@@ -21,6 +23,22 @@ public class DayOPD {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getScheduleId() {

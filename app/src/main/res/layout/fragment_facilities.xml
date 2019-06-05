@@ -5,8 +5,11 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/txtFacilities"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_margin="8dp"
+        android:textSize="18sp"
+        android:textColor="@color/gray_b"
         android:text="No data" />
 </RelativeLayout>

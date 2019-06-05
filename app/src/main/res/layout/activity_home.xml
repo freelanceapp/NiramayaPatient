@@ -49,6 +49,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="16dp"
                         android:layout_marginRight="16dp"
+                        android:background="?selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_search" />
 
                     <ImageView

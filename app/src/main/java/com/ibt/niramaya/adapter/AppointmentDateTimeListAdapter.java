@@ -38,13 +38,10 @@ public class AppointmentDateTimeListAdapter extends RecyclerView.Adapter<Appoint
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final DateOPD dOPD = vendorLists.get(position);
         holder.tvAppointmentTime.setText(dOPD.getStartTime()+" - "+dOPD.getEndTime());
-        holder.rlSchedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                row_index = position;
-                notifyDataSetChanged();
-                listener.initScheduleList(position, "Week", null, dOPD);
-            }
+        holder.rlSchedule.setOnClickListener(v -> {
+            row_index = position;
+            notifyDataSetChanged();
+            listener.initScheduleList(position, "Date", null, dOPD);
         });
 
         if (row_index == position) {

@@ -5,8 +5,11 @@ import android.app.Dialog;
 
 import com.ibt.niramaya.BuildConfig;
 import com.ibt.niramaya.modal.doctor_opd.DoctorOpdModel;
+import com.ibt.niramaya.modal.doctor_opd_model.DoctorOpdDataModel;
 import com.ibt.niramaya.modal.finance.PatientFinanceListModel;
+import com.ibt.niramaya.modal.home.HomeDataModel;
 import com.ibt.niramaya.modal.hospital.HospitalListModel;
+import com.ibt.niramaya.modal.hospital_detail.HospitalDetailModel;
 import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.OpdInvoiceMainModal;
 import com.ibt.niramaya.modal.invoice_modal.pathology_invoice_modal.PahologyInvoiceListMainModal;
 import com.ibt.niramaya.modal.invoice_modal.pharmacy_invoice_modal.PharmacyInvoiceMainModal;
@@ -14,6 +17,8 @@ import com.ibt.niramaya.modal.otp_verifacation_modal.OtpVerificationMainModal;
 import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
 import com.ibt.niramaya.modal.prescription.PrescritionListModel;
 import com.ibt.niramaya.modal.prescription.detail.PrescriptionDetailModel;
+import com.ibt.niramaya.modal.specialization.all.SpecialistDoctorModel;
+import com.ibt.niramaya.modal.specialization.hospital.HospitalSpecialistDoctorModel;
 import com.ibt.niramaya.utils.AppProgressDialog;
 
 import java.util.concurrent.TimeUnit;
@@ -238,19 +243,38 @@ public class RetrofitService {
         });
     }
 
-    public static void getOpdDoctorList(final Dialog dialog, final Call<DoctorOpdModel> method, final WebResponse webResponse) {
+    public static void getHomePageData(final Dialog dialog, final Call<HomeDataModel> method, final WebResponse webResponse) {
         if (dialog != null)
             AppProgressDialog.show(dialog);
 
-        method.enqueue(new Callback<DoctorOpdModel>() {
+        method.enqueue(new Callback<HomeDataModel>() {
             @Override
-            public void onResponse(Call<DoctorOpdModel> call, Response<DoctorOpdModel> response) {
+            public void onResponse(Call<HomeDataModel> call, Response<HomeDataModel> response) {
                 AppProgressDialog.hide(dialog);
                 WebServiceResponse.handleResponse(response, webResponse);
             }
 
             @Override
-            public void onFailure(Call<DoctorOpdModel> call, Throwable throwable) {
+            public void onFailure(Call<HomeDataModel> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getOpdDoctorList(final Dialog dialog, final Call<HospitalDetailModel> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<HospitalDetailModel>() {
+            @Override
+            public void onResponse(Call<HospitalDetailModel> call, Response<HospitalDetailModel> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<HospitalDetailModel> call, Throwable throwable) {
                 AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());
             }
@@ -270,6 +294,63 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<PatientFinanceListModel> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void doctorDetail(final Dialog dialog, final Call<DoctorOpdDataModel> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<DoctorOpdDataModel>() {
+            @Override
+            public void onResponse(Call<DoctorOpdDataModel> call, Response<DoctorOpdDataModel> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<DoctorOpdDataModel> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getSpecializationDoctor(final Dialog dialog, final Call<SpecialistDoctorModel> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<SpecialistDoctorModel>() {
+            @Override
+            public void onResponse(Call<SpecialistDoctorModel> call, Response<SpecialistDoctorModel> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<SpecialistDoctorModel> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void getHospitalSpecializationDoctor(final Dialog dialog, final Call<HospitalSpecialistDoctorModel> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<HospitalSpecialistDoctorModel>() {
+            @Override
+            public void onResponse(Call<HospitalSpecialistDoctorModel> call, Response<HospitalSpecialistDoctorModel> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<HospitalSpecialistDoctorModel> call, Throwable throwable) {
                 AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());
             }

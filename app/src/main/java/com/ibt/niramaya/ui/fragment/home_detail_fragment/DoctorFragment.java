@@ -1,6 +1,5 @@
 package com.ibt.niramaya.ui.fragment.home_detail_fragment;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,21 +11,14 @@ import android.view.ViewGroup;
 
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.adapter.doctor_opd.DoctorOpdListAdapter;
-import com.ibt.niramaya.constant.Constant;
-import com.ibt.niramaya.modal.doctor_opd.DoctorDatum;
-import com.ibt.niramaya.modal.doctor_opd.DoctorOpdModel;
+import com.ibt.niramaya.modal.hospital_detail.DoctorDatum;
 import com.ibt.niramaya.retrofit.RetrofitService;
-import com.ibt.niramaya.retrofit.WebResponse;
 import com.ibt.niramaya.ui.activity.DoctorActivity;
-import com.ibt.niramaya.ui.activity.HospitalDetailActivity;
-import com.ibt.niramaya.utils.AppPreference;
 import com.ibt.niramaya.utils.BaseFragment;
 import com.ibt.niramaya.utils.ConnectionDetector;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Response;
 
 public class DoctorFragment extends BaseFragment implements View.OnClickListener {
 
@@ -51,7 +43,15 @@ public class DoctorFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void fetchDoctorList() {
-        String hospitalId = HospitalDetailActivity.hospitalId;
+
+        doctorList = getArguments().getParcelableArrayList("DOCTORS");
+        rvDoctorOpdList = rootView.findViewById(R.id.rvDoctorOpdList);
+        doctorAdapter = new DoctorOpdListAdapter(doctorList, mContext, DoctorFragment.this);
+        rvDoctorOpdList.setLayoutManager(new LinearLayoutManager(mContext));
+        rvDoctorOpdList.setAdapter(doctorAdapter);
+        doctorAdapter.notifyDataSetChanged();
+
+        /*String hospitalId = HospitalDetailActivity.hospitalId;
         String userId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
         if (cd.isNetworkAvailable()){
             RetrofitService.getOpdDoctorList(new Dialog(mContext), retrofitApiClient.doctorOpdList(
@@ -59,8 +59,8 @@ public class DoctorFragment extends BaseFragment implements View.OnClickListener
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     DoctorOpdModel doctorModel = (DoctorOpdModel)  result.body();
-                    if (!doctorModel.getError() && doctorModel.getDoctorData().size()>0){
-                        doctorList = doctorModel.getDoctorData();
+                    if (!doctorModel.getError() && doctorModel.getDoctorOpdData().size()>0){
+                        doctorList = doctorModel.getDoctorOpdData();
                         rvDoctorOpdList = rootView.findViewById(R.id.rvDoctorOpdList);
                         doctorAdapter = new DoctorOpdListAdapter(doctorList, mContext, DoctorFragment.this);
                         rvDoctorOpdList.setLayoutManager(new LinearLayoutManager(mContext));
@@ -74,7 +74,7 @@ public class DoctorFragment extends BaseFragment implements View.OnClickListener
 
                 }
             });
-        }
+        }*/
     }
 
     private void initViews() {
@@ -89,7 +89,7 @@ public class DoctorFragment extends BaseFragment implements View.OnClickListener
     public void onClick(View v) {
         if (v.getId()== R.id.llDoctor){
             int tag = (int) v.getTag();
-            startActivity(new Intent(mContext, DoctorActivity.class).putExtra("DoctorData", doctorList.get(tag)));
+            startActivity(new Intent(mContext, DoctorActivity.class).putExtra("DoctorId", doctorList.get(tag).getDoctorId()));
         }
     }
 }

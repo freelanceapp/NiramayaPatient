@@ -2,6 +2,7 @@ package com.ibt.niramaya.ui.fragment;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -28,10 +29,14 @@ import com.ibt.niramaya.adapter.HospitalCategoryAdapter;
 import com.ibt.niramaya.adapter.HospitalListAdapter;
 import com.ibt.niramaya.adapter.ViewPagerAdapter;
 import com.ibt.niramaya.constant.Constant;
-import com.ibt.niramaya.modal.hospital.HospitalDatum;
+import com.ibt.niramaya.modal.home.Appslider;
+import com.ibt.niramaya.modal.home.HomeDataModel;
+import com.ibt.niramaya.modal.home.HospitalDatum;
+import com.ibt.niramaya.modal.home.SystemSpecialization;
 import com.ibt.niramaya.modal.hospital.HospitalListModel;
 import com.ibt.niramaya.retrofit.RetrofitService;
 import com.ibt.niramaya.retrofit.WebResponse;
+import com.ibt.niramaya.ui.activity.SpecialistDoctorActivity;
 import com.ibt.niramaya.utils.Alerts;
 import com.ibt.niramaya.utils.AppPreference;
 import com.ibt.niramaya.utils.AppProgressDialog;
@@ -60,14 +65,17 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private ViewPager pagerSuccess;
     private ViewPagerAdapter adapter;
     private Double currentLat, currentLong;
-    private List<Integer> successImagesList = new ArrayList<>();
+    private List<Appslider> successImagesList = new ArrayList<>();
 
     private GpsTracker gpsTracker;
     private TextView txtLocationAddress;
 
-    private HospitalListAdapter hospitalListAdapter;
+    private HospitalListAdapter hospitalNearListAdapter;
+    private HospitalListAdapter hospitalPopularListAdapter;
     private DumHospitalListAdapter popularHospitalAdapter;
     private List<HospitalDatum> hospitalList = new ArrayList<>();
+    private List<HospitalDatum> pHospitalList = new ArrayList<>();
+    private List<SystemSpecialization> sHospitalList = new ArrayList<>();
     private List<String> popularHospitalList = new ArrayList<>();
 
     @Nullable
@@ -85,17 +93,17 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void init() {
-
         imgSearch.setVisibility(View.VISIBLE);
         imgSort.setVisibility(View.GONE);
 
         activity = getActivity();
         mContext = getActivity();
         cd = new ConnectionDetector(mContext);
-        initViewPager();
         nearByHospitalList();
-        popularHospitalList();
-        hospitalCategoryList();
+        //hospitalCategoryList();
+
+        imgSearch.setOnClickListener((v -> {}));
+
 
         /*Alerts.show(mContext, "Latitude : "+gpsTracker.getLatitude()+"Longitude : "+gpsTracker.getLongitude());
         Log.v("CURRENT_LOCATION", "Latitude : "+gpsTracker.getLatitude()+", Longitude : "+gpsTracker.getLongitude());
@@ -116,10 +124,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             requestPermission();
         }
 
-        successImagesList.clear();
-        for (int i = 0; i < 6; i++) {
-            successImagesList.add(R.drawable.default_img_pager);
-        }
 
         adapter = new ViewPagerAdapter(mContext, successImagesList, this);
         pagerSuccess.setAdapter(adapter);
@@ -162,18 +166,42 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         String userID = AppPreference.getStringPreference(mContext, Constant.USER_ID);
 
         if (cd.isNetworkAvailable()){
-            RetrofitService.getHospitalList(new Dialog(mContext), retrofitApiClient.hospitalList(
-                    "1", "", String.valueOf(currentLat), String.valueOf(currentLong), "1"), new WebResponse() {
+            RetrofitService.getHomePageData(new Dialog(mContext), retrofitApiClient.hospitalList(
+                    userID, "", String.valueOf(currentLat), String.valueOf(currentLong), "100"), new WebResponse() {
                         @Override
                         public void onResponseSuccess(Response<?> result) {
-                            HospitalListModel hospitalListModel = (HospitalListModel) result.body();
-                            if (!hospitalListModel.getError() && hospitalListModel.getHospitalData().size()>0){
-                                hospitalList = hospitalListModel.getHospitalData();
-                                RecyclerView recyclerViewNear = rootView.findViewById(R.id.recyclerViewNear);
-                                recyclerViewNear.setHasFixedSize(true);
-                                recyclerViewNear.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
-                                hospitalListAdapter = new HospitalListAdapter(hospitalList, mContext, HomeFragment.this);
-                                recyclerViewNear.setAdapter(hospitalListAdapter);
+                            HomeDataModel homeDataModel = (HomeDataModel) result.body();
+                            if (!homeDataModel.getError() && homeDataModel.getHospitalData().size()>0){
+                                if (homeDataModel.getAppslider().size()>0){
+                                    successImagesList = homeDataModel.getAppslider();
+                                    initViewPager();
+                                }
+                                if (homeDataModel.getHospitalData().size()>0){
+                                    hospitalList = homeDataModel.getHospitalData();
+                                    RecyclerView recyclerViewNear = rootView.findViewById(R.id.recyclerViewNear);
+                                    recyclerViewNear.setHasFixedSize(true);
+                                    recyclerViewNear.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+                                    hospitalNearListAdapter = new HospitalListAdapter(hospitalList, mContext, HomeFragment.this);
+                                    recyclerViewNear.setAdapter(hospitalNearListAdapter);
+                                }
+                                if (homeDataModel.getHospitalPopular().size()>0){
+                                    pHospitalList = homeDataModel.getHospitalPopular();
+                                    RecyclerView recyclerViewPopular = rootView.findViewById(R.id.recyclerViewPopularity);
+                                    recyclerViewPopular.setHasFixedSize(true);
+                                    recyclerViewPopular.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+                                    hospitalPopularListAdapter = new HospitalListAdapter(pHospitalList, mContext, HomeFragment.this);
+                                    recyclerViewPopular.setAdapter(hospitalPopularListAdapter);
+                                }
+                                if(homeDataModel.getSystemSpecialization().size()>0){
+                                    sHospitalList = homeDataModel.getSystemSpecialization();
+                                    RecyclerView recyclerViewCategory = rootView.findViewById(R.id.recyclerViewCategory);
+                                    recyclerViewCategory.setHasFixedSize(true);
+                                    recyclerViewCategory.setLayoutManager(new GridLayoutManager(getActivity(),
+                                            2, GridLayoutManager.HORIZONTAL, false));
+                                    HospitalCategoryAdapter popularHospitalAdapter = new HospitalCategoryAdapter(sHospitalList, mContext, HomeFragment.this);
+                                    recyclerViewCategory.setAdapter(popularHospitalAdapter);
+                                    popularHospitalAdapter.notifyDataSetChanged();
+                                }
                             }
                         }
 
@@ -215,21 +243,17 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
      * Hospital Category list
      * */
     private void hospitalCategoryList() {
-        for (int i = 0; i < 10; i++) {
-            popularHospitalList.add("Name");
-        }
-        RecyclerView recyclerViewCategory = rootView.findViewById(R.id.recyclerViewCategory);
-        recyclerViewCategory.setHasFixedSize(true);
-        recyclerViewCategory.setLayoutManager(new GridLayoutManager(getActivity(),
-                2, GridLayoutManager.HORIZONTAL, false));
-        HospitalCategoryAdapter popularHospitalAdapter = new HospitalCategoryAdapter(popularHospitalList, mContext, this);
-        recyclerViewCategory.setAdapter(popularHospitalAdapter);
-        popularHospitalAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.txtCategoryName:
+                int catPos = (int) v.getTag();
+                startActivity(new Intent(mContext, SpecialistDoctorActivity.class)
+                .putExtra("SPECIALIZATION", sHospitalList.get(catPos)));
+                break;
+        }
     }
 
     /*private void getLatLong() {

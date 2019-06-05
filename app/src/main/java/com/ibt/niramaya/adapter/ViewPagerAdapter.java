@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.ibt.niramaya.R;
+import com.ibt.niramaya.modal.home.Appslider;
 
 import java.util.List;
 
@@ -16,10 +18,10 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private List<Integer> searchArrayList;
+    private List<Appslider> searchArrayList;
     private View.OnClickListener onClickListener;
 
-    public ViewPagerAdapter(Context context, List<Integer> searchArrayList, View.OnClickListener onClickListener) {
+    public ViewPagerAdapter(Context context, List<Appslider> searchArrayList, View.OnClickListener onClickListener) {
         this.mContext = context;
         this.searchArrayList = searchArrayList;
         this.onClickListener = onClickListener;
@@ -40,7 +42,13 @@ public class ViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = mLayoutInflater.inflate(R.layout.slide_show_pager_item, container, false);
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
-        imageView.setImageResource(searchArrayList.get(position));
+        //imageView.setImageResource(searchArrayList.get(position));
+
+        Glide.with(mContext)
+                .load(searchArrayList.get(position).getImage())
+                .fitCenter()
+                .into(imageView);
+
         /*imageView.setTag(position);
         imageView.setOnClickListener(onClickListener);*/
         //String strUrl = searchArrayList.get(position).getOfferPicture();

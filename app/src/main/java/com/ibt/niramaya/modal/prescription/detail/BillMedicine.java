@@ -18,6 +18,9 @@ public class BillMedicine implements Parcelable {
     @SerializedName("pharmacy_bill_medicine_quantity")
     @Expose
     private String pharmacyBillMedicineQuantity;
+    @SerializedName("pharmacy_bill_medicine_quantity_type")
+    @Expose
+    private String pharmacyBillMedicineQuantityType;
     @SerializedName("pharmacy_bill_medicine_created_date")
     @Expose
     private String pharmacyBillMedicineCreatedDate;
@@ -41,6 +44,7 @@ public class BillMedicine implements Parcelable {
         this.pharmacyBillMedicineId = ((String) in.readValue((String.class.getClassLoader())));
         this.pharmacyBillMedicineName = ((String) in.readValue((String.class.getClassLoader())));
         this.pharmacyBillMedicineQuantity = ((String) in.readValue((String.class.getClassLoader())));
+        this.pharmacyBillMedicineQuantityType = ((String) in.readValue((String.class.getClassLoader())));
         this.pharmacyBillMedicineCreatedDate = ((String) in.readValue((String.class.getClassLoader())));
     }
 
@@ -71,6 +75,14 @@ public class BillMedicine implements Parcelable {
         this.pharmacyBillMedicineQuantity = pharmacyBillMedicineQuantity;
     }
 
+    public String getPharmacyBillMedicineQuantityType() {
+        return pharmacyBillMedicineQuantityType;
+    }
+
+    public void setPharmacyBillMedicineQuantityType(String pharmacyBillMedicineQuantityType) {
+        this.pharmacyBillMedicineQuantityType = pharmacyBillMedicineQuantityType;
+    }
+
     public String getPharmacyBillMedicineCreatedDate() {
         return pharmacyBillMedicineCreatedDate;
     }
@@ -83,6 +95,7 @@ public class BillMedicine implements Parcelable {
         dest.writeValue(pharmacyBillMedicineId);
         dest.writeValue(pharmacyBillMedicineName);
         dest.writeValue(pharmacyBillMedicineQuantity);
+        dest.writeValue(pharmacyBillMedicineQuantityType);
         dest.writeValue(pharmacyBillMedicineCreatedDate);
     }
 

@@ -1,4 +1,4 @@
-package com.ibt.niramaya.modal.doctor_opd;
+package com.ibt.niramaya.modal.hospital_detail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,10 @@ public class DoctorDatum implements Parcelable {
     private List<DoctorSpecialization> doctorSpecialization = new ArrayList<>();
     @SerializedName("opd_list")
     @Expose
-    private List<OpdList> opdList = new ArrayList<>();
+    private String opdList;
+    @SerializedName("rating")
+    @Expose
+    private String rating;
     public final static Parcelable.Creator<DoctorDatum> CREATOR = new Creator<DoctorDatum>() {
 
 
@@ -59,8 +62,9 @@ public class DoctorDatum implements Parcelable {
         this.dateOfBirth = ((String) in.readValue((String.class.getClassLoader())));
         this.profileImage = ((String) in.readValue((String.class.getClassLoader())));
         this.createdDate = ((String) in.readValue((String.class.getClassLoader())));
-        in.readList(this.doctorSpecialization, (com.ibt.niramaya.modal.doctor_opd.DoctorSpecialization.class.getClassLoader()));
-        in.readList(this.opdList, (com.ibt.niramaya.modal.doctor_opd.OpdList.class.getClassLoader()));
+        in.readList(this.doctorSpecialization, (com.ibt.niramaya.modal.hospital_detail.DoctorSpecialization.class.getClassLoader()));
+        this.opdList = ((String) in.readValue((String.class.getClassLoader())));
+        this.rating = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public DoctorDatum() {
@@ -122,12 +126,20 @@ public class DoctorDatum implements Parcelable {
         this.doctorSpecialization = doctorSpecialization;
     }
 
-    public List<OpdList> getOpdList() {
+    public String getOpdList() {
         return opdList;
     }
 
-    public void setOpdList(List<OpdList> opdList) {
+    public void setOpdList(String opdList) {
         this.opdList = opdList;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public void writeToParcel(Parcel dest, int flags) {
@@ -138,7 +150,8 @@ public class DoctorDatum implements Parcelable {
         dest.writeValue(profileImage);
         dest.writeValue(createdDate);
         dest.writeList(doctorSpecialization);
-        dest.writeList(opdList);
+        dest.writeValue(opdList);
+        dest.writeValue(rating);
     }
 
     public int describeContents() {

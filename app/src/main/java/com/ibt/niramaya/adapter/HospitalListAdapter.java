@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.ibt.niramaya.R;
-import com.ibt.niramaya.modal.hospital.HospitalDatum;
+import com.ibt.niramaya.modal.home.HospitalDatum;
 import com.ibt.niramaya.ui.activity.HospitalDetailActivity;
 
 import java.util.List;
@@ -54,7 +54,7 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, HospitalDetailActivity.class);
-                intent.putExtra("HospitalId", vendorLists.get(position).getHospitalId());
+                intent.putExtra("HospitalData", vendorLists.get(position));
                 mContext.startActivity(intent);
             }
         });

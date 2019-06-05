@@ -45,7 +45,7 @@
         <activity
             android:name=".ui.activity.SearchHospitalListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.PeditricianActivity" />
+        <activity android:name=".ui.activity.SpecialistDoctorActivity" />
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait">
@@ -73,7 +73,6 @@
         </activity>
         <activity android:name=".utils.BaseActivity" />
         <activity android:name=".ui.activity.HospitalDetailActivity" />
-        <activity android:name=".ui.activity.BookAppointmentActivity" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:windowSoftInputMode="stateHidden" />

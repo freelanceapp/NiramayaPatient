@@ -1,16 +1,21 @@
 package com.ibt.niramaya.ui.activity;
 
 import android.app.Dialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.adapter.PrescriptionAdvisedListAdapter;
 import com.ibt.niramaya.adapter.PrescriptionGivenListAdapter;
@@ -36,10 +41,15 @@ import retrofit2.Response;
 
 public class PrescriptionActivity extends BaseActivity implements View.OnClickListener {
 
+    private DrawerLayout drawer;
+    private Toolbar toolbar;
+    private RelativeLayout leftDrawer;
+    private RelativeLayout rightDrawer;
+
     private OpdList opdData;
     private TextView tvPatientName, tvPatientId, tvDoctorName, tvHospitalName, tvOpdCreatedDate, tvAge, tvContact,
             tvComplaint, tvBpCount, tvHrCount, tvRespCount, tvTempCount, tvPainScoreCount, tvDischargeType;
-    private ImageView ivHospitalLogo, ivBack;
+    private ImageView ivHospitalLogo;
     private Preception perceptionData;
     private ArrayList<Medicine> medicineList;
     private ArrayList<Test> testList;
@@ -49,13 +59,21 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_prescription);
+        setContentView(R.layout.activity_prescription_main);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        showHomeBackOnToolbar(toolbar);
 
         initViews();
     }
 
     private void initViews() {
         opdData = (OpdList) getIntent().getParcelableExtra("OPD_DATA");
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        rightDrawer = (RelativeLayout) findViewById(R.id.nav_right);
+
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         tvPatientName = findViewById(R.id.tvPatientName);
         tvPatientId = findViewById(R.id.tvPatientId);
@@ -65,7 +83,6 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
         tvAge = findViewById(R.id.tvAge);
         tvContact = findViewById(R.id.tvContact);
         ivHospitalLogo = findViewById(R.id.ivHospitalLogo);
-        ivBack = findViewById(R.id.ivBack);
 
         tvComplaint = findViewById(R.id.tvComplaint);
         tvBpCount = findViewById(R.id.tvBpCount);
@@ -79,20 +96,23 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
         tvPatientId.setText("Patient Id : "+AppPreference.getStringPreference(mContext, Constant.CURRENT_PATENT_ID));
         tvDoctorName.setText(opdData.getDoctorName());
         tvHospitalName.setText(opdData.getHospitalName());
-        tvOpdCreatedDate.setText(changeDateFormat(opdData.getHospitalCreatedDate()));
+        tvOpdCreatedDate.setText(changeDateFormat(opdData.getOpdCreatedDate()));
 
-        ivBack.setOnClickListener(this);
 
-        String imgData = opdData.getHospialLogo();
-        imgData = imgData.replace("data:image/png;base64,","");
+        String imgData = opdData.getHospitalImage();
+        //imgData = imgData.replace("data:image/png;base64,","");
 
-        try {
+        Glide.with(mContext)
+                .load(imgData)
+                .into(ivHospitalLogo);
+
+        /*try {
             byte[] imageBytes = Base64.decode(imgData, Base64.DEFAULT);
             Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0,imageBytes.length);
             ivHospitalLogo.setImageBitmap(decodedImage);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         fetchPrescriptionDetail();
 
@@ -208,6 +228,20 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_bill_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==R.id.action_view){
+            drawer.openDrawer(Gravity.END);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void initPrescriptionList() {
         RecyclerView rvTrtGiven = findViewById(R.id.rvTrtGiven);
         RecyclerView rvTrtAdvised = findViewById(R.id.rvTrtAdvised);
@@ -244,9 +278,14 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.ivBack:
-                onBackPressed();
-                break;
+        }
+    }
+
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
+        } else {
+            super.onBackPressed();
         }
     }
 }

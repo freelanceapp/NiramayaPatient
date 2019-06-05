@@ -10,19 +10,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ibt.niramaya.R;
+import com.ibt.niramaya.modal.home.SystemSpecialization;
+import com.ibt.niramaya.ui.activity.SpecialistDoctorActivity;
 import com.ibt.niramaya.ui.activity.invoice_data.BookAppointmentActivityKt;
 
 import java.util.List;
 
 public class HospitalCategoryAdapter extends RecyclerView.Adapter<HospitalCategoryAdapter.MyViewHolder> {
 
-    private List<String> vendorLists;
+    private List<SystemSpecialization> sHospitalList;
     private Context mContext;
     private View.OnClickListener onClickListener;
 
-    public HospitalCategoryAdapter(List<String> vendorLists, Context mContext, View.OnClickListener onClickListener) {
-        this.vendorLists = vendorLists;
+    public HospitalCategoryAdapter(List<SystemSpecialization> vendorLists, Context mContext, View.OnClickListener onClickListener) {
+        this.sHospitalList = vendorLists;
         this.mContext = mContext;
         this.onClickListener = onClickListener;
     }
@@ -35,40 +38,31 @@ public class HospitalCategoryAdapter extends RecyclerView.Adapter<HospitalCatego
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        /*holder.restaurent_name.setText(vendorLists.get(position).getVendorName());
-        holder.restaurent_address.setText(vendorLists.get(position).getVendorStreet());
-        holder.cardViewItem.setTag(position);
-        holder.cardViewItem.setOnClickListener(onClickListener);
-
-        String sImg = Constant.BASE_URL + vendorLists.get(position).getVendorLogo();
-        Glide.with(mContext).load(sImg)
-                .into(holder.rc_img);*/
-        holder.imgCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, BookAppointmentActivityKt.class);
-                mContext.startActivity(intent);
-            }
-        });
+        Glide.with(mContext)
+                .load(sHospitalList.get(position).getSpecializationImage())
+                .fitCenter()
+                .into(holder.imgCategory);
+        holder.txtCategoryName.setText(sHospitalList.get(position).getSpecializationTitle());
+        holder.txtCategoryName.setTag(position);
+        holder.txtCategoryName.setOnClickListener(onClickListener);
+        /*holder.txtCategoryName.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, SpecialistDoctorActivity.class);
+            mContext.startActivity(intent);
+        });*/
     }
 
     @Override
     public int getItemCount() {
-        return vendorLists.size();
+        return sHospitalList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView restaurent_name, txtCategoryName;
+        public TextView txtCategoryName;
         public ImageView imgCategory;
-        private CardView cardViewItem;
 
         public MyViewHolder(View view) {
             super(view);
             txtCategoryName = view.findViewById(R.id.txtCategoryName);
-            /*cardViewItem = view.findViewById(R.id.cardViewItem);
-            restaurent_address = view.findViewById(R.id.restaurent_address);
-            restaurent_name = view.findViewById(R.id.restaurent_name);
-            rc_img = view.findViewById(R.id.restaurent_img);*/
             imgCategory = view.findViewById(R.id.imgCategory);
         }
     }

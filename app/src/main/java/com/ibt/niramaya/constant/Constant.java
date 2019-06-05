@@ -19,6 +19,9 @@ public class Constant {
     public static final String OPD_INVOICE_LIST = "patient/select_opd_bill.php";
     public static final String PATIENT_FINANCE_LIST = "patient/select-patient-finance.php";
     public static final String DOCTOR_OPD_LIST = "patient/select-hospital-doctor-opd-list.php";
+    public static final String DOCTOR_OPD = "patient/select-hospital-doctor-opd.php";
+    public static final String SPECIALIST_DOCTOR_OPD = "patient/select-doctor-specialization-opd-list.php";
+    public static final String HOSPITAL_SPECIALIST_DOCTOR_OPD = "patient/select-hospital-doctor-specialization-opd-list.php";
     public static final String BOOK_APPOINTMENT = "patient/create-apointment.php";
     public static final String ADD_PATIENT_FINANCE_REPORT = "patient/add-patient-finance.php";
 

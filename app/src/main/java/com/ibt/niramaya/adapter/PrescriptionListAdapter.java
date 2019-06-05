@@ -39,7 +39,7 @@ public class PrescriptionListAdapter extends RecyclerView.Adapter<PrescriptionLi
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        holder.txtDate.setText(changeDateFormat(vendorLists.get(position).getHospitalCreatedDate()));
+        holder.txtDate.setText(changeDateFormat(vendorLists.get(position).getOpdCreatedDate()));
         holder.txtHospitalName.setText(vendorLists.get(position).getHospitalName());
         holder.txtDoctorName.setText(vendorLists.get(position).getDoctorName());
 
