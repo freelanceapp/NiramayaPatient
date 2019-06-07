@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.modal.prescription.PTGivenModel;
 
@@ -47,12 +48,19 @@ public class PrescriptionGivenListAdapter extends RecyclerView.Adapter<Prescript
                     holder.llCanvas.setVisibility(View.VISIBLE);
                     holder.llTestCanvas.setVisibility(View.GONE);
 
-                    try {
+                    /*try {
                         holder.ivMedicine.setImageBitmap(getImageBitmap(prescriptionModel.getMedicineName()));
                         holder.ivDose.setImageBitmap(getImageBitmap(prescriptionModel.getMedicineDoes()));
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }
+                    }*/
+
+                    Glide.with(mContext)
+                            .load(prescriptionModel.getMedicineName())
+                            .into(holder.ivMedicine);
+                    Glide.with(mContext)
+                            .load(prescriptionModel.getMedicineDoes())
+                            .into(holder.ivDose);
 
                 }else{
 
@@ -65,12 +73,19 @@ public class PrescriptionGivenListAdapter extends RecyclerView.Adapter<Prescript
                     holder.tvMedicine.setText(prescriptionModel.getMedicineName());
                     holder.tvDose.setText(prescriptionModel.getMedicineDoes());
 
-                    try {
+                    /*try {
                         holder.ivMedicine.setImageBitmap(getImageBitmap(prescriptionModel.getMedicineName()));
                         holder.ivDose.setImageBitmap(getImageBitmap(prescriptionModel.getMedicineDoes()));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+*/
+                    Glide.with(mContext)
+                            .load(prescriptionModel.getMedicineName())
+                            .into(holder.ivMedicine);
+                    Glide.with(mContext)
+                            .load(prescriptionModel.getMedicineDoes())
+                            .into(holder.ivDose);
                 }
 
                 break;
@@ -80,7 +95,10 @@ public class PrescriptionGivenListAdapter extends RecyclerView.Adapter<Prescript
                     holder.llTest.setVisibility(View.GONE);
                     holder.llCanvas.setVisibility(View.GONE);
                     holder.llTestCanvas.setVisibility(View.VISIBLE);
-                    holder.ivTest.setImageBitmap(getImageBitmap(prescriptionModel.getTestName()));
+                    Glide.with(mContext)
+                            .load(prescriptionModel.getTestName())
+                            .into(holder.ivTest);
+                    //holder.ivTest.setImageBitmap(getImageBitmap(prescriptionModel.getTestName()));
                 } else {
                     holder.llMedicine.setVisibility(View.GONE);
                     holder.llTest.setVisibility(View.VISIBLE);

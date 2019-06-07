@@ -76,7 +76,7 @@ public class Preception implements Parcelable {
     private List<Test> test = null;
     @SerializedName("bill_test")
     @Expose
-    private List<Object> billTest = null;
+    private List<BillTest> billTest = null;
     public final static Parcelable.Creator<Preception> CREATOR = new Creator<Preception>() {
 
 
@@ -115,7 +115,7 @@ public class Preception implements Parcelable {
         in.readList(this.medicine, (com.ibt.niramaya.modal.prescription.detail.Medicine.class.getClassLoader()));
         in.readList(this.billMedicine, (com.ibt.niramaya.modal.prescription.detail.BillMedicine.class.getClassLoader()));
         in.readList(this.test, (com.ibt.niramaya.modal.prescription.detail.Test.class.getClassLoader()));
-        in.readList(this.billTest, (java.lang.Object.class.getClassLoader()));
+        in.readList(this.billTest, (com.ibt.niramaya.modal.prescription.detail.BillTest.class.getClassLoader()));
     }
 
     public Preception() {
@@ -289,11 +289,11 @@ public class Preception implements Parcelable {
         this.test = test;
     }
 
-    public List<Object> getBillTest() {
+    public List<BillTest> getBillTest() {
         return billTest;
     }
 
-    public void setBillTest(List<Object> billTest) {
+    public void setBillTest(List<BillTest> billTest) {
         this.billTest = billTest;
     }
 

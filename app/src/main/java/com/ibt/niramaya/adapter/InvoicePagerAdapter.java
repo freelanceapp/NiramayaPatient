@@ -4,12 +4,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.ibt.niramaya.ui.fragment.invoice_list.IpdInvoiceFragment;
 import com.ibt.niramaya.ui.fragment.invoice_list.OpdInvoiceFragment;
 import com.ibt.niramaya.ui.fragment.invoice_list.PathologyInvoiceFragment;
 import com.ibt.niramaya.ui.fragment.invoice_list.PharmacyInvoiceFragment;
 
 public class InvoicePagerAdapter extends FragmentPagerAdapter {
-    private int COUNT = 3;
+    private int COUNT = 4;
 
     public InvoicePagerAdapter(FragmentManager fm) {
         super(fm);
@@ -27,6 +29,9 @@ public class InvoicePagerAdapter extends FragmentPagerAdapter {
                 break;
             case 2:
                 fragment = new OpdInvoiceFragment();
+                break;
+            case 3:
+                fragment = new IpdInvoiceFragment();
                 break;
         }
         return fragment;
@@ -50,6 +55,9 @@ public class InvoicePagerAdapter extends FragmentPagerAdapter {
                 break;
             case 2:
                 title = "Opd";
+                break;
+            case 3:
+                title = "Ipd";
                 break;
         }
         return title;

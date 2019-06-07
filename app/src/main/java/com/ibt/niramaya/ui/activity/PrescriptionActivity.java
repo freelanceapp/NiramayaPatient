@@ -17,12 +17,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.ibt.niramaya.R;
+import com.ibt.niramaya.adapter.MedicineBillListAdapter;
+import com.ibt.niramaya.adapter.PathologyBillListAdapter;
 import com.ibt.niramaya.adapter.PrescriptionAdvisedListAdapter;
 import com.ibt.niramaya.adapter.PrescriptionGivenListAdapter;
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.modal.prescription.OpdList;
 import com.ibt.niramaya.modal.prescription.PTAdvisedModel;
 import com.ibt.niramaya.modal.prescription.PTGivenModel;
+import com.ibt.niramaya.modal.prescription.detail.BillMedicine;
+import com.ibt.niramaya.modal.prescription.detail.BillTest;
 import com.ibt.niramaya.modal.prescription.detail.Medicine;
 import com.ibt.niramaya.modal.prescription.detail.Preception;
 import com.ibt.niramaya.modal.prescription.detail.PrescriptionDetailModel;
@@ -45,6 +49,7 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
     private Toolbar toolbar;
     private RelativeLayout leftDrawer;
     private RelativeLayout rightDrawer;
+    private RecyclerView rvMedicineBill, rvPathologyBill;
 
     private OpdList opdData;
     private TextView tvPatientName, tvPatientId, tvDoctorName, tvHospitalName, tvOpdCreatedDate, tvAge, tvContact,
@@ -55,6 +60,8 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
     private ArrayList<Test> testList;
     private ArrayList<PTAdvisedModel> treatmentAdvisedList = new ArrayList<>();
     private ArrayList<PTGivenModel> treatmentGivenList = new ArrayList<>();
+    private ArrayList<BillMedicine> medicineBillList = new ArrayList<>();
+    private ArrayList<BillTest> pathologyBillList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +91,9 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
         tvContact = findViewById(R.id.tvContact);
         ivHospitalLogo = findViewById(R.id.ivHospitalLogo);
 
+        rvMedicineBill = findViewById(R.id.rvMedicineBill);
+        rvPathologyBill = findViewById(R.id.rvPathologyBill);
+
         tvComplaint = findViewById(R.id.tvComplaint);
         tvBpCount = findViewById(R.id.tvBpCount);
         tvHrCount = findViewById(R.id.tvHrCount);
@@ -100,19 +110,10 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
 
 
         String imgData = opdData.getHospitalImage();
-        //imgData = imgData.replace("data:image/png;base64,","");
 
         Glide.with(mContext)
                 .load(imgData)
                 .into(ivHospitalLogo);
-
-        /*try {
-            byte[] imageBytes = Base64.decode(imgData, Base64.DEFAULT);
-            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0,imageBytes.length);
-            ivHospitalLogo.setImageBitmap(decodedImage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
 
         fetchPrescriptionDetail();
 
@@ -145,6 +146,13 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
 
                         treatmentAdvisedList.clear();
                         treatmentGivenList.clear();
+
+                        if (detailModel.getPreception().getBillMedicine().size()>0){
+                            medicineBillList = (ArrayList<BillMedicine>) detailModel.getPreception().getBillMedicine();
+                        }
+                        if (detailModel.getPreception().getBillTest().size()>0){
+                            pathologyBillList = (ArrayList<BillTest>) detailModel.getPreception().getBillTest();
+                        }
 
                         for (int i = 0; i<medicineList.size(); i++){
                             PTGivenModel givenModel = new PTGivenModel();
@@ -255,6 +263,16 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
         PrescriptionAdvisedListAdapter advisedAdapter = new PrescriptionAdvisedListAdapter(treatmentAdvisedList, mContext);
         rvTrtAdvised.setAdapter(advisedAdapter);
         advisedAdapter.notifyDataSetChanged();
+
+        rvMedicineBill.setLayoutManager(new LinearLayoutManager(mContext));
+        MedicineBillListAdapter medicineAdapter = new MedicineBillListAdapter(medicineBillList, mContext, PrescriptionActivity.this);
+        rvMedicineBill.setAdapter(medicineAdapter);
+        medicineAdapter.notifyDataSetChanged();
+
+        rvPathologyBill.setLayoutManager(new LinearLayoutManager(mContext));
+        PathologyBillListAdapter pathologyAdapter = new PathologyBillListAdapter(pathologyBillList, mContext, PrescriptionActivity.this);
+        rvPathologyBill.setAdapter(pathologyAdapter);
+        pathologyAdapter.notifyDataSetChanged();
     }
 
     public String changeDateFormat(String time) {
@@ -278,6 +296,12 @@ public class PrescriptionActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.llPathologyRoot:
+                int pTag = (int) v.getTag();
+                break;
+            case R.id.llRoot:
+                int mTag = (int) v.getTag();
+                break;
         }
     }
 

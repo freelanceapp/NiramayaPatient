@@ -49,12 +49,13 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <ImageView
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivProfile"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="6dp"
-                    android:adjustViewBounds="true"
                     android:src="@drawable/ic_profile" />
 
                 <TextView

@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/layout_bg4"
             app:tabGravity="fill"
+            app:tabMode="scrollable"
             app:tabIndicatorColor="@color/white"
             app:tabIndicatorHeight="2dp"
             app:tabPaddingEnd="20dp"

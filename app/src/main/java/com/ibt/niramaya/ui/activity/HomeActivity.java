@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -16,13 +17,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ibt.niramaya.R;
+import com.ibt.niramaya.adapter.home.TokenPageSliderAdapter;
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.modal.patient_modal.PaitentProfile;
 import com.ibt.niramaya.modal.patient_modal.PatientMainModal;
+import com.ibt.niramaya.modal.token.TokenDatum;
+import com.ibt.niramaya.modal.token.TokenModel;
 import com.ibt.niramaya.retrofit.RetrofitApiClient;
 import com.ibt.niramaya.retrofit.RetrofitService;
 import com.ibt.niramaya.retrofit.WebResponse;
@@ -38,12 +43,16 @@ import com.ibt.niramaya.ui.fragment.blood_donation.BloodDonationFragment;
 import com.ibt.niramaya.utils.Alerts;
 import com.ibt.niramaya.utils.AppPreference;
 import com.ibt.niramaya.utils.ConnectionDetector;
+import com.ibt.niramaya.utils.FixedSpeedScroller;
 import com.ibt.niramaya.utils.FragmentUtils;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Response;
 
@@ -61,6 +70,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private FragmentManager fragmentManager;
     private List<PaitentProfile> patientList = new ArrayList<>();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private ArrayList<TokenDatum> tokenList = new ArrayList<>();
+    private ViewPager tokenPager;
+    private RelativeLayout rlBottom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +86,62 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         init(savedInstanceState);
     }
 
+    private void initTokenSlider() {
+
+        rlBottom.setVisibility(View.VISIBLE);
+
+        tokenPager = findViewById(R.id.tokenPager);
+
+        TokenPageSliderAdapter tokenSliderAdapter = new TokenPageSliderAdapter(
+                mContext, tokenList, tokenListener);
+        tokenPager.setAdapter(tokenSliderAdapter);
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
+
+        try {
+            Field mScroller;
+            mScroller = ViewPager.class.getDeclaredField("mScroller");
+            mScroller.setAccessible(true);
+            FixedSpeedScroller scroller = new FixedSpeedScroller(tokenPager.getContext());
+            //FixedSpeedScroller scroller = new FixedSpeedScroller(tokenPager.getContext(), new AccelerateInterpolator());
+            // scroller.setFixedDuration(5000);
+            mScroller.set(tokenPager, scroller);
+        } catch (NoSuchFieldException e) {
+        } catch (IllegalArgumentException e) {
+        } catch (IllegalAccessException e) {
+        }
+
+    }
+
+    private class SliderTimer extends TimerTask {
+        @Override
+        public void run() {
+            HomeActivity.this.runOnUiThread(() -> {
+                if (tokenPager.getCurrentItem() < tokenList.size() - 1) {
+                    tokenPager.setCurrentItem(tokenPager.getCurrentItem() + 1);
+                } else {
+                    tokenPager.setCurrentItem(0);
+                }
+            });
+        }
+
+        /*override fun run() {
+            this@HomeActivity.runOnUiThread {
+                if (viewPager.currentItem < colorName.size - 1) {
+                    viewPager.currentItem = viewPager.currentItem + 1
+                } else {
+                    viewPager.currentItem = 0
+                }
+            }
+        }*/
+    }
+
     private void init(Bundle savedInstanceState) {
 
         imgSearch = findViewById(R.id.imgSearch);
         imgSort = findViewById(R.id.imgSort);
         txtTitle = findViewById(R.id.txtTitle);
+        rlBottom = findViewById(R.id.rlBottom);
 
         fragmentManager = getSupportFragmentManager();
         fragmentUtils = new FragmentUtils(fragmentManager);
@@ -297,6 +360,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             txtTitle.setText("Home");
             fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.home_frame);
             slidingRootNav.closeMenu();
+        } else if (slidingRootNav.isMenuOpened()) {
+            slidingRootNav.closeMenu();
         } else {
             finish();
         }
@@ -310,15 +375,59 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             AppPreference.setStringPreference(mContext, Constant.CURRENT_PATENT_NAME,
                     patientList.get(position).getPatientName());
             Fragment HomeFragment = fragmentManager.findFragmentByTag(Constant.HomeFragment);
+
+            initTokenView(patientList.get(position).getPatientId());
+
             if (HomeFragment == null) {
                 onBackPressed();
             }
+
+            /*if (slidingRootNav.isMenuOpened()) {
+                slidingRootNav.closeMenu();
+            }*/
 
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
 
+        }
+    };
+
+    private void initTokenView(String patientId) {
+        if (cd.isNetworkAvailable()) {
+            RetrofitService.patientToken(new Dialog(mContext), retrofitApiClient.patientToken(patientId), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    TokenModel tokenModel = (TokenModel) result.body();
+                    if (!tokenModel.getError()) {
+                        if (tokenModel.getData().size() > 0) {
+                            tokenList = (ArrayList<TokenDatum>) tokenModel.getData();
+                            initTokenSlider();
+                        }
+                    } else {
+                        Alerts.show(mContext, tokenModel.getMessage());
+                        rlBottom.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onResponseFailed(String error) {
+                    rlBottom.setVisibility(View.GONE);
+                }
+            });
+        }
+    }
+
+    private View.OnClickListener tokenListener = v -> {
+        switch (v.getId()) {
+            case R.id.ivRefresh:
+                initTokenView(AppPreference.getStringPreference(mContext, Constant.CURRENT_PATENT_ID));
+                break;
+            case R.id.rlRoot:
+                int tag = (int) v.getTag();
+                TokenDatum tokenData = tokenList.get(tag);
+                break;
         }
     };
 
@@ -370,5 +479,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Alerts.show(mContext,regId);*//*
 
     }*/
+
 
 }

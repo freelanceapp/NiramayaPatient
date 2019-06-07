@@ -19,6 +19,7 @@ import com.ibt.niramaya.modal.prescription.PrescritionListModel;
 import com.ibt.niramaya.modal.prescription.detail.PrescriptionDetailModel;
 import com.ibt.niramaya.modal.specialization.all.SpecialistDoctorModel;
 import com.ibt.niramaya.modal.specialization.hospital.HospitalSpecialistDoctorModel;
+import com.ibt.niramaya.modal.token.TokenModel;
 import com.ibt.niramaya.utils.AppProgressDialog;
 
 import java.util.concurrent.TimeUnit;
@@ -351,6 +352,25 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<HospitalSpecialistDoctorModel> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void patientToken(final Dialog dialog, final Call<TokenModel> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<TokenModel>() {
+            @Override
+            public void onResponse(Call<TokenModel> call, Response<TokenModel> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<TokenModel> call, Throwable throwable) {
                 AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());
             }

@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.widget.*
+import com.bumptech.glide.Glide
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView
 import com.github.sundeepk.compactcalendarview.domain.Event
@@ -120,8 +121,12 @@ class BookAppointmentActivityKt : BaseActivity(), View.OnClickListener, InitSche
 
         initPatientSpinner()
 
-        tvDrName!!.text = doctorData!!.name
+        tvDrName!!.text = doctorData.name
         //tvDrDesignation.setText(doctorData.getName());
+
+        Glide.with(mContext)
+                .load(doctorData.profileImage)
+                .into(ivProfile)
 
         tvSelectDate = findViewById(R.id.tvSelectDate)
         tvSelectTime = findViewById(R.id.tvSelectTime)

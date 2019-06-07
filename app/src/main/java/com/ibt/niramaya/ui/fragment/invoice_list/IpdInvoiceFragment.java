@@ -1,7 +1,6 @@
 package com.ibt.niramaya.ui.fragment.invoice_list;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +16,6 @@ import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.BillDatum;
 import com.ibt.niramaya.modal.invoice_modal.opd_invoice_modal.OpdInvoiceMainModal;
 import com.ibt.niramaya.retrofit.RetrofitService;
 import com.ibt.niramaya.retrofit.WebResponse;
-import com.ibt.niramaya.ui.activity.invoice_data.OpdBillActivity;
 import com.ibt.niramaya.utils.Alerts;
 import com.ibt.niramaya.utils.AppPreference;
 import com.ibt.niramaya.utils.BaseFragment;
@@ -31,7 +29,7 @@ import retrofit2.Response;
 import static com.ibt.niramaya.ui.activity.HomeActivity.imgSearch;
 import static com.ibt.niramaya.ui.activity.HomeActivity.imgSort;
 
-public class OpdInvoiceFragment extends BaseFragment implements View.OnClickListener {
+public class IpdInvoiceFragment extends BaseFragment implements View.OnClickListener {
 
     private List<BillDatum> opdInformationList = new ArrayList<>();
     private View rootView;
@@ -51,7 +49,7 @@ public class OpdInvoiceFragment extends BaseFragment implements View.OnClickList
     private void init() {
         imgSearch.setVisibility(View.GONE);
         imgSort.setVisibility(View.VISIBLE);
-        opdInvoiceListApi();
+        //opdInvoiceListApi();
 
     }
 
@@ -103,7 +101,7 @@ public class OpdInvoiceFragment extends BaseFragment implements View.OnClickList
                         RecyclerView recyclerViewInvoice = rootView.findViewById(R.id.recyclerViewInvoice);
                         recyclerViewInvoice.setHasFixedSize(true);
                         recyclerViewInvoice.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-                        invoiceListAdapter = new OpdInvoiceListAdapter(opdInformationList, mContext, OpdInvoiceFragment.this);
+                        invoiceListAdapter = new OpdInvoiceListAdapter(opdInformationList, mContext, IpdInvoiceFragment.this);
                         recyclerViewInvoice.setAdapter(invoiceListAdapter);
                         opdInformationList.addAll(opdInvoiceMainModal.getBillData());
                         invoiceListAdapter.notifyDataSetChanged();

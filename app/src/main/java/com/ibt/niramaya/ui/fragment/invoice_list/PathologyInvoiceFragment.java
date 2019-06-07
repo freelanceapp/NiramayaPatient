@@ -56,7 +56,7 @@ public class PathologyInvoiceFragment extends BaseFragment implements View.OnCli
         pathologyInvoiceListApi();
     }
 
-    private boolean _hasLoadedOnce = false; // your boolean field
+    /*private boolean _hasLoadedOnce = false; // your boolean field
 
     @Override
     public void setUserVisibleHint(boolean isFragmentVisible_) {
@@ -70,7 +70,7 @@ public class PathologyInvoiceFragment extends BaseFragment implements View.OnCli
                 _hasLoadedOnce = true;
             }
         }
-    }
+    }*/
 
     private void prescriptionListApi() {
         RecyclerView recyclerViewInvoice = rootView.findViewById(R.id.recyclerViewInvoice);

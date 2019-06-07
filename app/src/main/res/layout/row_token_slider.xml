@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_bg4">
+
+    <RelativeLayout
+        android:id="@+id/rlRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/tvPatientName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Patient Name"
+            android:visibility="gone"
+            android:textColor="@color/gray_white"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/ivRefresh"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/icf_refresh_button" />
+
+        <TextView
+            android:id="@+id/tvOPDName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvPatientName"
+            android:text="OPD Title : Opd Name"
+            android:textStyle="bold"
+            android:textColor="@color/gray_white"
+            android:textSize="@dimen/size_16" />
+
+        <TextView
+            android:id="@+id/tvYourToken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvOPDName"
+            android:text="Your Token : 20"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/gray_g"
+            android:textSize="@dimen/size_14" />
+
+        <TextView
+            android:id="@+id/tvCurrentToken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvOPDName"
+            android:layout_marginTop="4dp"
+            android:layout_alignParentRight="true"
+            android:text="Current Token : 12"
+            android:textColor="@color/gray_g"
+            android:textSize="@dimen/size_14" />
+    </RelativeLayout>
+
+</RelativeLayout>

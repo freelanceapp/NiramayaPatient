@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.modal.hospital_detail.DoctorDatum;
 
@@ -41,6 +42,10 @@ public class DoctorOpdListAdapter extends RecyclerView.Adapter<DoctorOpdListAdap
         holder.tvDoctorRatings.setText(doctorData.getRating());
         holder.llDoctor.setTag(position);
         holder.llDoctor.setOnClickListener(onClickListener);
+
+        Glide.with(mContext)
+                .load(doctorData.getProfileImage())
+                .into(holder.civDoctorProfile);
 
         StringBuilder specialization = new StringBuilder();
         int sCount = 0;

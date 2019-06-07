@@ -62,7 +62,7 @@ public class PharmacyInvoiceFragment extends BaseFragment implements View.OnClic
         prescriptionListApi();
     }
 
-    private boolean _hasLoadedOnce = false; // your boolean field
+    /*private boolean _hasLoadedOnce = false; // your boolean field
 
     @Override
     public void setUserVisibleHint(boolean isFragmentVisible_) {
@@ -76,7 +76,7 @@ public class PharmacyInvoiceFragment extends BaseFragment implements View.OnClic
                 _hasLoadedOnce = true;
             }
         }
-    }
+    }*/
 
     private void prescriptionListApi() {
         RecyclerView recyclerViewInvoice = rootView.findViewById(R.id.recyclerViewInvoice);

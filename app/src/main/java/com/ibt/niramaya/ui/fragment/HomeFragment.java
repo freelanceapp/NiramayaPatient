@@ -42,9 +42,11 @@ import com.ibt.niramaya.utils.AppPreference;
 import com.ibt.niramaya.utils.AppProgressDialog;
 import com.ibt.niramaya.utils.BaseFragment;
 import com.ibt.niramaya.utils.ConnectionDetector;
+import com.ibt.niramaya.utils.FixedSpeedScroller;
 import com.ibt.niramaya.utils.GpsTracker;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -136,6 +138,20 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             }
         };
         imageHandler.postDelayed(imageRunnable, 3000);
+
+        try {
+            Field mScroller;
+            mScroller = ViewPager.class.getDeclaredField("mScroller");
+            mScroller.setAccessible(true);
+            FixedSpeedScroller scroller = new FixedSpeedScroller(pagerSuccess.getContext());
+            //FixedSpeedScroller scroller = new FixedSpeedScroller(tokenPager.getContext(), new AccelerateInterpolator());
+            // scroller.setFixedDuration(5000);
+            mScroller.set(pagerSuccess, scroller);
+        } catch (NoSuchFieldException e) {
+        } catch (IllegalArgumentException e) {
+        } catch (IllegalAccessException e) {
+        }
+
     }
 
     public void pagerSlide() {

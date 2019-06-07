@@ -16,6 +16,7 @@ import com.ibt.niramaya.modal.prescription.PrescritionListModel;
 import com.ibt.niramaya.modal.prescription.detail.PrescriptionDetailModel;
 import com.ibt.niramaya.modal.specialization.all.SpecialistDoctorModel;
 import com.ibt.niramaya.modal.specialization.hospital.HospitalSpecialistDoctorModel;
+import com.ibt.niramaya.modal.token.TokenModel;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -225,4 +226,8 @@ public interface RetrofitApiClient {
     @FormUrlEncoded
     @POST(Constant.PATIENT_FINANCE_LIST)
     Call<PatientFinanceListModel> patientFinanceList(@Field("patient_id") String patient_id);
+
+    @FormUrlEncoded
+    @POST(Constant.PATIENT_TOKEN)
+    Call<TokenModel> patientToken(@Field("patient_id") String patient_id);
 }
