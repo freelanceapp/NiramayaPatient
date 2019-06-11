@@ -36,6 +36,7 @@ public class DoctorActivity extends BaseActivity implements View.OnClickListener
     private DoctorOpdData doctorDetail;
     private TextView tvDoctorName, tvSpecialization;
     private CircleImageView ivProfile;
+    private String hospitalId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class DoctorActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_doctor);
 
         doctorId = getIntent().getExtras().getString("DoctorId");
+        hospitalId = getIntent().getExtras().getString("HospitalId");
 
         fetchDoctorData();
 
@@ -71,7 +73,7 @@ public class DoctorActivity extends BaseActivity implements View.OnClickListener
         String userId = AppPreference.getStringPreference(mContext, Constant.USER_ID);
         if (cd.isNetworkAvailable()){
             RetrofitService.doctorDetail(new Dialog(mContext), retrofitApiClient.doctorOpd(
-                    "1", userId, "", doctorId), new WebResponse() {
+                    hospitalId, userId, "", doctorId), new WebResponse() {
                 @Override
                 public void onResponseSuccess(Response<?> result) {
                     DoctorOpdDataModel opdModel = (DoctorOpdDataModel) result.body();
