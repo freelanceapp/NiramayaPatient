@@ -6,11 +6,15 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.ibt.niramaya.constant.Constant;
-import com.ibt.niramaya.firebase_service.NotificationUtils;
+import com.ibt.niramaya.retrofit.RetrofitApiClient;
+import com.ibt.niramaya.retrofit.RetrofitService;
 import com.ibt.niramaya.ui.activity.HomeActivity;
+import com.ibt.niramaya.utils.AppPreference;
+import com.ibt.niramaya.utils.ConnectionDetector;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,9 +22,62 @@ import org.json.JSONObject;
 
 public class MyFirebaseMessangingService extends FirebaseMessagingService {
 
-    private static final String TAG = com.ibt.niramaya.firebase_service.MyFirebaseMessangingService.class.getSimpleName();
+    public Context mContext;
+    public RetrofitApiClient retrofitApiClient;
+    public ConnectionDetector cd;
+    private static final String TAG = MyFirebaseMessangingService.class.getSimpleName();
 
     private NotificationUtils notificationUtils;
+
+    @Override
+    public void onNewToken(String s) {
+        super.onNewToken(s);
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        cd = new ConnectionDetector(mContext);
+        retrofitApiClient = RetrofitService.getRetrofit();
+        Log.e("Token", "...");
+        // TODO: Implement this method to send any registration to your app's servers.
+        sendRegistrationToServer(refreshedToken);
+        if (!(AppPreference.getStringPreference(mContext, Constant.FIREBASE_TOKEN)).isEmpty()) {
+            tokenApi(refreshedToken);
+        }
+    }
+
+    private void sendRegistrationToServer(String token) {
+        // Add custom implementation, as needed.
+        Log.e(TAG, "sendRegistrationToServer: " + token);
+        if (!(AppPreference.getStringPreference(mContext, Constant.FIREBASE_TOKEN)).isEmpty()) {
+            tokenApi(token);
+        }
+
+    }
+
+    private void tokenApi(String strToken) {
+        /*Looper.prepare();
+        String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        String strId = AppPreference.getStringPreference(mContext, Constant.User_Id);
+        if (cd.isNetworkAvailable()) {
+            RetrofitService.getSignData(new Dialog(mContext), retrofitApiClient.updateToken(strId, strToken, android_id, "user"), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    SignUpModel loginModal = (SignUpModel) result.body();
+                    assert loginModal != null;
+                    if (!loginModal.getError()) {
+                        Alerts.show(mContext, loginModal.getMessage());
+                    } else {
+                        Alerts.show(mContext, loginModal.getMessage());
+                    }
+                }
+
+                @Override
+                public void onResponseFailed(String error) {
+                    Alerts.show(mContext, error);
+                }
+            });
+        } else {
+            cd.show(mContext);
+        }*/
+    }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -58,7 +115,7 @@ public class MyFirebaseMessangingService extends FirebaseMessagingService {
             // play notification sound
             NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
             notificationUtils.playNotificationSound();
-        }else{
+        } else {
             // If the app is in background, firebase itself handles the notification
         }
     }

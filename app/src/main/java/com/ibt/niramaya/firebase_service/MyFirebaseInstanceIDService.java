@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.retrofit.RetrofitApiClient;
 import com.ibt.niramaya.retrofit.RetrofitService;
@@ -12,7 +12,8 @@ import com.ibt.niramaya.utils.AppPreference;
 import com.ibt.niramaya.utils.ConnectionDetector;
 
 
-public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
+public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
+
     private static final String TAG = "FirebaseIDService";
     public Context mContext;
     public RetrofitApiClient retrofitApiClient;
@@ -27,8 +28,8 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     }
 
     @Override
-    public void onTokenRefresh() {
-        // Get updated InstanceID token.
+    public void onNewToken(String s) {
+        super.onNewToken(s);
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         cd = new ConnectionDetector(mContext);
         retrofitApiClient = RetrofitService.getRetrofit();
@@ -40,14 +41,6 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         }
     }
 
-    /**
-     * Persist token to third-party servers.
-     * <p>
-     * Modify this method to associate the user's FCM InstanceID token with any server-side account
-     * maintained by your application.
-     *
-     * @param token The new token.
-     */
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
         Log.e(TAG, "sendRegistrationToServer: " + token);
