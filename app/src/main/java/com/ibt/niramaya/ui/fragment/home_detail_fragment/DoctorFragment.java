@@ -26,6 +26,7 @@ public class DoctorFragment extends BaseFragment implements View.OnClickListener
     private DoctorOpdListAdapter doctorAdapter;
     private RecyclerView rvDoctorOpdList;
     private List<DoctorDatum> doctorList = new ArrayList<>();
+    private String hospitalId;
 
 
     @Nullable
@@ -45,6 +46,7 @@ public class DoctorFragment extends BaseFragment implements View.OnClickListener
     private void fetchDoctorList() {
 
         doctorList = getArguments().getParcelableArrayList("DOCTORS");
+        hospitalId = getArguments().getString("HospitalId");
         rvDoctorOpdList = rootView.findViewById(R.id.rvDoctorOpdList);
         doctorAdapter = new DoctorOpdListAdapter(doctorList, mContext, DoctorFragment.this);
         rvDoctorOpdList.setLayoutManager(new LinearLayoutManager(mContext));
@@ -89,7 +91,9 @@ public class DoctorFragment extends BaseFragment implements View.OnClickListener
     public void onClick(View v) {
         if (v.getId()== R.id.llDoctor){
             int tag = (int) v.getTag();
-            startActivity(new Intent(mContext, DoctorActivity.class).putExtra("DoctorId", doctorList.get(tag).getDoctorId()));
+            startActivity(new Intent(mContext, DoctorActivity.class)
+                    .putExtra("DoctorId", doctorList.get(tag).getDoctorId())
+            .putExtra("HospitalId", hospitalId));
         }
     }
 }

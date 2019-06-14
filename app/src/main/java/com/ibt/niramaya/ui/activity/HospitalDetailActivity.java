@@ -112,6 +112,7 @@ public class HospitalDetailActivity extends BaseActivity implements View.OnClick
                 if (doctorDataList.size()>0) {
                     Bundle dctBundle = new Bundle();
                     dctBundle.putParcelableArrayList("DOCTORS", doctorDataList);
+                    dctBundle.putString("HospitalId", hospitalId);
                     DoctorFragment doctorFragment = new DoctorFragment();
                     doctorFragment.setArguments(dctBundle);
 
