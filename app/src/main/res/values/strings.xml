@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Niramaya</string>
     <string name="home">Home</string>
+
+    <string name="google_key">AIzaSyAfu1N06_TUQ9TV3QQrAUmVC59yd4QWZBU</string>
+
     <string name="find_your_location">Find your location</string>
     <string name="show_pwd">Show Password</string>
     <string name="hide_pwd">Hide Password</string>

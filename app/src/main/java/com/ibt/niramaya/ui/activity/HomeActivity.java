@@ -31,12 +31,12 @@ import com.ibt.niramaya.modal.token.TokenModel;
 import com.ibt.niramaya.retrofit.RetrofitApiClient;
 import com.ibt.niramaya.retrofit.RetrofitService;
 import com.ibt.niramaya.retrofit.WebResponse;
-import com.ibt.niramaya.ui.fragment.PatientFragment;
 import com.ibt.niramaya.ui.fragment.BedFragment;
 import com.ibt.niramaya.ui.fragment.DocumentsFragment;
 import com.ibt.niramaya.ui.fragment.HomeFragment;
 import com.ibt.niramaya.ui.fragment.InvoiceFragment;
 import com.ibt.niramaya.ui.fragment.PatientFinanceDetailFragment;
+import com.ibt.niramaya.ui.fragment.PatientFragment;
 import com.ibt.niramaya.ui.fragment.PrescriptionsFragment;
 import com.ibt.niramaya.ui.fragment.ReportFragment;
 import com.ibt.niramaya.ui.fragment.blood_donation.BloodDonationFragment;
@@ -221,6 +221,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.txtSettings).setOnClickListener(this);
         findViewById(R.id.txtAddUser).setOnClickListener(this);
         findViewById(R.id.llLogout).setOnClickListener(this);
+
+        findViewById(R.id.cardViewAmbulance).setOnClickListener(this);
     }
 
     @Override
@@ -320,6 +322,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     fragmentUtils.replaceFragment(new PatientFragment(), Constant.AddUserFragment, R.id.home_frame);
                     slidingRootNav.closeMenu();
                 }
+                break;
+            case R.id.cardViewAmbulance:
+
                 break;
             case R.id.llLogout:
                 doLogout();

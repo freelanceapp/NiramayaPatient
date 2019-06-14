@@ -3,6 +3,7 @@ package com.ibt.niramaya.retrofit;
 import com.ibt.niramaya.constant.Constant;
 import com.ibt.niramaya.modal.doctor_opd.DoctorOpdModel;
 import com.ibt.niramaya.modal.doctor_opd_model.DoctorOpdDataModel;
+import com.ibt.niramaya.modal.driver.driver_list_modal.DriverMainModal;
 import com.ibt.niramaya.modal.finance.PatientFinanceListModel;
 import com.ibt.niramaya.modal.home.HomeDataModel;
 import com.ibt.niramaya.modal.hospital.HospitalListModel;
@@ -24,6 +25,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -230,4 +232,7 @@ public interface RetrofitApiClient {
     @FormUrlEncoded
     @POST(Constant.PATIENT_TOKEN)
     Call<TokenModel> patientToken(@Field("patient_id") String patient_id);
+
+    @GET("driver.json")
+    Call<DriverMainModal> driverList();
 }

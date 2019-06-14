@@ -12,12 +12,15 @@ import com.ibt.niramaya.utils.AppPreference;
 import com.ibt.niramaya.utils.ConnectionDetector;
 
 
-public class
-MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
+public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private static final String TAG = "FirebaseIDService";
     public Context mContext;
     public RetrofitApiClient retrofitApiClient;
     public ConnectionDetector cd;
+
+    public MyFirebaseInstanceIDService() {
+
+    }
 
     public MyFirebaseInstanceIDService(Context mContext) {
         this.mContext = mContext;
@@ -29,7 +32,7 @@ MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         cd = new ConnectionDetector(mContext);
         retrofitApiClient = RetrofitService.getRetrofit();
-        Log.e("Token","...");
+        Log.e("Token", "...");
         // TODO: Implement this method to send any registration to your app's servers.
         sendRegistrationToServer(refreshedToken);
         if (!(AppPreference.getStringPreference(mContext, Constant.FIREBASE_TOKEN)).isEmpty()) {
@@ -39,7 +42,7 @@ MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     /**
      * Persist token to third-party servers.
-     *
+     * <p>
      * Modify this method to associate the user's FCM InstanceID token with any server-side account
      * maintained by your application.
      *
