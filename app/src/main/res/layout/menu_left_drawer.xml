@@ -213,9 +213,11 @@
                         app:cardElevation="0dp">
 
                         <TextView
+                            android:id="@+id/txtAddUser"
                             android:layout_width="100dp"
                             android:layout_height="60dp"
                             android:gravity="center"
+                            android:text="Patient"
                             android:textColor="@color/white"
                             android:textSize="@dimen/size_14" />
                     </android.support.v7.widget.CardView>
@@ -347,11 +349,11 @@
                         app:cardElevation="0dp">
 
                         <TextView
-                            android:id="@+id/txtAddUser"
+                            android:id="@+id/txtAmbulance"
                             android:layout_width="100dp"
                             android:layout_height="60dp"
                             android:gravity="center"
-                            android:text="Patient"
+                            android:text="Ambulance"
                             android:textColor="@color/white"
                             android:textSize="@dimen/size_14" />
                     </android.support.v7.widget.CardView>

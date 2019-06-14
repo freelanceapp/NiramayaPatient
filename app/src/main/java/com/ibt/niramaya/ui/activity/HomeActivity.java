@@ -31,6 +31,7 @@ import com.ibt.niramaya.modal.token.TokenModel;
 import com.ibt.niramaya.retrofit.RetrofitApiClient;
 import com.ibt.niramaya.retrofit.RetrofitService;
 import com.ibt.niramaya.retrofit.WebResponse;
+import com.ibt.niramaya.ui.fragment.AmbulanceFragment;
 import com.ibt.niramaya.ui.fragment.PatientFragment;
 import com.ibt.niramaya.ui.fragment.BedFragment;
 import com.ibt.niramaya.ui.fragment.DocumentsFragment;
@@ -221,6 +222,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.txtSettings).setOnClickListener(this);
         findViewById(R.id.txtAddUser).setOnClickListener(this);
         findViewById(R.id.llLogout).setOnClickListener(this);
+        findViewById(R.id.txtAmbulance).setOnClickListener(this);
     }
 
     @Override
@@ -234,6 +236,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Fragment DocumentsFragment = fragmentManager.findFragmentByTag(Constant.DocumentsFragment);
         Fragment PrescriptionFragment = fragmentManager.findFragmentByTag(Constant.PrescriptionFragment);
         Fragment ReportFragment = fragmentManager.findFragmentByTag(Constant.ReportsFragment);
+        Fragment AmbulanceFragment = fragmentManager.findFragmentByTag(Constant.AmbulanceFragment);
 
         String patientId = AppPreference.getStringPreference(mContext, Constant.CURRENT_PATENT_ID);
 
@@ -321,6 +324,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     slidingRootNav.closeMenu();
                 }
                 break;
+            case R.id.txtAmbulance:
+                txtTitle.setText("Ambulance");
+                if (AmbulanceFragment == null) {
+                    fragmentUtils.replaceFragment(new AmbulanceFragment(), Constant.AmbulanceFragment, R.id.home_frame);
+                    slidingRootNav.closeMenu();
+                }
+                break;
             case R.id.llLogout:
                 doLogout();
                 slidingRootNav.closeMenu();
@@ -337,6 +347,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Fragment PatientFinanceDetailFragment = fragmentManager.findFragmentByTag(Constant.PatientFinanceDetailFragment);
         Fragment PrescriptionFragment = fragmentManager.findFragmentByTag(Constant.PrescriptionFragment);
         Fragment ReportFragment = fragmentManager.findFragmentByTag(Constant.ReportsFragment);
+        Fragment AmbulanceFragment = fragmentManager.findFragmentByTag(Constant.AmbulanceFragment);
 
         if (HomeFragment != null) {
             finish();
@@ -357,6 +368,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.home_frame);
             slidingRootNav.closeMenu();
         } else if (BedFragment != null) {
+            txtTitle.setText("Home");
+            fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.home_frame);
+            slidingRootNav.closeMenu();
+        } else if (AmbulanceFragment != null) {
             txtTitle.setText("Home");
             fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.home_frame);
             slidingRootNav.closeMenu();

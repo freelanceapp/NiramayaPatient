@@ -43,6 +43,7 @@ public class Constant {
     public static final String DocumentsFragment = "DocumentsFragment";
     public static final String SettingsFragment = "SettingsFragment";
     public static final String AddUserFragment = "PatientFragment";
+    public static final String AmbulanceFragment = "AmbulanceFragment";
 
     public static final String FacilitiesFragment = "FacilitiesFragment";
     public static final String DepartmentsFragment = "DepartmentsFragment";

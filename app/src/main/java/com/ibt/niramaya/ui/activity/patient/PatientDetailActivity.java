@@ -394,7 +394,7 @@ public class PatientDetailActivity extends BaseActivity implements View.OnClickL
 
             }
         }, dobYear, dobMonth, dobDay);
-        dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        dialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
         dialog.setTitle("");
         dialog.show();
     }
