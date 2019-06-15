@@ -38,6 +38,7 @@ import com.ibt.niramaya.ui.fragment.DocumentsFragment;
 import com.ibt.niramaya.ui.fragment.HomeFragment;
 import com.ibt.niramaya.ui.fragment.InvoiceFragment;
 import com.ibt.niramaya.ui.fragment.PatientFinanceDetailFragment;
+import com.ibt.niramaya.ui.fragment.PatientFragment;
 import com.ibt.niramaya.ui.fragment.PrescriptionsFragment;
 import com.ibt.niramaya.ui.fragment.ReportFragment;
 import com.ibt.niramaya.ui.fragment.blood_donation.BloodDonationFragment;

@@ -1,5 +1,6 @@
 package com.ibt.niramaya.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import com.ibt.niramaya.R;
 import com.ibt.niramaya.adapter.patient_adapter.PatientListAdapter;
 import com.ibt.niramaya.modal.patient_modal.PaitentProfile;
 import com.ibt.niramaya.retrofit.RetrofitService;
+import com.ibt.niramaya.ui.activity.ambulance.AmbulanceActivity;
 import com.ibt.niramaya.utils.Alerts;
 import com.ibt.niramaya.utils.BaseFragment;
 import com.ibt.niramaya.utils.ConnectionDetector;
@@ -72,11 +74,11 @@ public class AmbulanceFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void normalCall() {
-        Alerts.show(mContext, "Normal");
+        startActivity(new Intent(mContext, AmbulanceActivity.class));
     }
 
     private void emergencyCall() {
-        Alerts.show(mContext, "Emergency");
+        startActivity(new Intent(mContext, AmbulanceActivity.class));
     }
 
 
