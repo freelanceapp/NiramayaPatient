@@ -183,7 +183,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         if (cd.isNetworkAvailable()){
             RetrofitService.getHomePageData(new Dialog(mContext), retrofitApiClient.hospitalList(
-                    userID, "", String.valueOf(currentLat), String.valueOf(currentLong), "100"), new WebResponse() {
+                    userID, "", String.valueOf(currentLat), String.valueOf(currentLong), "10000"), new WebResponse() {
                         @Override
                         public void onResponseSuccess(Response<?> result) {
                             HomeDataModel homeDataModel = (HomeDataModel) result.body();

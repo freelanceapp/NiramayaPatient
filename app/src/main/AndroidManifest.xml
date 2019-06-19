@@ -81,6 +81,7 @@
         <activity android:name=".ui.activity.PrescriptionActivity" />
         <activity android:name=".ui.activity.invoice_data.BookAppointmentActivityKt" />
         <activity android:name=".ui.activity.ambulance.AmbulanceActivity" />
+        <activity android:name=".ui.activity.ambulance.AmbulanceDetailActivity" />
 
         <service android:name=".firebase_service.MyFirebaseMessangingService">
             <intent-filter>

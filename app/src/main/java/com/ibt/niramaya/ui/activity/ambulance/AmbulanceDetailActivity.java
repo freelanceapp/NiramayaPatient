@@ -4,7 +4,6 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -19,6 +18,7 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,8 +63,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class AmbulanceActivity extends BaseActivity implements LocationListener,
-        OnMapReadyCallback, RoutingListener, GoogleMap.OnMarkerClickListener {
+public class AmbulanceDetailActivity extends BaseActivity implements LocationListener,
+        OnMapReadyCallback, RoutingListener {
 
     private RetrofitApiClient client;
     private DriverMainModal mainModal;
@@ -78,6 +78,8 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
 
     private double latitude = 0.0;
     private double longitude = 0.0;
+    private double driverOldLatitude = 0.0;
+    private double driverOldLongitude = 0.0;
     private long UPDATE_INTERVAL = 2000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
     private LocationRequest mLocationRequest;
@@ -89,10 +91,16 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
     private List<Polyline> polylines = new ArrayList<>();
     private static final int[] COLORS = new int[]{R.color.colorAccent};
     private Marker driverMarker;
-    private boolean isMarkerRotating =false;
-    private RelativeLayout cvDriverDetail;
-    private String clickedDriverId;
-    private TextView tvDriverName, tvDriverDistance, txtTitle;
+    private boolean isMarkerRotating = false;
+    private RelativeLayout
+            cvDriverDetail;
+    private String driverId;
+    private DriverLocation driverLocation;
+
+    private MarkerOptions dOptions;
+    private Marker dMarker;
+    private TextView txtTitle;
+    private ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,19 +114,23 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
         //init();
 
         cvDriverDetail = findViewById(R.id.cvDriverDetail);
-        tvDriverName = findViewById(R.id.tvDriverName);
-        tvDriverDistance = findViewById(R.id.tvDriverDistance);
         txtTitle = findViewById(R.id.txtTitle);
+        imgBack = findViewById(R.id.imgBack);
+        imgBack.setOnClickListener(v -> onBackPressed());
 
         (findViewById(R.id.btnClose)).setOnClickListener(v -> {
-            startActivity(new Intent(mContext, AmbulanceDetailActivity.class)
-            .putExtra("DRIVER_ID", clickedDriverId));
+            cvDriverDetail.setVisibility(View.GONE);
         });
+
+
+        driverId = getIntent().getExtras().getString("DRIVER_ID");
+
+        //updateDriverLocationOnFirebase();
 
         initFirebaseDatabase();
     }
 
-    private void initFirebaseDatabase(){
+    private void initFirebaseDatabase() {
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("driver");
 
@@ -127,11 +139,18 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 driverList = new ArrayList<>();
                 activeDriverList = new ArrayList<>();
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    DriverLocation driverLocation = postSnapshot.getValue(DriverLocation.class);
-                    driverList.add(driverLocation);
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    DriverLocation dl = postSnapshot.getValue(DriverLocation.class);
+                    //driverList.add(dl);
+                    if (dl.getDriverId().equals(driverId)) {
+                        driverLocation = dl;
+                        txtTitle.setText(dl.getDriverName());
+                        createRoute();
+                    }
+
                 }
-                if (mMap != null){
+
+                /*if (mMap != null){
                     mMap.clear();
                 }
 
@@ -141,18 +160,7 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
                                 driverList.get(i).getDriverName(), driverList.get(i).getDriverId());
                         activeDriverList.add(driverList.get(i));
                     }
-                }
-
-                /*bound camera between these lat lng*/
-                LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                for (DriverLocation dLoc : driverList) {
-                    builder.include(new LatLng(dLoc.getDriverLat(), dLoc.getDriverLong()));
-                }
-                LatLngBounds bounds = builder.build();
-                int padding = 100; // offset from edges of the map in pixels
-                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                mMap.animateCamera(cu);
-                mMap.moveCamera(cu);
+                }*/
             }
 
             @Override
@@ -195,7 +203,7 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
     public void onLocationChanged(Location location) {
         latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-       // getDriverListDataApi();
+        // getDriverListDataApi();
 
         if (latitude > 0) {
             addMarker(latLng);
@@ -224,14 +232,11 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
             addMarker(latLng);
         }
 
-        mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
         mMap.setOnInfoWindowClickListener(arg0 -> {
             //DriverLocation dl = driverList.get(Integer.parseInt(arg0.getSnippet()));
-            Alerts.show(mContext, arg0.getTitle()+" :=: "+arg0.getId()+" :=: ");
+            Alerts.show(mContext, arg0.getTitle() + " :=: " + arg0.getId() + " :=: ");
         });
-        mMap.setOnMarkerClickListener(this);
 
     }
 
@@ -273,7 +278,7 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
 
         MarkerOptions dMarkerOption = new MarkerOptions();
         dMarkerOption.position(new LatLng(latitude, longitude));
-        dMarkerOption.anchor(0.5f,0.5f);
+        dMarkerOption.anchor(0.5f, 0.5f);
         dMarkerOption.title(title);
         dMarkerOption.snippet(snippet);
         dMarkerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.ambulance));
@@ -281,14 +286,14 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
         return mMap.addMarker(dMarkerOption);
     }
 
-    private void createRoute(){
+    private void createRoute() {
         Routing routing = new Routing.Builder()
                 .key("AIzaSyBvaYGedz5oMgLpYMF42wtJE8VIT28juM8")//NonRestrictedKey
                 .travelMode(AbstractRouting.TravelMode.DRIVING)
                 .withListener(this)
                 .alternativeRoutes(false)
-                .waypoints(new LatLng(driverList.get(0).getDriverLat(), driverList.get(0).getDriverLong()),
-                        new LatLng(driverList.get(1).getDriverLat(), driverList.get(0).getDriverLong()))
+                .waypoints(new LatLng(latitude, longitude),
+                        new LatLng(driverLocation.getDriverLat(), driverLocation.getDriverLong()))
                 .build();
         routing.execute();
     }
@@ -305,17 +310,25 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
 
     @Override
     public void onRoutingSuccess(ArrayList<Route> route, int p1) {
-        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(driverList.get(0).getDriverLat(), driverList.get(0).getDriverLong()));
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude));
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(driverList.get(0).getDriverLat(), driverList.get(0).getDriverLong()), 15);
+        /*bound camera between these lat lng*/
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(new LatLng(latitude, longitude));
+        builder.include(new LatLng(driverLocation.getDriverLat(), driverLocation.getDriverLong()));
+        LatLngBounds bounds = builder.build();
+        int padding = 100; // offset from edges of the map in pixels
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        mMap.animateCamera(cu);
+        mMap.moveCamera(cu);
+
+        /*CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(driverLocation.getDriverLat(), driverLocation.getDriverLong()), 15);
         //mMap.animateCamera(cameraUpdate);
-        mMap.moveCamera(cameraUpdate);
+        mMap.moveCamera(cameraUpdate);*/
 
 
-
-
-        if(polylines.size()>0) {
+        if (polylines.size() > 0) {
             for (Polyline poly : polylines) {
                 poly.remove();
             }
@@ -323,7 +336,7 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
 
         polylines = new ArrayList<>();
         //add route(s) to the map.
-        for (int i = 0; i <route.size(); i++) {
+        for (int i = 0; i < route.size(); i++) {
 
             //In case of more than 5 alternative routes
             int colorIndex = i % COLORS.length;
@@ -335,20 +348,23 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
             Polyline polyline = mMap.addPolyline(polyOptions);
             polylines.add(polyline);
 
-            Toast.makeText(getApplicationContext(),"Route "+ (i+1) +": distance - "+ route.get(i).getDistanceValue()+": duration - "+ route.get(i).getDurationValue(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Route " + (i + 1) + ": distance - " + route.get(i).getDistanceValue() + ": duration - " + route.get(i).getDurationValue(), Toast.LENGTH_SHORT).show();
         }
 
         // Start marker
-        /*MarkerOptions options = new MarkerOptions();
-        options.position(new LatLng(22.7301946, 75.88527203));
+        MarkerOptions options = new MarkerOptions();
+        options.position(new LatLng(latitude, longitude));
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.pin_placeholder));
-        mMap.addMarker(options);*/
+        mMap.addMarker(options);
 
         // End marker
-        /*options = new MarkerOptions();
-        options.position(new LatLng(22.71507333, 75.88278294));
-        options.icon(BitmapDescriptorFactory.fromResource(R.drawable.icf_hospital_location_pin));
-        mMap.addMarker(options);*/
+        if (dMarker != null) {
+            dMarker.remove();
+        }
+        dOptions = new MarkerOptions();
+        dOptions.position(new LatLng(driverLocation.getDriverLat(), driverLocation.getDriverLong()));
+        dOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ambulance));
+        dMarker = mMap.addMarker(dOptions);
     }
 
     @Override
@@ -359,7 +375,7 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
     /***********************************************************
      * Move Ambulance Smoothly
      ************************************************************/
-    private double bearingBetweenLocations(LatLng latLng1,LatLng latLng2) {
+    private double bearingBetweenLocations(LatLng latLng1, LatLng latLng2) {
 
         double PI = 3.14159;
         double lat1 = latLng1.latitude * PI / 180;
@@ -382,7 +398,7 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
     }
 
     private void rotateMarker(final Marker marker, final float toRotation) {
-        if(!isMarkerRotating) {
+        if (!isMarkerRotating) {
             final Handler handler = new Handler();
             final long start = SystemClock.uptimeMillis();
             final float startRotation = marker.getRotation();
@@ -458,7 +474,7 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
     private interface LatLngInterpolatorNew {
         LatLng interpolate(float fraction, LatLng a, LatLng b);
 
-        class LinearFixed implements LatLngInterpolatorNew {
+        class LinearFixed implements AmbulanceDetailActivity.LatLngInterpolatorNew {
             @Override
             public LatLng interpolate(float fraction, LatLng a, LatLng b) {
                 double lat = (b.latitude - a.latitude) * fraction + a.latitude;
@@ -486,42 +502,5 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
         else if (begin.latitude < end.latitude && begin.longitude >= end.longitude)
             return (float) ((90 - Math.toDegrees(Math.atan(lng / lat))) + 270);
         return -1;
-    }
-
-
-    /****************************************************************
-     * Marker Clicked Event
-     *****************************************************************/
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        clickedDriverId = marker.getSnippet();
-        for(DriverLocation clickedDriver : activeDriverList){
-            if (clickedDriver.getDriverId().equals(clickedDriverId)){
-                cvDriverDetail.setVisibility(View.VISIBLE);
-                double distance = calCulateDistance(clickedDriver.getDriverLat(), clickedDriver.getDriverLong());
-                String strDistance = String.format("%.2f", distance);
-                /*Alerts.show(mContext, "Marker Clicked : "+marker.getTitle()
-                        +"\nDriver Id : "+clickedDriverId
-                        +"\nDriver Distance : "+strDistance+"KM");*/
-                tvDriverName.setText("Distance : "+strDistance+"km");
-                tvDriverDistance.setText("Driver Name : "+marker.getTitle());
-            }
-        }
-        return true;
-    }
-
-    /********************************************************************
-     *
-     **********************************************************************/
-    private double calCulateDistance(double dLat, double dLong){
-        Location locationA = new Location("point A");
-        locationA.setLatitude(latitude);
-        locationA.setLongitude(longitude);
-        Location locationB = new Location("point B");
-        locationB.setLatitude(dLat);
-        locationB.setLongitude(dLong);
-
-        double distance = (locationA.distanceTo(locationB))/1000;
-        return distance;
     }
 }

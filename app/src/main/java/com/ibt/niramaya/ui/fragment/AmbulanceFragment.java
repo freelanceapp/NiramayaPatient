@@ -78,7 +78,8 @@ public class AmbulanceFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void emergencyCall() {
-        startActivity(new Intent(mContext, AmbulanceActivity.class));
+//        startActivity(new Intent(mContext, AmbulanceActivity.class));
+        Alerts.show(mContext, "Coming Soon...");
     }
 
 
