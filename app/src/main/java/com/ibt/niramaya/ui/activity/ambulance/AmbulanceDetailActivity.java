@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -15,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -101,6 +103,9 @@ public class AmbulanceDetailActivity extends BaseActivity implements LocationLis
     private Marker dMarker;
     private TextView txtTitle;
     private ImageView imgBack;
+    private float start_rotation = 0;
+    private float rotationBearing = 0;
+    private LatLng endPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,22 +150,29 @@ public class AmbulanceDetailActivity extends BaseActivity implements LocationLis
                     if (dl.getDriverId().equals(driverId)) {
                         driverLocation = dl;
                         txtTitle.setText(dl.getDriverName());
+                        if (driverOldLatitude>0&&driverOldLatitude>0&&dMarker!=null){
+                            LatLng startPosition = new LatLng(driverOldLatitude, driverOldLongitude);
+                            endPosition = new LatLng(driverLocation.getDriverLat(), driverLocation.getDriverLong());
+
+                            //animateMarkerToGB(dMarker, endPosition);
+                            Location tempLocation = new Location(LocationManager.GPS_PROVIDER);
+                            tempLocation.setLatitude(endPosition.latitude);
+                            tempLocation.setLongitude(endPosition.longitude);
+                            rotationBearing = getBearing(new LatLng(driverOldLatitude,driverOldLongitude), endPosition);
+                            if (rotationBearing>0) {
+                                rotateMarker(dMarker, rotationBearing, start_rotation);
+                            }
+                            moveVechile(dMarker, tempLocation);
+
+                            String msg = "Lat 1 : "+driverOldLatitude+"\nLong 1 : "+driverOldLongitude+
+                                    "\nLat 2 : "+endPosition.latitude+"\nLong 2 : "+endPosition.longitude;
+
+                           // Alerts.show(mContext, msg+"\nBearing : "+rotationBearing);
+
+                        }
                         createRoute();
                     }
-
                 }
-
-                /*if (mMap != null){
-                    mMap.clear();
-                }
-
-                for(int i = 0 ; i < driverList.size() ; i++) {
-                    if (driverList.get(i).isDriverStatus()) {
-                        createMarker(driverList.get(i).getDriverLat(), driverList.get(i).getDriverLong(),
-                                driverList.get(i).getDriverName(), driverList.get(i).getDriverId());
-                        activeDriverList.add(driverList.get(i));
-                    }
-                }*/
             }
 
             @Override
@@ -321,7 +333,12 @@ public class AmbulanceDetailActivity extends BaseActivity implements LocationLis
         int padding = 100; // offset from edges of the map in pixels
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         mMap.animateCamera(cu);
-        mMap.moveCamera(cu);
+        //mMap.moveCamera(cu);
+
+
+
+        driverOldLatitude = driverLocation.getDriverLat();
+        driverOldLongitude = driverLocation.getDriverLong();
 
         /*CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(driverLocation.getDriverLat(), driverLocation.getDriverLong()), 15);
         //mMap.animateCamera(cameraUpdate);
@@ -348,7 +365,7 @@ public class AmbulanceDetailActivity extends BaseActivity implements LocationLis
             Polyline polyline = mMap.addPolyline(polyOptions);
             polylines.add(polyline);
 
-            Toast.makeText(getApplicationContext(), "Route " + (i + 1) + ": distance - " + route.get(i).getDistanceValue() + ": duration - " + route.get(i).getDurationValue(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Route " + (i + 1) + ": distance - " + route.get(i).getDistanceValue() + ": duration - " + route.get(i).getDurationValue(), Toast.LENGTH_SHORT).show();
         }
 
         // Start marker
@@ -363,8 +380,13 @@ public class AmbulanceDetailActivity extends BaseActivity implements LocationLis
         }
         dOptions = new MarkerOptions();
         dOptions.position(new LatLng(driverLocation.getDriverLat(), driverLocation.getDriverLong()));
+        dOptions.anchor(0.5f, 0.5f);
         dOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ambulance));
         dMarker = mMap.addMarker(dOptions);
+        if (endPosition!=null && rotationBearing>0) {
+            rotateMarker(dMarker, rotationBearing, start_rotation);
+        }
+
     }
 
     @Override
@@ -503,4 +525,109 @@ public class AmbulanceDetailActivity extends BaseActivity implements LocationLis
             return (float) ((90 - Math.toDegrees(Math.atan(lng / lat))) + 270);
         return -1;
     }
+
+    /***********************************************************
+     * Start block fir Moving Ambulance Smoothly
+     ************************************************************/
+
+    public static void animateMarkerToGB(final Marker marker, final LatLng finalPosition) {
+        final LatLng startPosition = marker.getPosition();
+        final Handler handler = new Handler();
+        final long start = SystemClock.uptimeMillis();
+        final Interpolator interpolator = new AccelerateDecelerateInterpolator();
+        final float durationInMs = 2000;
+        final LatLngInterpolator latLngInterpolator = new LatLngInterpolator.Spherical();
+        handler.post(new Runnable() {
+            long elapsed;
+            float t;
+            float v;
+            @Override
+            public void run() {
+                // Calculate progress using interpolator
+                elapsed = SystemClock.uptimeMillis() - start;
+                t = elapsed / durationInMs;
+                v = interpolator.getInterpolation(t);
+                marker.setPosition(latLngInterpolator.interpolate(v, startPosition, finalPosition));
+                // Repeat till progress is complete.
+                if (t < 1) {
+                    // Post again 16ms later.
+                    handler.postDelayed(this, 16);
+                }
+            }
+        });
+    }
+
+    public void moveVechile(final Marker myMarker, final Location finalPosition) {
+
+        final LatLng startPosition = myMarker.getPosition();
+
+        final Handler handler = new Handler();
+        final long start = SystemClock.uptimeMillis();
+        final Interpolator interpolator = new AccelerateDecelerateInterpolator();
+        final float durationInMs = 1000;
+        final boolean hideMarker = false;
+
+        handler.post(new Runnable() {
+            long elapsed;
+            float t;
+            float v;
+
+            @Override
+            public void run() {
+                // Calculate progress using interpolator
+                elapsed = SystemClock.uptimeMillis() - start;
+                t = elapsed / durationInMs;
+                v = interpolator.getInterpolation(t);
+
+                LatLng currentPosition = new LatLng(
+                        startPosition.latitude * (1 - t) + (finalPosition.getLatitude()) * t,
+                        startPosition.longitude * (1 - t) + (finalPosition.getLongitude()) * t);
+                myMarker.setPosition(currentPosition);
+                // myMarker.setRotation(finalPosition.getBearing());
+
+
+                // Repeat till progress is completeelse
+                if (t < 1) {
+                    // Post again 16ms later.
+                    handler.postDelayed(this, 16);
+                    // handler.postDelayed(this, 100);
+                } else {
+                    if (hideMarker) {
+                        myMarker.setVisible(false);
+                    } else {
+                        myMarker.setVisible(true);
+                    }
+                }
+            }
+        });
+
+    }
+
+    public void rotateMarker(final Marker marker, final float toRotation, final float st) {
+        final Handler handler = new Handler();
+        final long start = SystemClock.uptimeMillis();
+        final float startRotation = st;
+        final long duration = 1000;
+
+        final Interpolator interpolator = new LinearInterpolator();
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                long elapsed = SystemClock.uptimeMillis() - start;
+                float t = interpolator.getInterpolation((float) elapsed / duration);
+
+                float rot = t * toRotation + (1 - t) * startRotation;
+
+
+                marker.setRotation(-rot > 180 ? rot / 2 : rot);
+                start_rotation = -rot > 180 ? rot / 2 : rot;
+                if (t < 1.0) {
+                    // Post again 16ms later.
+                    handler.postDelayed(this, 1000);
+                }
+            }
+        });
+    }
+
 }

@@ -14,11 +14,9 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +45,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.modal.ambulance.DriverLocation;
@@ -136,7 +133,9 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
                 }
 
                 for(int i = 0 ; i < driverList.size() ; i++) {
-                    if (driverList.get(i).isDriverStatus()) {
+                    if (driverList.get(i).isDriverStatus() &&
+                            calculateDistance(driverList.get(i).getDriverLat(),
+                                    driverList.get(i).getDriverLong())<100.00) {
                         createMarker(driverList.get(i).getDriverLat(), driverList.get(i).getDriverLong(),
                                 driverList.get(i).getDriverName(), driverList.get(i).getDriverId());
                         activeDriverList.add(driverList.get(i));
@@ -145,7 +144,7 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
 
                 /*bound camera between these lat lng*/
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                for (DriverLocation dLoc : driverList) {
+                for (DriverLocation dLoc : activeDriverList) {
                     builder.include(new LatLng(dLoc.getDriverLat(), dLoc.getDriverLong()));
                 }
                 LatLngBounds bounds = builder.build();
@@ -498,7 +497,7 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
         for(DriverLocation clickedDriver : activeDriverList){
             if (clickedDriver.getDriverId().equals(clickedDriverId)){
                 cvDriverDetail.setVisibility(View.VISIBLE);
-                double distance = calCulateDistance(clickedDriver.getDriverLat(), clickedDriver.getDriverLong());
+                double distance = calculateDistance(clickedDriver.getDriverLat(), clickedDriver.getDriverLong());
                 String strDistance = String.format("%.2f", distance);
                 /*Alerts.show(mContext, "Marker Clicked : "+marker.getTitle()
                         +"\nDriver Id : "+clickedDriverId
@@ -513,7 +512,7 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
     /********************************************************************
      *
      **********************************************************************/
-    private double calCulateDistance(double dLat, double dLong){
+    private double calculateDistance(double dLat, double dLong){
         Location locationA = new Location("point A");
         locationA.setLatitude(latitude);
         locationA.setLongitude(longitude);
