@@ -4,6 +4,8 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -13,11 +15,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +41,7 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
@@ -41,6 +57,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,17 +68,24 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ibt.niramaya.R;
 import com.ibt.niramaya.modal.ambulance.DriverLocation;
+import com.ibt.niramaya.modal.ambulance.driver_detail.Ambulance;
+import com.ibt.niramaya.modal.ambulance.driver_detail.AmbulanceDetailModel;
 import com.ibt.niramaya.modal.driver.driver_list_modal.DriverList;
 import com.ibt.niramaya.modal.driver.driver_list_modal.DriverMainModal;
 import com.ibt.niramaya.retrofit.RetrofitApiClient;
+import com.ibt.niramaya.retrofit.RetrofitService;
+import com.ibt.niramaya.retrofit.WebResponse;
 import com.ibt.niramaya.utils.Alerts;
 import com.ibt.niramaya.utils.BaseActivity;
 import com.ibt.niramaya.utils.GpsTracker;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Response;
 
 public class AmbulanceActivity extends BaseActivity implements LocationListener,
         OnMapReadyCallback, RoutingListener, GoogleMap.OnMarkerClickListener {
@@ -90,6 +117,10 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
     private RelativeLayout cvDriverDetail;
     private String clickedDriverId;
     private TextView tvDriverName, tvDriverDistance, txtTitle;
+    private ImageView ivCurrentLocation;
+    private Button btnMore;
+    private BottomSheetBehavior sheetBehavior;
+    private LinearLayout layoutBottomSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,19 +131,51 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
         mapFragment.getMapAsync(this);
 
         //initRetrofit();
-        //init();
+        init();
 
+        initFirebaseDatabase();
+    }
+
+    private void init() {
         cvDriverDetail = findViewById(R.id.cvDriverDetail);
         tvDriverName = findViewById(R.id.tvDriverName);
         tvDriverDistance = findViewById(R.id.tvDriverDistance);
         txtTitle = findViewById(R.id.txtTitle);
+        ivCurrentLocation = findViewById(R.id.ivCurrentLocation);
+        btnMore = findViewById(R.id.btnClose);
 
-        (findViewById(R.id.btnClose)).setOnClickListener(v -> {
-            startActivity(new Intent(mContext, AmbulanceDetailActivity.class)
-            .putExtra("DRIVER_ID", clickedDriverId));
+        ivCurrentLocation.setOnClickListener(v -> getLatLong());
+
+        btnMore.setOnClickListener(v -> {
+            /*startActivity(new Intent(mContext, AmbulanceDetailActivity.class)
+                    .putExtra("DRIVER_ID", clickedDriverId));*/
+            fetchAmbulanceDetail();
         });
 
-        initFirebaseDatabase();
+        Places.initialize(getApplicationContext(), getResources().getString(R.string.google_key));
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                latLng = place.getLatLng();
+                latitude = latLng.latitude;
+                longitude = latLng.longitude;
+                Log.e("lat : ", String.valueOf(latitude));
+                Log.e("longi : ", String.valueOf(longitude));
+                initFirebaseDatabase();
+            }
+
+            @Override
+            public void onError(Status status) {
+                Alerts.show(mContext, status.getStatusMessage());
+            }
+        });
+
+
+
     }
 
     private void initFirebaseDatabase(){
@@ -142,11 +205,14 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
                     }
                 }
 
+                addMarker(latLng);
+
                 /*bound camera between these lat lng*/
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
                 for (DriverLocation dLoc : activeDriverList) {
                     builder.include(new LatLng(dLoc.getDriverLat(), dLoc.getDriverLong()));
                 }
+                builder.include(new LatLng(latitude, longitude));
                 LatLngBounds bounds = builder.build();
                 int padding = 100; // offset from edges of the map in pixels
                 CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
@@ -166,24 +232,19 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
         latitude = gpsTracker.getLatitude();
         longitude = gpsTracker.getLongitude();
         latLng = new LatLng(latitude, longitude);
-        getAddressList();
+        initFirebaseDatabase();
     }
 
-    private void getAddressList() {
+    private void getAddressList(double aLat, double aLong) {
         // AppProgressDialog.show(dialog);
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
-            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            List<Address> addresses = geocoder.getFromLocation(aLat, aLong, 1);
             if (addresses.size() > 0) {
                 //  AppProgressDialog.hide(dialog);
             } else {
                 // AppProgressDialog.show(dialog);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getLatLong();
-                    }
-                }, 3000);
+                new Handler().postDelayed(() -> getLatLong(), 3000);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -222,9 +283,14 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
             mMap.animateCamera(cameraUpdate);
             addMarker(latLng);
         }
-
+/*
         mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);*/
+
+        LatLng indore = new LatLng(22.719568, 75.857727);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+        mMap.animateCamera(cameraUpdate);
+        addMarker(indore);
 
         mMap.setOnInfoWindowClickListener(arg0 -> {
             //DriverLocation dl = driverList.get(Integer.parseInt(arg0.getSnippet()));
@@ -355,139 +421,6 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
 
     }
 
-    /***********************************************************
-     * Move Ambulance Smoothly
-     ************************************************************/
-    private double bearingBetweenLocations(LatLng latLng1,LatLng latLng2) {
-
-        double PI = 3.14159;
-        double lat1 = latLng1.latitude * PI / 180;
-        double long1 = latLng1.longitude * PI / 180;
-        double lat2 = latLng2.latitude * PI / 180;
-        double long2 = latLng2.longitude * PI / 180;
-
-        double dLon = (long2 - long1);
-
-        double y = Math.sin(dLon) * Math.cos(lat2);
-        double x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1)
-                * Math.cos(lat2) * Math.cos(dLon);
-
-        double brng = Math.atan2(y, x);
-
-        brng = Math.toDegrees(brng);
-        brng = (brng + 360) % 360;
-
-        return brng;
-    }
-
-    private void rotateMarker(final Marker marker, final float toRotation) {
-        if(!isMarkerRotating) {
-            final Handler handler = new Handler();
-            final long start = SystemClock.uptimeMillis();
-            final float startRotation = marker.getRotation();
-            final long duration = 1000;
-
-            final Interpolator interpolator = new LinearInterpolator();
-
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    isMarkerRotating = true;
-
-                    long elapsed = SystemClock.uptimeMillis() - start;
-                    float t = interpolator.getInterpolation((float) elapsed / duration);
-
-                    float rot = t * toRotation + (1 - t) * startRotation;
-
-                    marker.setRotation(-rot > 180 ? rot / 2 : rot);
-                    if (t < 1.0) {
-                        // Post again 16ms later.
-                        handler.postDelayed(this, 16);
-                    } else {
-                        isMarkerRotating = false;
-                    }
-                }
-            });
-        }
-    }
-
-    private void animateMarkerNew(final LatLng startPosition, final LatLng destination, final Marker marker) {
-
-        if (marker != null) {
-
-            final LatLng endPosition = new LatLng(destination.latitude, destination.longitude);
-
-            final float startRotation = marker.getRotation();
-            final LatLngInterpolatorNew latLngInterpolator = new LatLngInterpolatorNew.LinearFixed();
-
-            ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
-            valueAnimator.setDuration(2000); // duration 3 second
-            valueAnimator.setInterpolator(new LinearInterpolator());
-            valueAnimator.addUpdateListener(animation -> {
-                try {
-                    float v = animation.getAnimatedFraction();
-                    LatLng newPosition = latLngInterpolator.interpolate(v, startPosition, endPosition);
-                    marker.setPosition(newPosition);
-                    mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
-                            .target(newPosition)
-                            .zoom(18f)
-                            .build()));
-
-                    marker.setRotation(getBearing(startPosition, new LatLng(destination.latitude, destination.longitude)));
-                } catch (Exception ex) {
-                    //I don't care atm..
-                }
-            });
-            valueAnimator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-
-                    // if (mMarker != null) {
-                    // mMarker.remove();
-                    // }
-                    // mMarker = googleMap.addMarker(new MarkerOptions().position(endPosition).icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_car)));
-//https://stackoverflow.com/questions/46422397/how-to-display-smooth-movement-of-current-location-in-google-map-android
-                }
-            });
-            valueAnimator.start();
-        }
-    }
-
-    private interface LatLngInterpolatorNew {
-        LatLng interpolate(float fraction, LatLng a, LatLng b);
-
-        class LinearFixed implements LatLngInterpolatorNew {
-            @Override
-            public LatLng interpolate(float fraction, LatLng a, LatLng b) {
-                double lat = (b.latitude - a.latitude) * fraction + a.latitude;
-                double lngDelta = b.longitude - a.longitude;
-                // Take the shortest path across the 180th meridian.
-                if (Math.abs(lngDelta) > 180) {
-                    lngDelta -= Math.signum(lngDelta) * 360;
-                }
-                double lng = lngDelta * fraction + a.longitude;
-                return new LatLng(lat, lng);
-            }
-        }
-    }
-
-    private float getBearing(LatLng begin, LatLng end) {
-        double lat = Math.abs(begin.latitude - end.latitude);
-        double lng = Math.abs(begin.longitude - end.longitude);
-
-        if (begin.latitude < end.latitude && begin.longitude < end.longitude)
-            return (float) (Math.toDegrees(Math.atan(lng / lat)));
-        else if (begin.latitude >= end.latitude && begin.longitude < end.longitude)
-            return (float) ((90 - Math.toDegrees(Math.atan(lng / lat))) + 90);
-        else if (begin.latitude >= end.latitude && begin.longitude >= end.longitude)
-            return (float) (Math.toDegrees(Math.atan(lng / lat)) + 180);
-        else if (begin.latitude < end.latitude && begin.longitude >= end.longitude)
-            return (float) ((90 - Math.toDegrees(Math.atan(lng / lat))) + 270);
-        return -1;
-    }
-
-
     /****************************************************************
      * Marker Clicked Event
      *****************************************************************/
@@ -522,5 +455,48 @@ public class AmbulanceActivity extends BaseActivity implements LocationListener,
 
         double distance = (locationA.distanceTo(locationB))/1000;
         return distance;
+    }
+
+    /**/
+    private void fetchAmbulanceDetail() {
+        if (cd.isNetworkAvailable()) {
+            RetrofitService.ambulanceDetail(new Dialog(mContext), retrofitApiClient.ambulanceDetail(clickedDriverId), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    AmbulanceDetailModel ambulanceModel = (AmbulanceDetailModel) result.body();
+                    if (!ambulanceModel.getError()){
+                        Alerts.show(mContext, ambulanceModel.getMessage());
+                        openBottomSheet(ambulanceModel.getAmbulance());
+                    }
+                }
+
+                @Override
+                public void onResponseFailed(String error) {
+
+                }
+            });
+        }
+    }
+
+    private void openBottomSheet(Ambulance ambulance) {
+
+        AlertDialog.Builder dialogBox = new AlertDialog.Builder(mContext);
+        dialogBox.setCancelable(false);
+
+        LayoutInflater li = LayoutInflater.from(mContext);
+        final View dialogView = li.inflate(R.layout.dialog_ambulance_detail, null);
+        dialogBox.setView(dialogView);
+        final AlertDialog alertDialog = dialogBox.create();
+        alertDialog.show();
+
+        RecyclerView rvAmbulance = dialogView.findViewById(R.id.rvAmbulance);
+        Button btnCancel = dialogView.findViewById(R.id.btnCancel);
+        Button btnBook = dialogView.findViewById(R.id.btnBook);
+
+        btnCancel.setOnClickListener(v -> alertDialog.dismiss());
+        btnBook.setOnClickListener(v -> Alerts.show(mContext, "In Process..."));
+
+
+
     }
 }

@@ -1,6 +1,7 @@
 package com.ibt.niramaya.retrofit;
 
 import com.ibt.niramaya.constant.Constant;
+import com.ibt.niramaya.modal.ambulance.driver_detail.AmbulanceDetailModel;
 import com.ibt.niramaya.modal.doctor_opd.DoctorOpdModel;
 import com.ibt.niramaya.modal.doctor_opd_model.DoctorOpdDataModel;
 import com.ibt.niramaya.modal.driver.driver_list_modal.DriverMainModal;
@@ -235,4 +236,11 @@ public interface RetrofitApiClient {
 
     @GET("driver.json")
     Call<DriverMainModal> driverList();
+
+    /*************************************************************
+    * Ambulance
+    ************************************************************/
+    @FormUrlEncoded
+    @POST(Constant.AMBULANCE_DETAIL_API)
+    Call<AmbulanceDetailModel> ambulanceDetail(@Field("driver_id") String driver_id);
 }

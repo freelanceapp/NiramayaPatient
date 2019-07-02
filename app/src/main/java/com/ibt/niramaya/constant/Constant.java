@@ -26,6 +26,8 @@ public class Constant {
     public static final String BOOK_APPOINTMENT = "patient/create-apointment.php";
     public static final String ADD_PATIENT_FINANCE_REPORT = "patient/add-patient-finance.php";
 
+    //Ambulance
+    public static final String AMBULANCE_DETAIL_API = "select-ambulance-charges.php";
 
     // Fragment constant
     public static final String HomeFragment = "Home_Fragment";

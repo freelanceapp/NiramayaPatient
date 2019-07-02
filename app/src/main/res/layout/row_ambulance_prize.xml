@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_g"
+    android:orientation="horizontal"
+    android:weightSum="10">
+
+    <TextView
+        android:id="@+id/tvServiceName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:layout_weight="5.5"
+        android:paddingLeft="10dp"
+        android:text="Service Name"
+        android:textColor="@color/black"
+        android:textSize="@dimen/size_14" />
+
+    <TextView
+        android:id="@+id/tvServicePrice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:layout_weight="3.5"
+        android:paddingLeft="10dp"
+        android:text="Service Price"
+        android:textColor="@color/black"
+        android:textSize="@dimen/size_14" />
+</LinearLayout>

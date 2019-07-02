@@ -4,6 +4,7 @@ package com.ibt.niramaya.retrofit;
 import android.app.Dialog;
 
 import com.ibt.niramaya.BuildConfig;
+import com.ibt.niramaya.modal.ambulance.driver_detail.AmbulanceDetailModel;
 import com.ibt.niramaya.modal.doctor_opd.DoctorOpdModel;
 import com.ibt.niramaya.modal.doctor_opd_model.DoctorOpdDataModel;
 import com.ibt.niramaya.modal.finance.PatientFinanceListModel;
@@ -371,6 +372,25 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<TokenModel> call, Throwable throwable) {
+                AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+    }
+
+    public static void ambulanceDetail(final Dialog dialog, final Call<AmbulanceDetailModel> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<AmbulanceDetailModel>() {
+            @Override
+            public void onResponse(Call<AmbulanceDetailModel> call, Response<AmbulanceDetailModel> response) {
+                AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<AmbulanceDetailModel> call, Throwable throwable) {
                 AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());
             }

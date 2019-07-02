@@ -304,8 +304,8 @@ public class AmbulanceDetailActivity extends BaseActivity implements LocationLis
                 .travelMode(AbstractRouting.TravelMode.DRIVING)
                 .withListener(this)
                 .alternativeRoutes(false)
-                .waypoints(new LatLng(latitude, longitude),
-                        new LatLng(driverLocation.getDriverLat(), driverLocation.getDriverLong()))
+                .waypoints(new LatLng(driverLocation.getDriverLat(), driverLocation.getDriverLong()),
+                        new LatLng(latitude, longitude))
                 .build();
         routing.execute();
     }
